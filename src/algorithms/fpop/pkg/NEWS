@@ -1,0 +1,11 @@
+2014.7.16
+
+multiBinSeg memory leak fixed.
+
+passes R CMD check with no errors, no warnings.
+
+0.0.1
+
+first version with fast fpop code.
+
+multiBinSeg produced a memory leak.

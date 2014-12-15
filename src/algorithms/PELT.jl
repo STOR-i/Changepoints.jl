@@ -1,6 +1,7 @@
 # PELT algorithm general
 
-# TO DO: MAKE MORE EFFICEINT - CHANGE R
+
+# TO DO: MAKE MORE EFFICEINT - CHANGE R dont need as vector of vectors
 #							 - CHANGE chpts vector RETURN different way look at killicks
 
 

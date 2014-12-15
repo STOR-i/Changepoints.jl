@@ -1,0 +1,16 @@
+CUSUM -- killick  cusum_binseg.R
+
+Kolmogorov - Smirnov test
+
+U test
+
+Man Whitney test
+
+Rizzo, M. L., and Sz´ekely, G. J. (2010), “Disco Analysis: A Nonparametric Extension of Analysis
+of Variance,” The Annals of Applied Statistics, 4(2), 1034–1055.
+
+David S. Matteson and Nicholas A. James (twitter one (EDM))
+
+
+Mayve implement a single changepoint  algorithm??
+CUSUM doesnt work in PELT??

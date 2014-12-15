@@ -1,0 +1,4 @@
+- make PELT more efficient
+- Mayve implement a single changepoint  algorithm??
+- change R BS to julia 
+- fpop ask jamie about using c code 

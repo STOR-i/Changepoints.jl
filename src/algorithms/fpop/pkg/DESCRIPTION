@@ -1,0 +1,11 @@
+Package: fpop
+Type: Package
+Title: Segmentation using optimal partionning and function pruning
+Version: 2014.7.16
+Depends: methods, cghseg
+SystemRequirements: GNU GSL
+Date: 2014-02-26
+Author:Guillem Rigaill
+Maintainer: Guillem Rigaill <rigaill@evry.inra.fr>
+Description: A wrapper to a C implementation of optimal partionning with function pruning
+License: LGPL (>= 2.1)
