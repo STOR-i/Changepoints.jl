@@ -8,7 +8,7 @@ function PELT_general( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
     if pen == 0.0
         pen = log(n)
     end
-    
+   
     # F[t] is optimal cost of segmentation upto time t
     F = Array(Float64, n)
     F[1] = - pen
@@ -35,6 +35,16 @@ function PELT_general( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
         
     end
 
-  return chpts , F[n] 
+    # get changepoints
+    CP = Array(Int64,0)
+    last = chpts[n]
+    push!(CP,last)
+    while last > 1
+      last = chpts[last]
+      push!(CP,last)
+    end
+    !sort(CP)  
+
+    return CP , F[n] 
 
 end
