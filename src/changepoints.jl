@@ -1,4 +1,5 @@
-module Changepoint
+module changepoints
+
 
 # package code goes here
 
