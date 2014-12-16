@@ -1,8 +1,11 @@
+# This script provides an example of simulating changepoint data,
+# using PELT to find these changepoints, and plotting the results
+#
+# Requires Winston plotting package
+
+using changepoints
 using Winston
 
-include(joinpath("parametric cost functions/continous distributions", "cost_normal_mean.jl"))
-include(joinpath("algorithms", "PELT.jl"))
-include("sim_type.jl")
                                                                
 num_samples = 1000
 lambda = 100         # Frequencey of changes

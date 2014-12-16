@@ -1,5 +1,3 @@
-#
-
 function NormalMeanSegment(data::Array{Float64})
     cd = cumsum( data )
     cd_2 = cumsum( abs2(data) )
