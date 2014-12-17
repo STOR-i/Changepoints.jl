@@ -43,7 +43,7 @@ function PELT_general( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
       last = chpts[last]
       push!(CP,last)
     end
-    !sort(CP)  
+    sort!(CP)  
 
     return CP , F[n] 
 
