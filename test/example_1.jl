@@ -19,7 +19,7 @@ norm_seg_costs = NormalMeanSegment(sample)
 pelt_output = PELT_general(norm_seg_costs, num_samples)
 
 
-println(new_pelt_output[1])
+println(pelt_output[1])
 println(Y.changepoints)
 
 p = plot(sample)
