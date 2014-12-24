@@ -29,7 +29,6 @@ function rand(dist::NormalMeanChange, n::Int64)
     while s < n
         t = min(dist._next_change - dist._counter - 1, n)
         x[s+1:t] = rand(Normal(dist._current_mean), t - s)
-        print(x[s+1:t])
         if t == dist._next_change - dist._counter - 1
             dist._next_change += 1 + rand(Poisson(dist.lambda))
             dist._current_mean = rand(Normal(dist.mu,dist.sd))
