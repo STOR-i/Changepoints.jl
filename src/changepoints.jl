@@ -1,6 +1,6 @@
 module changepoints
 
-export PELT_general, NormalMeanChange, NormalVarSegment, NormalMeanSegment
+export PELT_general, NormalMeanChange, NormalVarSegment, NormalMeanSegment, ChangepointSampler
 
 include("cost_normal_mean.jl")
 include("cost_normal_var.jl")
