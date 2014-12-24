@@ -15,5 +15,15 @@ rand(Y, num_samples)
 μ = 1.0
 σ = Uniform(2.0, 15.0)
 Y = ChangepointSampler(()->Normal(μ, rand(σ)), λ)
-sample = rand(Y, num_samples)
+rand(Y, num_samples)
+
+# Exponential change sampler
+μ = Uniform(0.0, 10.0)
+Y = ChangepointSampler(()->Exponential(rand(μ)), λ)
+rand(Y, num_samples)
+
+# Poisson change sampler
+μ = Uniform(0.0, 10.0)
+Y = ChangepointSampler(()->Poisson(rand(μ)), λ)
+rand(Y, num_samples)
 
