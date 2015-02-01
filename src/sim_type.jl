@@ -16,6 +16,7 @@ type NormalMeanChange <: Sampleable{Univariate, Continuous}
     _next_change::Int64         # Index of next changepoint
 end
 
+
 function NormalMeanChange(lambda::Int64 = 10, mu::Float64 = 0.0, sd::Float64 = 1.0)
     dist = NormalMeanChange(lambda, mu, sd, [], [], 0, rand(Normal(mu, sd)), rand(Poisson(lambda)) + 1)
     push!(dist.changepoints, 1)

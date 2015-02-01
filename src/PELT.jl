@@ -1,8 +1,6 @@
-# PELT algorithm general
+# PELT algorithm 
 
-# now have to get chpts at end STILL TO DO
-
-function PELT_general( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
+function PELT( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
 
     # if we havent specified beta make it BIC penalty 
     if pen == 0.0
@@ -48,3 +46,4 @@ function PELT_general( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
     return CP , F[n] 
 
 end
+

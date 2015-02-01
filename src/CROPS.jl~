@@ -1,16 +1,50 @@
 # PELT for a range of penalties -- Make more efficient by recylcling comps , style of output?
 # see http://arxiv.org/pdf/1412.3617.pdf
 
-function PELT_range_of_penalties(segment_cost::Function , n::Int64, pen::Array{Float64} )
+function CROPS(segment_cost::Function , n::Int64, pen::Array{Float64} )
 
-    pen_ranges = [ minimum(pen) , maximum(pen) ]
+    pen_interval = [ minimum(pen) , maximum(pen) ]
 
-    # output dictionary
+    # these are what we output
+    out_num_cpts = []
+    out_max_pen = []
+    out_constrain = []
+  
+    while true
+
+        # do pelt and record no of chpts and 
+        for i in 1:length(pen_interval)
+            cpts , opt = PELT( segment_cost , n , pen_interval[i] )
+
+            if ( in(length(cpts) , out_num_cpts ) )
+                # find the index
+
+            end
+            
+            # calculates the cost of the constrained problem
+            # constrained (no of chpts = no_chpts[i])
+            constrained_like[i] = opt - no_chpts[i]*pen_interval[i]
+        end
+        
+        # find 
+        minimum(no_chpts)
+        maximum(no_chpts)
+        
+        # condition to break while loop no new entries being put into out_num_cpts
+        
+    end
+
+    return out
+
+end
+
+
+      # output dictionary
     out = ["no of chpts"=> Array(Int64,0), "penalty"=> Array((Float64,Float64),0), "optimum"=>  Array((Float64,Float64),0)]
 
-    while length(pen_ranges) > 0 
 
-        beta0 = pen_ranges[1]
+## inside while loop previously
+beta0 = pen_ranges[1]
         beta1 = pen_ranges[2]
         cpts_beta0 , opt_beta0 = PELT_general( segment_cost , n , beta0 )
         cpts_beta1 , opt_beta1 = PELT_general( segment_cost , n , beta1 )
@@ -47,10 +81,4 @@ function PELT_range_of_penalties(segment_cost::Function , n::Int64, pen::Array{F
             # remove first two elements
             pen_ranges = pen_ranges[3:end]
         end
-
-    end
-
-    return out
-
-end
-
+#########################
