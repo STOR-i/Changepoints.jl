@@ -14,7 +14,7 @@ sd = 10.0;            # Std. dev of mean
 Y = NormalMeanChange(lambda, mu, sd);
 sample = rand(Y, num_samples);
 seg_costs = NormalMeanSegment(sample);
-PELT_general(seg_costs, num_samples);
+PELT(seg_costs, num_samples);
 
 ###
 # Normal var segments
@@ -28,7 +28,7 @@ sample = rand(Y, num_samples)
 
 # Run PELT
 seg_costs = NormalVarSegment(sample, μ)
-PELT_general(seg_costs, num_samples)
+PELT(seg_costs, num_samples)
 
 ###
 # Exponential changepoints
@@ -41,7 +41,7 @@ sample = rand(Y, num_samples)
 
 # Run PELT
 seg_costs = ExponentialSegment(sample)
-PELT_general(seg_costs, num_samples)
+PELT(seg_costs, num_samples)
 
 # Integer output not currently compatable with ChangepointSampler
 
@@ -56,5 +56,5 @@ PELT_general(seg_costs, num_samples)
 
 ## # Run PELT
 ## seg_costs = PoissonSegment(sample)
-## PELT_general(seg_costs, num_samples)
+## PELT(seg_costs, num_samples)
 

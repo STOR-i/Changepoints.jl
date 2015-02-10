@@ -1,6 +1,10 @@
 module changepoints
 
-export PELT_general, NormalMeanChange, NormalVarSegment, NormalMeanSegment, ExponentialSegment, ChangepointSampler
+using Distributions
+using Base.Meta
+import Base.rand
+
+export PELT, NormalMeanChange, NormalVarSegment, NormalMeanSegment, ExponentialSegment, ChangepointSampler
 
 include("segment_costs.jl")
 include("PELT.jl")
