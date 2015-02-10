@@ -2,46 +2,33 @@
 
 println("Running PELT tests...")
 
-num_samples = 1000;
-lambda = 100;         # Frequencey of changes
+n = 1000;        # Number of samples
+λ = 100;         # Frequencey of changes
 
-###
-# Normal mean segments
-
-mu = 0.0;             # Average mean
-sd = 10.0;            # Std. dev of mean
-
-Y = NormalMeanChange(lambda, mu, sd);
-sample = rand(Y, num_samples);
+########################
+# Normal mean segments #
+########################
+μ, σ = Normal(0.0, 10.0), 1.0
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 seg_costs = NormalMeanSegment(sample);
-PELT(seg_costs, num_samples);
+PELT(seg_costs, n);
 
-###
-# Normal var segments
-###
-
-# Generate sample
-μ = 1.0
-σ = Uniform(2.0, 15.0)
-Y = ChangepointSampler(()->Normal(μ, rand(σ)), λ)
-sample = rand(Y, num_samples)
-
-# Run PELT
+#######################
+# Normal var segments #
+#######################
+μ, σ = 1.0, Uniform(2.0, 15.0)
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 seg_costs = NormalVarSegment(sample, μ)
-PELT(seg_costs, num_samples)
+PELT(seg_costs, n)
 
-###
-# Exponential changepoints
-###
-
+############################
+# Exponential changepoints #
+############################
 # Generate sample
 μ = Uniform(0.0, 10.0)
-Y = ChangepointSampler(()->Exponential(rand(μ)), λ)
-sample = rand(Y, num_samples)
-
-# Run PELT
+sample, cps = @changepoint_sampler n λ Exponential(μ)
 seg_costs = ExponentialSegment(sample)
-PELT(seg_costs, num_samples)
+PELT(seg_costs, n)
 
 # Integer output not currently compatable with ChangepointSampler
 
@@ -52,9 +39,9 @@ PELT(seg_costs, num_samples)
 ## # Generate sample
 ## μ = Uniform(0.0, 10.0)
 ## Y = ChangepointSampler(()->Poisson(rand(μ)), λ)
-## sample = rand(Y, num_samples)
+## sample = rand(Y, n)
 
 ## # Run PELT
 ## seg_costs = PoissonSegment(sample)
-## PELT(seg_costs, num_samples)
+## PELT(seg_costs, n)
 

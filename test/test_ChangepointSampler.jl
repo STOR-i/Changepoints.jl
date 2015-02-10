@@ -12,8 +12,6 @@ mu = Normal(1.0, 1.0)
 σ = 1.0
 Y = ChangepointSampler(()->Normal(rand(mu), σ), λ)
 rand(Y, num_samples)
-println(mu)
-eval(:mu)
 @changepoint_sampler num_samples λ Normal(mu, σ)
 
 # Normal variance change sampler

@@ -6,23 +6,21 @@
 using changepoints
 using Winston
 
-num_samples = 1000
+n = 1000           # Sample size
 λ = 100            # Frequencey of changes
 
-# Create a
-μ = 1.0
-σ = Uniform(2.0, 15.0)
-Y = ChangepointSampler(()->Normal(μ, rand(σ)), λ)
-sample = rand(Y, num_samples)
+# Generate a sample with changing 
+μ, σ = 1.0, Uniform(2.0, 15.0)
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 
 norm_seg_costs = NormalVarSegment(sample, μ)
-pelt_output = PELT_general(norm_seg_costs, num_samples)
+pelt_output = PELT(norm_seg_costs, n)
 
 println(pelt_output[1])
-println(Y.changepoints)
+println(cps)
 
 p = plot(sample)
-for i in Y.changepoints
+for i in cps
     add(p, LineX(i, color = "red", linewidth=0.5))
 end
 

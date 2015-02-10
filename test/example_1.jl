@@ -3,27 +3,25 @@
 #
 # Requires Winston plotting package
 
+using Distributions, Winston
 using changepoints
-using Winston
+
 
                                                                
-num_samples = 1000
-lambda = 100         # Frequencey of changes
-mu = 0.0             # Average mean
-sd = 10.0            # Std. dev of mean
+n = 1000        # Sample size
+λ = 100         # Frequencey of changes
 
-Y = NormalMeanChange(lambda, mu, sd)
-sample = rand(Y, num_samples)
+μ, σ = Normal(0.0, 10.0), 1.0
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 
 norm_seg_costs = NormalMeanSegment(sample)
-pelt_output = PELT_general(norm_seg_costs, num_samples)
-
+pelt_output = PELT(norm_seg_costs, n)
 
 println(pelt_output[1])
-println(Y.changepoints)
+println(cps)
 
 p = plot(sample)
-for i in Y.changepoints
+for i in cps
     add(p, LineX(i, color = "red", linewidth=0.5))
 end
 
