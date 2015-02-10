@@ -1,9 +1,6 @@
 # creates type for simulating changepoints and redefines rand()
 # - maybe more LOS distributions (geometric, negative binomial, uniform ...)
 
-import Base.rand
-using Distributions
-
 type NormalMeanChange <: Sampleable{Univariate, Continuous}
     lambda::Int64               # Frequency of changepoints
     mu::Float64                 # Mean of mean parameter
@@ -79,4 +76,31 @@ function rand(dist::ChangepointSampler, n::Int64)
     end
     dist._counter += n
     return x
+end
+
+
+macro changepoint_sampler(n, λ, dist)
+    if !isexpr(dist, :call)
+        error("Syntax error: expected distribution construction in second argument")
+    end
+    n = eval(Main, n)
+    λ = eval(Main, λ)
+    if length(dist.args) == 1
+        return Expr(:call, :rand, dist, n)
+    else
+        dtype = dist.args[1]
+        args = Any[]
+        for a in dist.args[2:end]
+            val = eval(Main,a)
+            if isa(val, Sampleable) push!(args, :(rand($a)))
+            else push!(args, :($a)) end
+        end
+        X = Expr(:call, dtype, args...)
+        #lam = Expr(:->, :(()), quote $X end)
+        lam = :(()-> $X)
+
+    end
+    sampler = eval(Main, Expr(:call, :ChangepointSampler, lam, λ))
+    #sampler = eval(:(ChangepointSampler($(lam), λ)))
+    return :(rand($(sampler), $n), $(sampler).changepoints)
 end
