@@ -18,16 +18,26 @@ For a general overview of the multiple changepoint problem and mathematical deta
 
 The methods implemented view the problem as one of optimising a penalised likelihood where the penalty comes in whenever a new changepoint is added. Assuming 
 we have specified the correct parametric (non-parametric cost coming soon) model/cost function then the only area of possible misspecification is in the 
-value of the penalty. 
-[CROPS](http://arxiv.org/abs/1412.3617)
+value of the penalty. There is no "correct" choice of penalty however it can be very instructive to look at the segmentations and especially the number of changepoints
+for a range of penalties. The Changepoints for a Range Of PenaltieS (CROPS) method allows us to do this efficiently using PELT, by exploiting the relationship 
+between the penalised and constrained versions of the same optimisation problem. For more information see [CROPS](http://arxiv.org/abs/1412.3617).
+
+QUESTION
+To use CROPS
+1. Call it from PELT macro by just checking for an array with length > 1 for penalty?
+2. Seperate function somehow?
+KAYLEA , JAMIE
 
 
 ## Simulation
 
+For testing or simulation studies it is often useful to be able to simulate time series with changepoints in them, this is more difficult than it sounds often as 
+it is bad practice to fix the position and number of changes. The following macro enables us to simulate time series with changepoints seperated by random time intervals drawn from a Poisson(lambda)
+distribution and parameters that themselves have distributions. 
 
 ```
-n = 100          # Sample size
-lambda = 4    # freq of changepoints
+n = 100       # Sample size
+lambda = 4    # frequency of changepoints
 mu, sigma = Normal(0,1), 1.0 
 sample, cps = @changepoint_sampler n lambda Normal(mu, sigma)
 ```
