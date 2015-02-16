@@ -1,4 +1,4 @@
-# PELT for a range of penalties -- Make more efficient by recylcling comps , style of output?
+# PELT for a range of penalties 
 # see http://arxiv.org/pdf/1412.3617.pdf
 
 function CROPS(segment_cost::Function , n::Int64, pen::Array{Float64} )
@@ -65,15 +65,12 @@ function CROPS(segment_cost::Function , n::Int64, pen::Array{Float64} )
         
         for i in 1:length(out_num_cpts)
 
-            # if they differ by 1, then just calc beta_int and find pen range
+            # if they differ by 1, then just calc beta_int and extend range of pen for large no of chpts
             if out_num_cpts[i] ==  out_num_cpts[i+1] + 1
-                # because difference in no of chpts is 1 calculate intersection of lines
                 beta_int =  (out_constrain[i+1] - out_constrain[i])
-                # THINK ABOUT THIS BIT LOOK IN PAPER
-                #push!( pen_interval , beta_int )
-             else
-                # difference in no of chpts is /= 1 
-                # so add to pen_interval to check
+                out_max_pen[i] = beta_int
+	    else
+                # difference in no of chpts is /= 1 so add to pen_interval to check how many
                 beta_int =  ( out_constrain[i+1] - out_constrain[i] )/( out_num_cpts[i] - out_num_cpts[i+1] )
                 push!( pen_interval , beta_int )
              end
@@ -83,8 +80,11 @@ function CROPS(segment_cost::Function , n::Int64, pen::Array{Float64} )
     # end of while loop    
     end
 
-    # organise output
-    # DICTIONARY
+    # organise output into a dictionary
+    out = Dict()
+    out["number"] = out_num_cpts
+    out["penalty"] = out_max_pen
+    out["constrained"] = out_constrain
     return out
 
 end
