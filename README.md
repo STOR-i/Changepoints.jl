@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en" class="">
   <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
@@ -9,7 +6,7 @@
     <meta http-equiv="Content-Language" content="en">
     
     
-    <title>TimeSeries.jl/README.md at master · JuliaStats/TimeSeries.jl · GitHub</title>
+    <title>Distributions.jl/README.md at master · JuliaStats/Distributions.jl · GitHub</title>
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
     <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png">
@@ -18,8 +15,8 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png">
     <meta property="fb:app_id" content="1401488693436528">
 
-      <meta content="@github" name="twitter:site" /><meta content="summary" name="twitter:card" /><meta content="JuliaStats/TimeSeries.jl" name="twitter:title" /><meta content="TimeSeries.jl - Time series toolkit for Julia" name="twitter:description" /><meta content="https://avatars2.githubusercontent.com/u/2761531?v=3&amp;s=400" name="twitter:image:src" />
-      <meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="https://avatars2.githubusercontent.com/u/2761531?v=3&amp;s=400" property="og:image" /><meta content="JuliaStats/TimeSeries.jl" property="og:title" /><meta content="https://github.com/JuliaStats/TimeSeries.jl" property="og:url" /><meta content="TimeSeries.jl - Time series toolkit for Julia" property="og:description" />
+      <meta content="@github" name="twitter:site" /><meta content="summary" name="twitter:card" /><meta content="JuliaStats/Distributions.jl" name="twitter:title" /><meta content="Distributions.jl - A Julia package for probability distributions and associated functions." name="twitter:description" /><meta content="https://avatars2.githubusercontent.com/u/2761531?v=3&amp;s=400" name="twitter:image:src" />
+      <meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="https://avatars2.githubusercontent.com/u/2761531?v=3&amp;s=400" property="og:image" /><meta content="JuliaStats/Distributions.jl" property="og:title" /><meta content="https://github.com/JuliaStats/Distributions.jl" property="og:url" /><meta content="Distributions.jl - A Julia package for probability distributions and associated functions." property="og:description" />
       <meta name="browser-stats-url" content="/_stats">
     <link rel="assets" href="https://assets-cdn.github.com/">
     <link rel="conduit-xhr" href="https://ghconduit.com:25035">
@@ -32,7 +29,7 @@
     <meta name="selected-link" value="repo_source" data-pjax-transient>
       <meta name="google-analytics" content="UA-3769691-2">
 
-    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="027EA0D9:72C7:237CA162:54E1E7B7" name="octolytics-dimension-request_id" />
+    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="027EA0D9:202C:32CF1F71:54E1E74A" name="octolytics-dimension-request_id" />
     
     <meta content="Rails, view, blob#show" name="analytics-event" />
 
@@ -42,7 +39,7 @@
 
 
     <meta content="authenticity_token" name="csrf-param" />
-<meta content="0GhUVSKP2t7XvNUmQR2XV7/gBQ+8KBmFDVjTMq7yb0Bqg6kmisZMt+clkL1ORb939sx0V7INGtT3LG/njoYbfA==" name="csrf-token" />
+<meta content="cG/js9z/X0qJ1qhUERlmpyTKtdDK3tjRbuOvCw1+ZvxxqqJ9Nv+b0BF/q9XG1jnU0eKDuQt95uRWaw81kuLJmA==" name="csrf-token" />
 
     <link href="https://assets-cdn.github.com/assets/github-7f7a8d43d99dce26334cc1cb3b327f57a9309f9d6f215d6f3dff77d5e0c593a3.css" media="all" rel="stylesheet" />
     <link href="https://assets-cdn.github.com/assets/github2-001b8ff6b9af1d78d785feee91eaacf441aa9c531b0b1ad513b01221d194cb1d.css" media="all" rel="stylesheet" />
@@ -53,11 +50,11 @@
     <meta http-equiv="x-pjax-version" content="eb9c2d1541587bf66c37d78ac6526205">
 
       
-  <meta name="description" content="TimeSeries.jl - Time series toolkit for Julia">
-  <meta name="go-import" content="github.com/JuliaStats/TimeSeries.jl git https://github.com/JuliaStats/TimeSeries.jl.git">
+  <meta name="description" content="Distributions.jl - A Julia package for probability distributions and associated functions.">
+  <meta name="go-import" content="github.com/JuliaStats/Distributions.jl git https://github.com/JuliaStats/Distributions.jl.git">
 
-  <meta content="2761531" name="octolytics-dimension-user_id" /><meta content="JuliaStats" name="octolytics-dimension-user_login" /><meta content="7288296" name="octolytics-dimension-repository_id" /><meta content="JuliaStats/TimeSeries.jl" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="7288296" name="octolytics-dimension-repository_network_root_id" /><meta content="JuliaStats/TimeSeries.jl" name="octolytics-dimension-repository_network_root_nwo" />
-  <link href="https://github.com/JuliaStats/TimeSeries.jl/commits/master.atom" rel="alternate" title="Recent Commits to TimeSeries.jl:master" type="application/atom+xml">
+  <meta content="2761531" name="octolytics-dimension-user_id" /><meta content="JuliaStats" name="octolytics-dimension-user_login" /><meta content="6619192" name="octolytics-dimension-repository_id" /><meta content="JuliaStats/Distributions.jl" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="6619192" name="octolytics-dimension-repository_network_root_id" /><meta content="JuliaStats/Distributions.jl" name="octolytics-dimension-repository_network_root_nwo" />
+  <link href="https://github.com/JuliaStats/Distributions.jl/commits/master.atom" rel="alternate" title="Recent Commits to Distributions.jl:master" type="application/atom+xml">
 
   </head>
 
@@ -81,11 +78,11 @@
 
     <div class="header-actions" role="navigation">
         <a class="button primary" href="/join" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up">Sign up</a>
-      <a class="button" href="/login?return_to=%2FJuliaStats%2FTimeSeries.jl%2Fblob%2Fmaster%2FREADME.md" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Sign in</a>
+      <a class="button" href="/login?return_to=%2FJuliaStats%2FDistributions.jl%2Fblob%2Fmaster%2FREADME.md" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Sign in</a>
     </div>
 
     <div class="site-search repo-scope js-site-search" role="search">
-      <form accept-charset="UTF-8" action="/JuliaStats/TimeSeries.jl/search" class="js-site-search-form" data-global-search-url="/search" data-repo-search-url="/JuliaStats/TimeSeries.jl/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+      <form accept-charset="UTF-8" action="/JuliaStats/Distributions.jl/search" class="js-site-search-form" data-global-search-url="/search" data-repo-search-url="/JuliaStats/Distributions.jl/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
   <input type="text"
     class="js-site-search-field is-clearable"
     data-hotkey="s"
@@ -130,42 +127,42 @@
 <ul class="pagehead-actions">
 
   <li>
-      <a href="/login?return_to=%2FJuliaStats%2FTimeSeries.jl"
+      <a href="/login?return_to=%2FJuliaStats%2FDistributions.jl"
     class="minibutton with-count tooltipped tooltipped-n"
     aria-label="You must be signed in to watch a repository" rel="nofollow">
     <span class="octicon octicon-eye"></span>
     Watch
   </a>
-  <a class="social-count" href="/JuliaStats/TimeSeries.jl/watchers">
-    11
+  <a class="social-count" href="/JuliaStats/Distributions.jl/watchers">
+    31
   </a>
 
 
   </li>
 
   <li>
-      <a href="/login?return_to=%2FJuliaStats%2FTimeSeries.jl"
+      <a href="/login?return_to=%2FJuliaStats%2FDistributions.jl"
     class="minibutton with-count tooltipped tooltipped-n"
     aria-label="You must be signed in to star a repository" rel="nofollow">
     <span class="octicon octicon-star"></span>
     Star
   </a>
 
-    <a class="social-count js-social-count" href="/JuliaStats/TimeSeries.jl/stargazers">
-      26
+    <a class="social-count js-social-count" href="/JuliaStats/Distributions.jl/stargazers">
+      84
     </a>
 
   </li>
 
     <li>
-      <a href="/login?return_to=%2FJuliaStats%2FTimeSeries.jl"
+      <a href="/login?return_to=%2FJuliaStats%2FDistributions.jl"
         class="minibutton with-count tooltipped tooltipped-n"
         aria-label="You must be signed in to fork a repository" rel="nofollow">
         <span class="octicon octicon-repo-forked"></span>
         Fork
       </a>
-      <a href="/JuliaStats/TimeSeries.jl/network" class="social-count">
-        8
+      <a href="/JuliaStats/Distributions.jl/network" class="social-count">
+        62
       </a>
     </li>
 </ul>
@@ -174,7 +171,7 @@
           <span class="mega-octicon octicon-repo"></span>
           <span class="author"><a href="/JuliaStats" class="url fn" itemprop="url" rel="author"><span itemprop="title">JuliaStats</span></a></span><!--
        --><span class="path-divider">/</span><!--
-       --><strong><a href="/JuliaStats/TimeSeries.jl" class="js-current-repository" data-pjax="#js-repo-pjax-container">TimeSeries.jl</a></strong>
+       --><strong><a href="/JuliaStats/Distributions.jl" class="js-current-repository" data-pjax="#js-repo-pjax-container">Distributions.jl</a></strong>
 
           <span class="page-context-loader">
             <img alt="" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
@@ -191,23 +188,23 @@
 <nav class="sunken-menu repo-nav js-repo-nav js-sidenav-container-pjax js-octicon-loaders"
      role="navigation"
      data-pjax="#js-repo-pjax-container"
-     data-issue-count-url="/JuliaStats/TimeSeries.jl/issues/counts">
+     data-issue-count-url="/JuliaStats/Distributions.jl/issues/counts">
   <ul class="sunken-menu-group">
     <li class="tooltipped tooltipped-w" aria-label="Code">
-      <a href="/JuliaStats/TimeSeries.jl" aria-label="Code" class="selected js-selected-navigation-item sunken-menu-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /JuliaStats/TimeSeries.jl">
+      <a href="/JuliaStats/Distributions.jl" aria-label="Code" class="selected js-selected-navigation-item sunken-menu-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /JuliaStats/Distributions.jl">
         <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
         <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
 </a>    </li>
 
       <li class="tooltipped tooltipped-w" aria-label="Issues">
-        <a href="/JuliaStats/TimeSeries.jl/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /JuliaStats/TimeSeries.jl/issues">
+        <a href="/JuliaStats/Distributions.jl/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /JuliaStats/Distributions.jl/issues">
           <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
           <span class="js-issue-replace-counter"></span>
           <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
 </a>      </li>
 
     <li class="tooltipped tooltipped-w" aria-label="Pull Requests">
-      <a href="/JuliaStats/TimeSeries.jl/pulls" aria-label="Pull Requests" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g p" data-selected-links="repo_pulls /JuliaStats/TimeSeries.jl/pulls">
+      <a href="/JuliaStats/Distributions.jl/pulls" aria-label="Pull Requests" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g p" data-selected-links="repo_pulls /JuliaStats/Distributions.jl/pulls">
           <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull Requests</span>
           <span class="js-pull-replace-counter"></span>
           <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
@@ -219,13 +216,13 @@
   <ul class="sunken-menu-group">
 
     <li class="tooltipped tooltipped-w" aria-label="Pulse">
-      <a href="/JuliaStats/TimeSeries.jl/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-selected-links="pulse /JuliaStats/TimeSeries.jl/pulse">
+      <a href="/JuliaStats/Distributions.jl/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-selected-links="pulse /JuliaStats/Distributions.jl/pulse">
         <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
         <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
 </a>    </li>
 
     <li class="tooltipped tooltipped-w" aria-label="Graphs">
-      <a href="/JuliaStats/TimeSeries.jl/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-selected-links="repo_graphs repo_contributors /JuliaStats/TimeSeries.jl/graphs">
+      <a href="/JuliaStats/Distributions.jl/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-selected-links="repo_graphs repo_contributors /JuliaStats/Distributions.jl/graphs">
         <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
         <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
 </a>    </li>
@@ -242,7 +239,7 @@
   <h3><span class="text-emphasized">HTTPS</span> clone URL</h3>
   <div class="input-group js-zeroclipboard-container">
     <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target"
-           value="https://github.com/JuliaStats/TimeSeries.jl.git" readonly="readonly">
+           value="https://github.com/JuliaStats/Distributions.jl.git" readonly="readonly">
     <span class="input-group-button">
       <button aria-label="Copy to clipboard" class="js-zeroclipboard minibutton zeroclipboard-button" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
     </span>
@@ -256,7 +253,7 @@
   <h3><span class="text-emphasized">Subversion</span> checkout URL</h3>
   <div class="input-group js-zeroclipboard-container">
     <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target"
-           value="https://github.com/JuliaStats/TimeSeries.jl" readonly="readonly">
+           value="https://github.com/JuliaStats/Distributions.jl" readonly="readonly">
     <span class="input-group-button">
       <button aria-label="Copy to clipboard" class="js-zeroclipboard minibutton zeroclipboard-button" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
     </span>
@@ -274,10 +271,10 @@
 
 
 
-                <a href="/JuliaStats/TimeSeries.jl/archive/master.zip"
+                <a href="/JuliaStats/Distributions.jl/archive/master.zip"
                    class="minibutton sidebar-button"
-                   aria-label="Download the contents of JuliaStats/TimeSeries.jl as a zip file"
-                   title="Download the contents of JuliaStats/TimeSeries.jl as a zip file"
+                   aria-label="Download the contents of JuliaStats/Distributions.jl as a zip file"
+                   title="Download the contents of JuliaStats/Distributions.jl as a zip file"
                    rel="nofollow">
                   <span class="octicon octicon-cloud-download"></span>
                   Download ZIP
@@ -288,9 +285,9 @@
         <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container>
           
 
-<a href="/JuliaStats/TimeSeries.jl/blob/f5ed853d332fa646d3b8bc3f3e4199b364091e22/README.md" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
+<a href="/JuliaStats/Distributions.jl/blob/bb1e2e3c228b72400e1a9db30080043fc7713189/README.md" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
 
-<!-- blob contrib key: blob_contributors:v21:82eba2e38cda5e34b95c761bef199a63 -->
+<!-- blob contrib key: blob_contributors:v21:366b227b4a9835e48e36e59b5165a7e3 -->
 
 <div class="file-navigation js-zeroclipboard-container">
   
@@ -334,9 +331,243 @@
         <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
 
 
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/anj/beta/README.md"
+                 data-name="anj/beta"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="anj/beta">anj/beta</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/binom-rand/README.md"
+                 data-name="binom-rand"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="binom-rand">binom-rand</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/combinators/README.md"
+                 data-name="combinators"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="combinators">combinators</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/db/Normal/README.md"
+                 data-name="db/Normal"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="db/Normal">db/Normal</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/betaprime/README.md"
+                 data-name="dh/betaprime"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/betaprime">dh/betaprime</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/conj2/README.md"
+                 data-name="dh/conj2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/conj2">dh/conj2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/dirdmle/README.md"
+                 data-name="dh/dirdmle"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/dirdmle">dh/dirdmle</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/doc3/README.md"
+                 data-name="dh/doc3"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/doc3">dh/doc3</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/mixture2/README.md"
+                 data-name="dh/mixture2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/mixture2">dh/mixture2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/mle2/README.md"
+                 data-name="dh/mle2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/mle2">dh/mle2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/mvn2/README.md"
+                 data-name="dh/mvn2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/mvn2">dh/mvn2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/mvnormal/README.md"
+                 data-name="dh/mvnormal"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/mvnormal">dh/mvnormal</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/probs/README.md"
+                 data-name="dh/probs"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/probs">dh/probs</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/readme2/README.md"
+                 data-name="dh/readme2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/readme2">dh/readme2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/rtests/README.md"
+                 data-name="dh/rtests"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/rtests">dh/rtests</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/sample/README.md"
+                 data-name="dh/sample"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/sample">dh/sample</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/show2/README.md"
+                 data-name="dh/show2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/show2">dh/show2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/support2/README.md"
+                 data-name="dh/support2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/support2">dh/support2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/test3/README.md"
+                 data-name="dh/test3"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/test3">dh/test3</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/trunc2/README.md"
+                 data-name="dh/trunc2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/trunc2">dh/trunc2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/vmf2/README.md"
+                 data-name="dh/vmf2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/vmf2">dh/vmf2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/vonmise2/README.md"
+                 data-name="dh/vonmise2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/vonmise2">dh/vonmise2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/dh/wishart2/README.md"
+                 data-name="dh/wishart2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dh/wishart2">dh/wishart2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/gh-pages/README.md"
+                 data-name="gh-pages"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="gh-pages">gh-pages</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/jmw/fit/README.md"
+                 data-name="jmw/fit"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="jmw/fit">jmw/fit</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/blob/jmw/lsf/README.md"
+                 data-name="jmw/lsf"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="jmw/lsf">jmw/lsf</a>
+            </div>
             <div class="select-menu-item js-navigation-item selected">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/blob/master/README.md"
+              <a href="/JuliaStats/Distributions.jl/blob/master/README.md"
                  data-name="master"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -345,30 +576,30 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/blob/metadata/README.md"
-                 data-name="metadata"
+              <a href="/JuliaStats/Distributions.jl/blob/minmax/README.md"
+                 data-name="minmax"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="metadata">metadata</a>
+                 title="minmax">minmax</a>
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/blob/param_meta/README.md"
-                 data-name="param_meta"
+              <a href="/JuliaStats/Distributions.jl/blob/rm-rmath/README.md"
+                 data-name="rm-rmath"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="param_meta">param_meta</a>
+                 title="rm-rmath">rm-rmath</a>
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/blob/simple_meta/README.md"
-                 data-name="simple_meta"
+              <a href="/JuliaStats/Distributions.jl/blob/travis_fix/README.md"
+                 data-name="travis_fix"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="simple_meta">simple_meta</a>
+                 title="travis_fix">travis_fix</a>
             </div>
         </div>
 
@@ -381,7 +612,223 @@
 
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.4.7/README.md"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.6.3/README.md"
+                 data-name="v0.6.3"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.6.3">v0.6.3</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.6.2/README.md"
+                 data-name="v0.6.2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.6.2">v0.6.2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.6.1/README.md"
+                 data-name="v0.6.1"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.6.1">v0.6.1</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.6.0/README.md"
+                 data-name="v0.6.0"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.6.0">v0.6.0</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.15/README.md"
+                 data-name="v0.5.15"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.15">v0.5.15</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.14/README.md"
+                 data-name="v0.5.14"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.14">v0.5.14</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.13/README.md"
+                 data-name="v0.5.13"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.13">v0.5.13</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.12/README.md"
+                 data-name="v0.5.12"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.12">v0.5.12</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.11/README.md"
+                 data-name="v0.5.11"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.11">v0.5.11</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.10/README.md"
+                 data-name="v0.5.10"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.10">v0.5.10</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.9/README.md"
+                 data-name="v0.5.9"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.9">v0.5.9</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.8/README.md"
+                 data-name="v0.5.8"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.8">v0.5.8</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.7/README.md"
+                 data-name="v0.5.7"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.7">v0.5.7</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.6/README.md"
+                 data-name="v0.5.6"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.6">v0.5.6</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.5/README.md"
+                 data-name="v0.5.5"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.5">v0.5.5</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.4/README.md"
+                 data-name="v0.5.4"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.4">v0.5.4</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.3/README.md"
+                 data-name="v0.5.3"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.3">v0.5.3</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.2/README.md"
+                 data-name="v0.5.2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.2">v0.5.2</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.1/README.md"
+                 data-name="v0.5.1"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.1">v0.5.1</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.5.0/README.md"
+                 data-name="v0.5.0"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.5.0">v0.5.0</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.11/README.md"
+                 data-name="v0.4.11"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.4.11">v0.4.11</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.10/README.md"
+                 data-name="v0.4.10"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.4.10">v0.4.10</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.9/README.md"
+                 data-name="v0.4.9"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.4.9">v0.4.9</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.8/README.md"
+                 data-name="v0.4.8"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="v0.4.8">v0.4.8</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.7/README.md"
                  data-name="v0.4.7"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -390,7 +837,7 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.4.6/README.md"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.6/README.md"
                  data-name="v0.4.6"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -399,7 +846,7 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.4.5/README.md"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.5/README.md"
                  data-name="v0.4.5"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -408,25 +855,7 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.4.4/README.md"
-                 data-name="v0.4.4"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.4.4">v0.4.4</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.4.3/README.md"
-                 data-name="v0.4.3"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.4.3">v0.4.3</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.4.2/README.md"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.2/README.md"
                  data-name="v0.4.2"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -435,7 +864,7 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.4.1/README.md"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.1/README.md"
                  data-name="v0.4.1"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -444,7 +873,7 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.4.0/README.md"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.4.0/README.md"
                  data-name="v0.4.0"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -453,106 +882,7 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.14/README.md"
-                 data-name="v0.3.14"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.14">v0.3.14</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.13/README.md"
-                 data-name="v0.3.13"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.13">v0.3.13</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.12/README.md"
-                 data-name="v0.3.12"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.12">v0.3.12</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.11/README.md"
-                 data-name="v0.3.11"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.11">v0.3.11</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.10/README.md"
-                 data-name="v0.3.10"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.10">v0.3.10</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.9/README.md"
-                 data-name="v0.3.9"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.9">v0.3.9</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.8/README.md"
-                 data-name="v0.3.8"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.8">v0.3.8</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.7/README.md"
-                 data-name="v0.3.7"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.7">v0.3.7</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.6/README.md"
-                 data-name="v0.3.6"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.6">v0.3.6</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.5/README.md"
-                 data-name="v0.3.5"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.5">v0.3.5</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.4/README.md"
-                 data-name="v0.3.4"
-                 data-skip-pjax="true"
-                 rel="nofollow"
-                 class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.3.4">v0.3.4</a>
-            </div>
-            <div class="select-menu-item js-navigation-item ">
-              <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.3/README.md"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.3.3/README.md"
                  data-name="v0.3.3"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -561,7 +891,7 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.2/README.md"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.3.2/README.md"
                  data-name="v0.3.2"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -570,7 +900,7 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.3.1/README.md"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.3.1/README.md"
                  data-name="v0.3.1"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -579,75 +909,84 @@
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.1.7/README.md"
-                 data-name="v0.1.7"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.2.13/README.md"
+                 data-name="v0.2.13"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.1.7">v0.1.7</a>
+                 title="v0.2.13">v0.2.13</a>
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.1.6/README.md"
-                 data-name="v0.1.6"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.2.12/README.md"
+                 data-name="v0.2.12"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.1.6">v0.1.6</a>
+                 title="v0.2.12">v0.2.12</a>
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.1.5/README.md"
-                 data-name="v0.1.5"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.2.10/README.md"
+                 data-name="v0.2.10"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.1.5">v0.1.5</a>
+                 title="v0.2.10">v0.2.10</a>
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.1.4/README.md"
-                 data-name="v0.1.4"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.2.9/README.md"
+                 data-name="v0.2.9"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.1.4">v0.1.4</a>
+                 title="v0.2.9">v0.2.9</a>
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.1.3/README.md"
-                 data-name="v0.1.3"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.2.8/README.md"
+                 data-name="v0.2.8"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.1.3">v0.1.3</a>
+                 title="v0.2.8">v0.2.8</a>
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.1.2/README.md"
-                 data-name="v0.1.2"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.2.7/README.md"
+                 data-name="v0.2.7"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.1.2">v0.1.2</a>
+                 title="v0.2.7">v0.2.7</a>
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.1.1/README.md"
-                 data-name="v0.1.1"
+              <a href="/JuliaStats/Distributions.jl/tree/v0.2.6/README.md"
+                 data-name="v0.2.6"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.1.1">v0.1.1</a>
+                 title="v0.2.6">v0.2.6</a>
             </div>
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/JuliaStats/TimeSeries.jl/tree/v0.1.0/README.md"
-                 data-name="v0.1.0"
+              <a href="/JuliaStats/Distributions.jl/tree/0.2.3/README.md"
+                 data-name="0.2.3"
                  data-skip-pjax="true"
                  rel="nofollow"
                  class="js-navigation-open select-menu-item-text css-truncate-target"
-                 title="v0.1.0">v0.1.0</a>
+                 title="0.2.3">0.2.3</a>
+            </div>
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/JuliaStats/Distributions.jl/tree/0.2.2/README.md"
+                 data-name="0.2.2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="0.2.2">0.2.2</a>
             </div>
         </div>
 
@@ -659,7 +998,7 @@
 </div>
 
   <div class="button-group right">
-    <a href="/JuliaStats/TimeSeries.jl/find/master"
+    <a href="/JuliaStats/Distributions.jl/find/master"
           class="js-show-file-finder minibutton empty-icon tooltipped tooltipped-s"
           data-pjax
           data-hotkey="t"
@@ -670,31 +1009,34 @@
   </div>
 
   <div class="breadcrumb js-zeroclipboard-target">
-    <span class='repo-root js-repo-root'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/JuliaStats/TimeSeries.jl" class="" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">TimeSeries.jl</span></a></span></span><span class="separator">/</span><strong class="final-path">README.md</strong>
+    <span class='repo-root js-repo-root'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/JuliaStats/Distributions.jl" class="" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">Distributions.jl</span></a></span></span><span class="separator">/</span><strong class="final-path">README.md</strong>
   </div>
 </div>
 
 
   <div class="commit file-history-tease">
     <div class="file-history-tease-header">
-        <img alt="milktrader" class="avatar" data-user="324836" height="24" src="https://avatars0.githubusercontent.com/u/324836?v=3&amp;s=48" width="24" />
-        <span class="author"><a href="/milktrader" rel="contributor">milktrader</a></span>
-        <time datetime="2014-11-04T20:56:26Z" is="relative-time">Nov 4, 2014</time>
+        <img alt="Iain Dunning" class="avatar" data-user="692635" height="24" src="https://avatars2.githubusercontent.com/u/692635?v=3&amp;s=48" width="24" />
+        <span class="author"><a href="/IainNZ" rel="contributor">IainNZ</a></span>
+        <time datetime="2014-09-13T16:09:02Z" is="relative-time">Sep 13, 2014</time>
         <div class="commit-title">
-            <a href="/JuliaStats/TimeSeries.jl/commit/e6ce0a90033daef4bdeda212149f384c17504b67" class="message" data-pjax="true" title="added whitespace line to README to run travis">added whitespace line to README to run travis</a>
+            <a href="/JuliaStats/Distributions.jl/commit/58984711b07fa36bc40cdcc1817f48999d44488c" class="message" data-pjax="true" title="Update PkgEval badge">Update PkgEval badge</a>
         </div>
     </div>
 
     <div class="participation">
       <p class="quickstat">
         <a href="#blob_contributors_box" rel="facebox">
-          <strong>3</strong>
+          <strong>6</strong>
            contributors
         </a>
       </p>
-          <a class="avatar-link tooltipped tooltipped-s" aria-label="milktrader" href="/JuliaStats/TimeSeries.jl/commits/master/README.md?author=milktrader"><img alt="milktrader" class="avatar" data-user="324836" height="20" src="https://avatars2.githubusercontent.com/u/324836?v=3&amp;s=40" width="20" /></a>
-    <a class="avatar-link tooltipped tooltipped-s" aria-label="quinnj" href="/JuliaStats/TimeSeries.jl/commits/master/README.md?author=quinnj"><img alt="Jacob Quinn" class="avatar" data-user="2896623" height="20" src="https://avatars0.githubusercontent.com/u/2896623?v=3&amp;s=40" width="20" /></a>
-    <a class="avatar-link tooltipped tooltipped-s" aria-label="IainNZ" href="/JuliaStats/TimeSeries.jl/commits/master/README.md?author=IainNZ"><img alt="Iain Dunning" class="avatar" data-user="692635" height="20" src="https://avatars0.githubusercontent.com/u/692635?v=3&amp;s=40" width="20" /></a>
+          <a class="avatar-link tooltipped tooltipped-s" aria-label="lindahua" href="/JuliaStats/Distributions.jl/commits/master/README.md?author=lindahua"><img alt="Dahua Lin" class="avatar" data-user="1900250" height="20" src="https://avatars0.githubusercontent.com/u/1900250?v=3&amp;s=40" width="20" /></a>
+    <a class="avatar-link tooltipped tooltipped-s" aria-label="johnmyleswhite" href="/JuliaStats/Distributions.jl/commits/master/README.md?author=johnmyleswhite"><img alt="John Myles White" class="avatar" data-user="22064" height="20" src="https://avatars1.githubusercontent.com/u/22064?v=3&amp;s=40" width="20" /></a>
+    <a class="avatar-link tooltipped tooltipped-s" aria-label="IainNZ" href="/JuliaStats/Distributions.jl/commits/master/README.md?author=IainNZ"><img alt="Iain Dunning" class="avatar" data-user="692635" height="20" src="https://avatars0.githubusercontent.com/u/692635?v=3&amp;s=40" width="20" /></a>
+    <a class="avatar-link tooltipped tooltipped-s" aria-label="dmbates" href="/JuliaStats/Distributions.jl/commits/master/README.md?author=dmbates"><img alt="Douglas Bates" class="avatar" data-user="371258" height="20" src="https://avatars1.githubusercontent.com/u/371258?v=3&amp;s=40" width="20" /></a>
+    <a class="avatar-link tooltipped tooltipped-s" aria-label="danmerl" href="/JuliaStats/Distributions.jl/commits/master/README.md?author=danmerl"><img alt="Dan Merl" class="avatar" data-user="3493568" height="20" src="https://avatars3.githubusercontent.com/u/3493568?v=3&amp;s=40" width="20" /></a>
+    <a class="avatar-link tooltipped tooltipped-s" aria-label="aviks" href="/JuliaStats/Distributions.jl/commits/master/README.md?author=aviks"><img alt="Avik Sengupta" class="avatar" data-user="378918" height="20" src="https://avatars1.githubusercontent.com/u/378918?v=3&amp;s=40" width="20" /></a>
 
 
     </div>
@@ -702,16 +1044,28 @@
       <h2 class="facebox-header">Users who have contributed to this file</h2>
       <ul class="facebox-user-list">
           <li class="facebox-user-list-item">
-            <img alt="milktrader" data-user="324836" height="24" src="https://avatars0.githubusercontent.com/u/324836?v=3&amp;s=48" width="24" />
-            <a href="/milktrader">milktrader</a>
+            <img alt="Dahua Lin" data-user="1900250" height="24" src="https://avatars2.githubusercontent.com/u/1900250?v=3&amp;s=48" width="24" />
+            <a href="/lindahua">lindahua</a>
           </li>
           <li class="facebox-user-list-item">
-            <img alt="Jacob Quinn" data-user="2896623" height="24" src="https://avatars2.githubusercontent.com/u/2896623?v=3&amp;s=48" width="24" />
-            <a href="/quinnj">quinnj</a>
+            <img alt="John Myles White" data-user="22064" height="24" src="https://avatars3.githubusercontent.com/u/22064?v=3&amp;s=48" width="24" />
+            <a href="/johnmyleswhite">johnmyleswhite</a>
           </li>
           <li class="facebox-user-list-item">
             <img alt="Iain Dunning" data-user="692635" height="24" src="https://avatars2.githubusercontent.com/u/692635?v=3&amp;s=48" width="24" />
             <a href="/IainNZ">IainNZ</a>
+          </li>
+          <li class="facebox-user-list-item">
+            <img alt="Douglas Bates" data-user="371258" height="24" src="https://avatars3.githubusercontent.com/u/371258?v=3&amp;s=48" width="24" />
+            <a href="/dmbates">dmbates</a>
+          </li>
+          <li class="facebox-user-list-item">
+            <img alt="Dan Merl" data-user="3493568" height="24" src="https://avatars1.githubusercontent.com/u/3493568?v=3&amp;s=48" width="24" />
+            <a href="/danmerl">danmerl</a>
+          </li>
+          <li class="facebox-user-list-item">
+            <img alt="Avik Sengupta" data-user="378918" height="24" src="https://avatars3.githubusercontent.com/u/378918?v=3&amp;s=48" width="24" />
+            <a href="/aviks">aviks</a>
           </li>
       </ul>
     </div>
@@ -721,15 +1075,15 @@
   <div class="file">
     <div class="meta clearfix">
       <div class="info file-name">
-          <span>175 lines (137 sloc)</span>
+          <span>22 lines (15 sloc)</span>
           <span class="meta-divider"></span>
-        <span>4.147 kb</span>
+        <span>1.147 kb</span>
       </div>
       <div class="actions">
         <div class="button-group">
-          <a href="/JuliaStats/TimeSeries.jl/raw/master/README.md" class="minibutton " id="raw-url">Raw</a>
-            <a href="/JuliaStats/TimeSeries.jl/blame/master/README.md" class="minibutton js-update-url-with-hash">Blame</a>
-          <a href="/JuliaStats/TimeSeries.jl/commits/master/README.md" class="minibutton " rel="nofollow">History</a>
+          <a href="/JuliaStats/Distributions.jl/raw/master/README.md" class="minibutton " id="raw-url">Raw</a>
+            <a href="/JuliaStats/Distributions.jl/blame/master/README.md" class="minibutton js-update-url-with-hash">Blame</a>
+          <a href="/JuliaStats/Distributions.jl/commits/master/README.md" class="minibutton " rel="nofollow">History</a>
         </div><!-- /.button-group -->
 
 
@@ -745,172 +1099,34 @@
     
   <div id="readme" class="blob instapaper_body">
     <article class="markdown-body entry-content" itemprop="mainContentOfPage"><h1>
-<a id="user-content-timeseriesjl" class="anchor" href="#timeseriesjl" aria-hidden="true"><span class="octicon octicon-link"></span></a>TimeSeries.jl</h1>
+<a id="user-content-distributionsjl" class="anchor" href="#distributionsjl" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distributions.jl</h1>
 
-<p><a href="https://travis-ci.org/JuliaStats/TimeSeries.jl"><img src="https://camo.githubusercontent.com/02b524b387e11b09c3eab73b9cbc2b281b97d2aa/68747470733a2f2f7472617669732d63692e6f72672f4a756c696153746174732f54696d655365726965732e6a6c2e706e67" alt="Build Status" data-canonical-src="https://travis-ci.org/JuliaStats/TimeSeries.jl.png" style="max-width:100%;"></a>
-<a href="https://coveralls.io/r/JuliaStats/TimeSeries.jl?branch=master"><img src="https://camo.githubusercontent.com/2c9c37b9255db3f0a44ae634bb11ff7533e1f966/68747470733a2f2f636f766572616c6c732e696f2f7265706f732f4a756c696153746174732f54696d655365726965732e6a6c2f62616467652e706e673f6272616e63683d6d6173746572" alt="Coverage Status" data-canonical-src="https://coveralls.io/repos/JuliaStats/TimeSeries.jl/badge.png?branch=master" style="max-width:100%;"></a>
-<a href="http://pkg.julialang.org/?pkg=TimeSeries&amp;ver=release"><img src="https://camo.githubusercontent.com/6b2037fde5e5952f5f006d97f2d124c5fe882ba6/687474703a2f2f706b672e6a756c69616c616e672e6f72672f6261646765732f54696d655365726965735f72656c656173652e737667" alt="TimeSeries" data-canonical-src="http://pkg.julialang.org/badges/TimeSeries_release.svg" style="max-width:100%;"></a></p>
+<p><a href="https://travis-ci.org/JuliaStats/Distributions.jl"><img src="https://camo.githubusercontent.com/3bbdef1335b8a3a23c5d30a9e484ee2e9cd64826/68747470733a2f2f7472617669732d63692e6f72672f4a756c696153746174732f446973747269627574696f6e732e6a6c2e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/JuliaStats/Distributions.jl.svg?branch=master" style="max-width:100%;"></a>
+<a href="http://pkg.julialang.org/?pkg=Distributions&amp;ver=release"><img src="https://camo.githubusercontent.com/2924403399c8ae0232505b88ed1fd7febacff25e/687474703a2f2f706b672e6a756c69616c616e672e6f72672f6261646765732f446973747269627574696f6e735f72656c656173652e737667" alt="Distributions" data-canonical-src="http://pkg.julialang.org/badges/Distributions_release.svg" style="max-width:100%;"></a>
+<a href="https://coveralls.io/r/JuliaStats/Distributions.jl?branch=master"><img src="https://camo.githubusercontent.com/36430c540caebff60b7806c45cdb4af2a9c12b11/68747470733a2f2f636f766572616c6c732e696f2f7265706f732f4a756c696153746174732f446973747269627574696f6e732e6a6c2f62616467652e706e673f6272616e63683d6d6173746572" alt="Coverage Status" data-canonical-src="https://coveralls.io/repos/JuliaStats/Distributions.jl/badge.png?branch=master" style="max-width:100%;"></a></p>
 
-<h4>
-<a id="user-content-installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h4>
+<p>A Julia package for probability distributions and associated functions. Particularly, Distributions implements:</p>
 
-<div class="highlight highlight-julia"><pre>julia<span class="pl-k">&gt;</span> Pkg<span class="pl-k">.</span><span class="pl-s3">add</span>(<span class="pl-s1"><span class="pl-pds">"</span>TimeSeries<span class="pl-pds">"</span></span>)</pre></div>
-
-<p>Additionally, the MarketData package includes some <code>const</code> objects that include TimeArray objects. These
-objects are historical price time series and can be used for testing, benchmarking or simply taking TimeSeries
-functionality through some paces. </p>
-
-<div class="highlight highlight-julia"><pre>julia<span class="pl-k">&gt;</span> Pkg<span class="pl-k">.</span><span class="pl-s3">add</span>(<span class="pl-s1"><span class="pl-pds">"</span>MarketData<span class="pl-pds">"</span></span>)</pre></div>
-
-<p>Alternately, you can create some dummy data with this code block.</p>
-
-<div class="highlight highlight-julia"><pre>d <span class="pl-k">=</span> [<span class="pl-s3">Date</span>(<span class="pl-c1">1980</span>,<span class="pl-c1">1</span>,<span class="pl-c1">1</span>)<span class="pl-c1">:Date</span>(<span class="pl-c1">2015</span>,<span class="pl-c1">1</span>,<span class="pl-c1">1</span>)];
-t <span class="pl-k">=</span> <span class="pl-s3">TimeArray</span>(d,<span class="pl-s3">rand</span>(<span class="pl-s3">length</span>(d)),[<span class="pl-s1"><span class="pl-pds">"</span>test<span class="pl-pds">"</span></span>])</pre></div>
+<ul class="task-list">
+<li>Moments (e.g mean, variance, skewness, and kurtosis), entropy, and other properties</li>
+<li>Probability density/mass functions (pdf) and their logarithm (logpdf)</li>
+<li>Moment generating functions and characteristic functions</li>
+<li>Sampling from population or from a distribution</li>
+<li>Maximum likelihood estimation</li>
+<li>Posterior w.r.t. conjugate prior, and Maximum-A-Posteriori (MAP) estimation</li>
+</ul>
 
 <h4>
-<a id="user-content-package-objective" class="anchor" href="#package-objective" aria-hidden="true"><span class="octicon octicon-link"></span></a>Package objective</h4>
+<a id="user-content-resources" class="anchor" href="#resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resources</h4>
 
-<p>TimeSeries aims to provide a lightweight framework for working with time series data in Julia. There are less than 500 total lines of code 
-in the <code>src/</code> directory.</p>
-
-<h4>
-<a id="user-content-quick-tour-of-current-api" class="anchor" href="#quick-tour-of-current-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick tour of current API</h4>
-
-<div class="highlight highlight-julia"><pre>julia<span class="pl-k">&gt;</span> <span class="pl-s">using</span> TimeSeries, MarketData
-
-julia<span class="pl-k">&gt;</span> ohlc
-<span class="pl-c1">500</span>x4 TimeArray{Float64,<span class="pl-c1">2</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> to <span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span>
-
-             Open    High    Low     Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> <span class="pl-k">|</span> <span class="pl-c1">104.88</span>  <span class="pl-c1">112.5</span>   <span class="pl-c1">101.69</span>  <span class="pl-c1">111.94</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> <span class="pl-k">|</span> <span class="pl-c1">108.25</span>  <span class="pl-c1">110.62</span>  <span class="pl-c1">101.19</span>  <span class="pl-c1">102.5</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">05</span> <span class="pl-k">|</span> <span class="pl-c1">103.75</span>  <span class="pl-c1">110.56</span>  <span class="pl-c1">103.0</span>   <span class="pl-c1">104.0</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">06</span> <span class="pl-k">|</span> <span class="pl-c1">106.12</span>  <span class="pl-c1">107.0</span>   <span class="pl-c1">95.0</span>    <span class="pl-c1">95.0</span>
-⋮
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">26</span> <span class="pl-k">|</span> <span class="pl-c1">21.35</span>   <span class="pl-c1">22.3</span>    <span class="pl-c1">21.14</span>   <span class="pl-c1">21.49</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">27</span> <span class="pl-k">|</span> <span class="pl-c1">21.58</span>   <span class="pl-c1">22.25</span>   <span class="pl-c1">21.58</span>   <span class="pl-c1">22.07</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">28</span> <span class="pl-k">|</span> <span class="pl-c1">21.97</span>   <span class="pl-c1">23.0</span>    <span class="pl-c1">21.96</span>   <span class="pl-c1">22.43</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span> <span class="pl-k">|</span> <span class="pl-c1">22.51</span>   <span class="pl-c1">22.66</span>   <span class="pl-c1">21.83</span>   <span class="pl-c1">21.9</span></pre></div>
-
-<h6>
-<a id="user-content-split" class="anchor" href="#split" aria-hidden="true"><span class="octicon octicon-link"></span></a>Split</h6>
-
-<div class="highlight highlight-julia"><pre>julia<span class="pl-k">&gt;</span> ohlc[<span class="pl-c1">1</span>]
-<span class="pl-c1">1</span>x4 TimeArray{Float64,<span class="pl-c1">2</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> to <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span>
-
-             Open    High    Low     Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> <span class="pl-k">|</span> <span class="pl-c1">104.88</span>  <span class="pl-c1">112.5</span>   <span class="pl-c1">101.69</span>  <span class="pl-c1">111.94</span>
-
-julia<span class="pl-k">&gt;</span> ohlc[<span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">2</span>]
-<span class="pl-c1">2</span>x4 TimeArray{Float64,<span class="pl-c1">2</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> to <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span>
-
-             Open    High    Low     Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> <span class="pl-k">|</span> <span class="pl-c1">104.88</span>  <span class="pl-c1">112.5</span>   <span class="pl-c1">101.69</span>  <span class="pl-c1">111.94</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> <span class="pl-k">|</span> <span class="pl-c1">108.25</span>  <span class="pl-c1">110.62</span>  <span class="pl-c1">101.19</span>  <span class="pl-c1">102.5</span>
-
-julia<span class="pl-k">&gt;</span> ohlc[[<span class="pl-s3">Date</span>(<span class="pl-c1">2000</span>,<span class="pl-c1">1</span>,<span class="pl-c1">3</span>), <span class="pl-s3">Date</span>(<span class="pl-c1">2000</span>,<span class="pl-c1">1</span>,<span class="pl-c1">14</span>)]]
-<span class="pl-c1">2</span>x4 TimeArray{Float64,<span class="pl-c1">2</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> to <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">14</span>
-
-             Open    High    Low     Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> <span class="pl-k">|</span> <span class="pl-c1">104.88</span>  <span class="pl-c1">112.5</span>   <span class="pl-c1">101.69</span>  <span class="pl-c1">111.94</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">14</span> <span class="pl-k">|</span> <span class="pl-c1">100.0</span>   <span class="pl-c1">102.25</span>  <span class="pl-c1">99.38</span>   <span class="pl-c1">100.44</span>
-
-julia<span class="pl-k">&gt;</span> ohlc[<span class="pl-s1"><span class="pl-pds">"</span>Low<span class="pl-pds">"</span></span>][<span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">2</span>]
-<span class="pl-c1">2</span>x1 TimeArray{Float64,<span class="pl-c1">1</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> to <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span>
-
-             Low
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> <span class="pl-k">|</span> <span class="pl-c1">101.69</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> <span class="pl-k">|</span> <span class="pl-c1">101.19</span>
-
-julia<span class="pl-k">&gt;</span> ohlc[<span class="pl-s1"><span class="pl-pds">"</span>Open<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>Close<span class="pl-pds">"</span></span>][<span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">2</span>]
-<span class="pl-c1">2</span>x2 TimeArray{Float64,<span class="pl-c1">2</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> to <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span>
-
-             Open    Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> <span class="pl-k">|</span> <span class="pl-c1">104.88</span>  <span class="pl-c1">111.94</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> <span class="pl-k">|</span> <span class="pl-c1">108.25</span>  <span class="pl-c1">102.5</span></pre></div>
-
-<h6>
-<a id="user-content-apply" class="anchor" href="#apply" aria-hidden="true"><span class="octicon octicon-link"></span></a>Apply</h6>
-
-<div class="highlight highlight-julia"><pre>julia<span class="pl-k">&gt;</span> op[<span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">3</span>] .<span class="pl-k">-</span> cl[<span class="pl-c1">2</span><span class="pl-k">:</span><span class="pl-c1">4</span>]
-<span class="pl-c1">2</span>x1 TimeArray{Float64,<span class="pl-c1">1</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> to <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">05</span>
-
-             Op.<span class="pl-k">-</span>Cl
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> <span class="pl-k">|</span> <span class="pl-c1">5.75</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">05</span> <span class="pl-k">|</span> <span class="pl-k">-</span><span class="pl-c1">0.25</span>
-
-julia<span class="pl-k">&gt;</span> <span class="pl-c1">2.</span><span class="pl-k">*</span>cl
-<span class="pl-c1">500</span>x1 TimeArray{Float64,<span class="pl-c1">1</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> to <span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span>
-
-             Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> <span class="pl-k">|</span> <span class="pl-c1">223.88</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> <span class="pl-k">|</span> <span class="pl-c1">205.0</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">05</span> <span class="pl-k">|</span> <span class="pl-c1">208.0</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">06</span> <span class="pl-k">|</span> <span class="pl-c1">190.0</span>
-⋮
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">26</span> <span class="pl-k">|</span> <span class="pl-c1">42.98</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">27</span> <span class="pl-k">|</span> <span class="pl-c1">44.14</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">28</span> <span class="pl-k">|</span> <span class="pl-c1">44.86</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span> <span class="pl-k">|</span> <span class="pl-c1">43.8</span>
-
-julia<span class="pl-k">&gt;</span> <span class="pl-s3">percentchange</span>(cl, method<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>log<span class="pl-pds">"</span></span>)
-<span class="pl-c1">499</span>x1 TimeArray{Float64,<span class="pl-c1">1</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> to <span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span>
-
-             Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> <span class="pl-k">|</span> <span class="pl-k">-</span><span class="pl-c1">0.09</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">05</span> <span class="pl-k">|</span> <span class="pl-c1">0.01</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">06</span> <span class="pl-k">|</span> <span class="pl-k">-</span><span class="pl-c1">0.09</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">07</span> <span class="pl-k">|</span> <span class="pl-c1">0.05</span>
-⋮
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">26</span> <span class="pl-k">|</span> <span class="pl-c1">0.01</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">27</span> <span class="pl-k">|</span> <span class="pl-c1">0.03</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">28</span> <span class="pl-k">|</span> <span class="pl-c1">0.02</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span> <span class="pl-k">|</span> <span class="pl-k">-</span><span class="pl-c1">0.02</span>
-
-julia<span class="pl-k">&gt;</span> <span class="pl-s3">basecall</span>(cl, cumsum)
-<span class="pl-c1">500</span>x1 TimeArray{Float64,<span class="pl-c1">1</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> to <span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span>
-
-             Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> <span class="pl-k">|</span> <span class="pl-c1">111.94</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> <span class="pl-k">|</span> <span class="pl-c1">214.44</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">05</span> <span class="pl-k">|</span> <span class="pl-c1">318.44</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">06</span> <span class="pl-k">|</span> <span class="pl-c1">413.44</span>
-⋮
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">26</span> <span class="pl-k">|</span> <span class="pl-c1">23028.84</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">27</span> <span class="pl-k">|</span> <span class="pl-c1">23050.91</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">28</span> <span class="pl-k">|</span> <span class="pl-c1">23073.34</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span> <span class="pl-k">|</span> <span class="pl-c1">23095.24</span>i</pre></div>
-
-<h6>
-<a id="user-content-combine" class="anchor" href="#combine" aria-hidden="true"><span class="octicon octicon-link"></span></a>Combine</h6>
-
-<div class="highlight highlight-julia"><pre>julia<span class="pl-k">&gt;</span> <span class="pl-s3">merge</span>(op,cl)
-<span class="pl-c1">500</span>x2 TimeArray{Float64,<span class="pl-c1">2</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> to <span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span>
-
-             Open    Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">03</span> <span class="pl-k">|</span> <span class="pl-c1">104.88</span>  <span class="pl-c1">111.94</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">04</span> <span class="pl-k">|</span> <span class="pl-c1">108.25</span>  <span class="pl-c1">102.5</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">05</span> <span class="pl-k">|</span> <span class="pl-c1">103.75</span>  <span class="pl-c1">104.0</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">06</span> <span class="pl-k">|</span> <span class="pl-c1">106.12</span>  <span class="pl-c1">95.0</span>
-⋮
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">26</span> <span class="pl-k">|</span> <span class="pl-c1">21.35</span>   <span class="pl-c1">21.49</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">27</span> <span class="pl-k">|</span> <span class="pl-c1">21.58</span>   <span class="pl-c1">22.07</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">28</span> <span class="pl-k">|</span> <span class="pl-c1">21.97</span>   <span class="pl-c1">22.43</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span> <span class="pl-k">|</span> <span class="pl-c1">22.51</span>   <span class="pl-c1">21.9</span>
-
-julia<span class="pl-k">&gt;</span> <span class="pl-s3">collapse</span>(cl, last)
-<span class="pl-c1">105</span>x1 TimeArray{Float64,<span class="pl-c1">1</span>} <span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">07</span> to <span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span>
-
-             Close
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">07</span> <span class="pl-k">|</span> <span class="pl-c1">99.5</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">14</span> <span class="pl-k">|</span> <span class="pl-c1">100.44</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">21</span> <span class="pl-k">|</span> <span class="pl-c1">111.31</span>
-<span class="pl-c1">2000</span><span class="pl-k">-</span><span class="pl-c1">01</span><span class="pl-k">-</span><span class="pl-c1">28</span> <span class="pl-k">|</span> <span class="pl-c1">101.62</span>
-⋮
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">14</span> <span class="pl-k">|</span> <span class="pl-c1">20.39</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">21</span> <span class="pl-k">|</span> <span class="pl-c1">21.0</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">28</span> <span class="pl-k">|</span> <span class="pl-c1">22.43</span>
-<span class="pl-c1">2001</span><span class="pl-k">-</span><span class="pl-c1">12</span><span class="pl-k">-</span><span class="pl-c1">31</span> <span class="pl-k">|</span> <span class="pl-c1">21.9</span></pre></div>
+<ul class="task-list">
+<li>
+<strong>Documentation</strong>: <a href="http://distributionsjl.readthedocs.org/en/latest/">http://distributionsjl.readthedocs.org/en/latest/</a>
+</li>
+<li>
+<strong>Release Notes</strong>: <a href="https://github.com/JuliaStats/Distributions.jl/blob/master/NEWS.md">https://github.com/JuliaStats/Distributions.jl/blob/master/NEWS.md</a>
+</li>
+</ul>
 </article>
   </div>
 
@@ -952,7 +1168,7 @@ julia<span class="pl-k">&gt;</span> <span class="pl-s3">collapse</span>(cl, last
     </a>
 
     <ul class="site-footer-links">
-      <li>&copy; 2015 <span title="0.03239s from github-fe140-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+      <li>&copy; 2015 <span title="0.03370s from github-fe116-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
         <li><a href="/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
         <li><a href="/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
         <li><a href="/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
