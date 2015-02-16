@@ -24,8 +24,10 @@ between the penalised and constrained versions of the same optimisation problem.
 
 QUESTION
 To use CROPS
-1.- Call it from PELT macro by just checking for an array with length > 1 for penalty?
-2.- Seperate function somehow?
+
+- Call it from PELT macro by just checking for an array with length > 1 for penalty?
+- Seperate function somehow?
+
 KAYLEA , JAMIE
 
 
