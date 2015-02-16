@@ -6,6 +6,11 @@ end
 # example of use
 include("sim_type.jl")
 
+n = 100          # Sample size
+lambda = 4    # freq of changepoints
+mu, sigma = Normal(0,1), 1.0 
+sample, cps = @changepoint_sampler n lambda Normal(mu, sigma)
+
 y = NormalMeanChange();
 sample = rand(y,100);
 y.changepoints

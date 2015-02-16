@@ -1,4 +1,0 @@
-x=NormalMeanChange()
-y= rand(x,1000)
-x.changepoints
-writedlm("data.txt",y)
