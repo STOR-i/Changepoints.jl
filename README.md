@@ -25,7 +25,7 @@ mu, sigma = Normal(0,1), 1.0
 data, cps = @changepoint_sampler n lambda Normal(mu, sigma)
 ```
 
-![Alt text](http://www.addictedtoibiza.com/wp-content/uploads/2012/12/example.png)
+![Alt text](example.png)
 
 
 `x = @PELT data Normal(?,1)`
