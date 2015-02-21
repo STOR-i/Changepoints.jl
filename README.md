@@ -9,26 +9,7 @@ A Julia package for the detection of multiple changepoints in time series.
 
 For a general overview of the multiple changepoint problem and mathematical details see [PELT](http://arxiv.org/pdf/1101.1438.pdf) and [FPOP](http://arxiv.org/abs/1409.1842).
 
-## Usage
-
-`@PELT(data,dist,penalty) `
-
-
-## Penalty selection
-
-The methods implemented view the problem as one of optimising a penalised likelihood where the penalty comes in whenever a new changepoint is added. Assuming 
-we have specified the correct parametric (non-parametric cost coming soon) model/cost function then the only area of possible misspecification is in the 
-value of the penalty. There is no "correct" choice of penalty however it can be very instructive to look at the segmentations and especially the number of changepoints
-for a range of penalties. The Changepoints for a Range Of PenaltieS (CROPS) method allows us to do this efficiently using PELT, by exploiting the relationship 
-between the penalised and constrained versions of the same optimisation problem. For more information see [CROPS](http://arxiv.org/abs/1412.3617).
-
-QUESTION
-To use CROPS
-
-- Call it from PELT macro by just checking for an array with length > 1 for penalty?
-- Seperate function somehow?
-
-KAYLEA , JAMIE
+# Usage
 
 
 ## Simulation
@@ -38,8 +19,22 @@ it is bad practice to fix the position and number of changes. The following macr
 distribution and parameters that themselves have distributions. 
 
 ```
-n = 100       # Sample size
-lambda = 4    # frequency of changepoints
+n = 1000          # Sample size
+lambda = 70       # freq of changepoints
 mu, sigma = Normal(0,1), 1.0 
-sample, cps = @changepoint_sampler n lambda Normal(mu, sigma)
-```
+data, cps = @changepoint_sampler n lambda Normal(mu, sigma)
+
+
+![Alt text](http://www.addictedtoibiza.com/wp-content/uploads/2012/12/example.png)
+
+
+`x = @PELT data Normal(?,1)
+
+## Penalty selection
+
+The methods implemented view the problem as one of optimising a penalised likelihood where the penalty comes in whenever a new changepoint is added. Assuming 
+we have specified the correct parametric (non-parametric cost coming soon) model/cost function then the only area of possible misspecification is in the 
+value of the penalty. There is no "correct" choice of penalty however it can be very instructive to look at the segmentations and especially the number of changepoints
+for a range of penalties. The Changepoints for a Range Of PenaltieS (CROPS) method allows us to do this efficiently using PELT, by exploiting the relationship 
+between the penalised and constrained versions of the same optimisation problem. For more information see [CROPS](http://arxiv.org/abs/1412.3617).
+
