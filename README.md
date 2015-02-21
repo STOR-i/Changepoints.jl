@@ -23,12 +23,12 @@ n = 1000          # Sample size
 lambda = 70       # freq of changepoints
 mu, sigma = Normal(0,1), 1.0 
 data, cps = @changepoint_sampler n lambda Normal(mu, sigma)
-
+```
 
 ![Alt text](http://www.addictedtoibiza.com/wp-content/uploads/2012/12/example.png)
 
 
-`x = @PELT data Normal(?,1)
+`x = @PELT data Normal(?,1)`
 
 ## Penalty selection
 
