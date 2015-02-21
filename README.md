@@ -11,12 +11,12 @@ For a general overview of the multiple changepoint problem and mathematical deta
 
 # Usage
 
+As an example first we simulate a time series with multiple changes in mean and then segment it using PELT plotting the time series as we go.
 
 ## Simulation
 
-For testing or simulation studies it is often useful to be able to simulate time series with changepoints in them, this is more difficult than it sounds often as 
-it is bad practice to fix the position and number of changes. The following macro enables us to simulate time series with changepoints seperated by random time intervals drawn from a Poisson(lambda)
-distribution and parameters that themselves have distributions. 
+This code simulates a time series of length n with segments that have lengths drawn from a Poisson distribution with mean lambda. The variance
+is fixed in this case as 1 but for each new segment a new mean is drawn from a standard gaussian distribution.
 
 ```
 n = 1000          # Sample size
@@ -27,7 +27,14 @@ data, cps = @changepoint_sampler n lambda Normal(mu, sigma)
 
 ![screenshot](https://bitbucket.org/bardwell/changepoints.jl/raw/master/example.png)
 
-`x = @PELT data Normal(?,1)`
+
+```
+x = @PELT data Normal(?,1)
+plot_chpts(data,x[1]) 
+```
+
+![screenshot](https://bitbucket.org/bardwell/changepoints.jl/raw/master/example_pelt.png)
+
 
 ## Penalty selection
 
