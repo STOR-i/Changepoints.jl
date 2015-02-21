@@ -25,8 +25,7 @@ mu, sigma = Normal(0,1), 1.0
 data, cps = @changepoint_sampler n lambda Normal(mu, sigma)
 ```
 
-![Alt text](Changepoints.jl/example.png)
-
+![screenshot](https://bitbucket.org/bardwell/changepoints.jl/raw/master/example.png)
 
 `x = @PELT data Normal(?,1)`
 
