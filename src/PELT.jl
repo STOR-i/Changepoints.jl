@@ -8,14 +8,15 @@ function PELT( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
     end
    
     # F[t] is optimal cost of segmentation upto time t
-    F = Array(Float64, n)
+    F = Array(Float64, n+1)
     F[1] = - pen
+    F[2] = 0
     # last chpt prior to time t 
     chpts =  Array(Int64, n)
     chpts[1] = 0
     # vector of candidate chpts at t 
     R = Array(Int64, 1)
-    R = [1]
+    R = [0]
 
     for t in 2:n
         cpt_cands = R
@@ -24,12 +25,12 @@ function PELT( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
             seg_costs[i] = segment_cost(cpt_cands[i], t)
         end
         
-        F[t] , tau = findmin( F[cpt_cands] + seg_costs + pen )
+        F[t+1] , tau = findmin( F[cpt_cands+1] + seg_costs + pen )
         chpts[t] = cpt_cands[tau]  
         
         # pruning step 
-        ineq_prune = F[cpt_cands] + seg_costs .< F[t]
-        R =  push!( cpt_cands[ineq_prune] , t )
+        ineq_prune = F[cpt_cands+1] + seg_costs .< F[t+1]
+        R =  push!( cpt_cands[ineq_prune] , t-1 )
         
     end
 
@@ -37,7 +38,7 @@ function PELT( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
     CP = Array(Int64,0)
     last = chpts[n]
     push!(CP,last)
-    while last > 1
+    while last > 0
       last = chpts[last]
       push!(CP,last)
     end
