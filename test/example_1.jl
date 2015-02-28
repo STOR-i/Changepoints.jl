@@ -13,9 +13,7 @@ n = 1000        # Sample size
 
 μ, σ = Normal(0.0, 10.0), 1.0
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
-
-norm_seg_costs = NormalMeanSegment(sample)
-pelt_output = PELT(norm_seg_costs, n)
+pelt_output = @PELT sample Normal(?, σ)
 
 println(pelt_output[1])
 println(cps)

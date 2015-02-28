@@ -12,6 +12,7 @@ n = 1000;        # Number of samples
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 seg_costs = NormalMeanSegment(sample);
 PELT(seg_costs, n);
+@PELT sample Normal(?,σ)
 
 #######################
 # Normal var segments #
@@ -20,6 +21,7 @@ PELT(seg_costs, n);
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 seg_costs = NormalVarSegment(sample, μ)
 PELT(seg_costs, n)
+@PELT sample Normal(μ, ?)
 
 ############################
 # Exponential changepoints #
@@ -29,6 +31,7 @@ PELT(seg_costs, n)
 sample, cps = @changepoint_sampler n λ Exponential(μ)
 seg_costs = ExponentialSegment(sample)
 PELT(seg_costs, n)
+@PELT sample Exponential(?)
 
 # Integer output not currently compatable with ChangepointSampler
 

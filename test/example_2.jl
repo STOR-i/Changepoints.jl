@@ -3,7 +3,7 @@
 #
 # Requires Winston plotting package
 
-using changepoints
+using changepoints, Distributions
 using Winston
 
 n = 1000           # Sample size
@@ -11,15 +11,13 @@ n = 1000           # Sample size
 
 # Generate a sample with changing 
 μ, σ = 1.0, Uniform(2.0, 15.0)
-sample, cps = @changepoint_sampler n λ Normal(μ, σ)
-
-norm_seg_costs = NormalVarSegment(sample, μ)
-pelt_output = PELT(norm_seg_costs, n)
+y, cps = @changepoint_sampler n λ Normal(μ, σ)
+pelt_output = @PELT y Normal(μ, ?)
 
 println(pelt_output[1])
 println(cps)
 
-p = plot(sample)
+p = plot(y)
 for i in cps
     add(p, LineX(i, color = "red", linewidth=0.5))
 end
