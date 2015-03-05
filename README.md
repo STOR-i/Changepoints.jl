@@ -70,3 +70,4 @@ to help us do this we can plot a so called "elbow" plot using
 ```
 elbow_plot(x)
 ```
+![screenshot](https://bitbucket.org/bardwell/changepoints.jl/raw/master/elbowplot.png)
