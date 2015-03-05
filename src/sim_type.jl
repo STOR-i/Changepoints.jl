@@ -44,6 +44,7 @@ macro changepoint_sampler(n, λ, dist)
     end
     n = eval(Main, n)
     λ = eval(Main, λ)
+#println(dist.args)
     if length(dist.args) == 1
         return Expr(:call, :rand, dist, n)
     else
