@@ -25,8 +25,7 @@ mu, sigma = Normal(0,1), 1.0
 data, cps = @changepoint_sampler n lambda Normal(mu, sigma)
 ```
 
-![screenshot](https://bitbucket.org/bardwell/changepoints.jl/raw/master/example.png)
-
+![Winston plot of simulated changepoints](/docs/example.png?raw=true "Simulated Changepoints")
 
 To segment the data assuming it is Normally distributed and has a constant variance of 1, using a default penalty (the log of the length of the data) and then plotting the data
 including the changepoints is done below.
@@ -36,8 +35,7 @@ x = @PELT data Normal(?,1)
 plot_chpts(data,x[1]) 
 ```
 
-![screenshot](https://bitbucket.org/bardwell/changepoints.jl/raw/master/example_pelt.png)
-
+![Winston plot of Changepoints detected by PELT](/docs/example_pelt.png?raw=true "Changepoints detected by PELT")
 
 If the variance is unknown and you wish it to be estimated from the data and if you want to use a non default penalty say pen
 which is a single number (we will come back to penalty ranges in the next section) then simply write
@@ -70,4 +68,4 @@ to help us do this we can plot a so called "elbow" plot using
 ```
 elbow_plot(x)
 ```
-![screenshot](https://bitbucket.org/bardwell/changepoints.jl/raw/master/elbowplot.png)
+![Winston plot of cost against number of changepoints](/docs/elbowplot.png?raw=true "Elbow plot")
