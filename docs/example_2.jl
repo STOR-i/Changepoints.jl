@@ -3,7 +3,7 @@
 #
 # Requires Winston plotting package
 
-using changepoints, Distributions
+using Changepoints, Distributions
 using Winston
 
 n = 1000           # Sample size

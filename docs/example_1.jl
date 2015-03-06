@@ -4,9 +4,7 @@
 # Requires Winston plotting package
 
 using Distributions, Winston
-using changepoints
-
-
+using Changepoints
                                                                
 n = 1000        # Sample size
 λ = 100         # Frequencey of changes
