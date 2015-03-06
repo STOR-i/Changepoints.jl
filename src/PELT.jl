@@ -6,12 +6,12 @@ Runs PELT algorithm on specified cost function for a given penalty
 # Arguments
 * `segment_cost::Function`: Calculates cost between two specified indices
 * `n::Int`: Length of time series
-# `pen::Float64`: Penalty of changepoints
+* `pen::Float64`: Penalty of changepoints
 
 # Returns
 * `(CP::Vector{Int}, cost::Float64)`:
-** `CP::Vector{Int}`: Vector of indices of detected changepoints
-** `cost::Float64`: Cost of optimal segmentation
+  * `CP::Vector{Int}`: Vector of indices of detected changepoints
+  * `cost::Float64`: Cost of optimal segmentation
 """ ->
 function PELT( segment_cost::Function , n::Int; pen::Float64 = log(n) )
    
