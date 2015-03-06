@@ -1,11 +1,19 @@
-# PELT algorithm 
+# PELT algorithm
 
-function PELT( segment_cost::Function , n::Int64, pen::Float64 = 0.0 )
+@doc """
+# Description
+Runs PELT algorithm on specified cost function for a given penalty
+# Arguments
+* `segment_cost::Function`: Calculates cost between two specified indices
+* `n::Int`: Length of time series
+# `pen::Float64`: Penalty of changepoints
 
-    # if we havent specified beta make it BIC penalty 
-    if pen == 0.0
-        pen = log(n)
-    end
+# Returns
+* `(CP::Vector{Int}, cost::Float64)`:
+** `CP::Vector{Int}`: Vector of indices of detected changepoints
+** `cost::Float64`: Cost of optimal segmentation
+""" ->
+function PELT( segment_cost::Function , n::Int; pen::Float64 = log(n) )
    
     # F[t] is optimal cost of segmentation upto time t
     F = Array(Float64, n+1)
