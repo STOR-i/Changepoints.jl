@@ -20,6 +20,5 @@ function elbow_plot( crops_object::Dict )
 	a = Points(x, y, kind="circle")
 	add(p, a, Curve(x, y))
 	return(p)
-
 end
 
