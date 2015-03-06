@@ -1,5 +1,7 @@
 # Changepoints.jl
 
+* Warning: This package is still in the early stages of development and is liable to break
+
 A Julia package for the detection of multiple changepoints in time series.
 
 - Detection is based on optimising a cost function over segments of the data.
@@ -20,9 +22,9 @@ is fixed in this case as 1 but for each new segment a new mean is drawn from a s
 
 ```
 n = 1000          # Sample size
-lambda = 70       # freq of changepoints
-mu, sigma = Normal(0,1), 1.0 
-data, cps = @changepoint_sampler n lambda Normal(mu, sigma)
+λ = 70       # freq of changepoints
+μ, σ = Normal(0,1), 1.0 
+data, cps = @changepoint_sampler n λ Normal(μ, σ)
 ```
 
 ![Winston plot of simulated changepoints](/docs/example.png?raw=true "Simulated Changepoints")
@@ -31,7 +33,7 @@ To segment the data assuming it is Normally distributed and has a constant varia
 including the changepoints is done below.
 
 ```
-x = @PELT data Normal(?,1)
+x = @PELT data Normal(?, 1.0)
 plot_chpts(data,x[1]) 
 ```
 
@@ -58,8 +60,8 @@ object is detected in the third parameter. So following the exampl0 from abovee 
 between penalty values of pen1 and pen2 then either of the following two top lines of code is acceptable.
 
 ```
-x = @PELT data Normal(?,1) [pen1,pen2]
-x = @PELT data Normal(?,1) pen1:pen2
+x = @PELT data Normal(?, 1.0) [pen1,pen2]
+x = @PELT data Normal(?, 1.0) pen1:pen2
 ```
 
 Having segmented the dataset for a range of penalties the problem now becomes one of model selection. I.e. finding the correct number of changepoints
