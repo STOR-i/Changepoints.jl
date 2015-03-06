@@ -1,5 +1,3 @@
-using Winston
-
 function plot_chpts(data , changepoints)
     p = plot(data)
     # then put a vertical line everywhere where there is a changept
