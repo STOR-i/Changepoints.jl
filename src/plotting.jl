@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-function plot_chpts(data , changepoints)
-=======
-using Winston
-
 function plot_cpts(data , changepoints)
->>>>>>> d00dfa9744a17d57ebfcabc77434ebb71fcc9ebc
     p = plot(data)
     # then put a vertical line everywhere where there is a changept
     for i in changepoints
