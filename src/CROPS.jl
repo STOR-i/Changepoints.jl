@@ -1,7 +1,7 @@
 # PELT for a range of penalties 
 # see http://arxiv.org/pdf/1412.3617.pdf
 
-function CROPS(segment_cost::Function , n::Int64, pen::Array{Float64} )  
+function CROPS(segment_cost::Function , n::Int64, pen::(Real,Real) )  
 
     pen_interval = [ minimum(pen) , maximum(pen) ]
 
