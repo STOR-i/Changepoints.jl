@@ -1,4 +1,4 @@
-module changepoints
+module Changepoints
 
 using Distributions
 using Base.Meta
