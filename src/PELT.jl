@@ -55,35 +55,3 @@ function PELT( segment_cost::Function , n::Int; pen::Float64 = log(n) )
     return CP , F[n] 
 
 end
-
-macro PELT(data, dist)
-    if !Meta.isexpr(dist,:call)
-        error("Syntax error: expected distribution as second argument")
-    end
-    dist_type = dist.args[1]
-    if dist_type == :Normal
-        if length(dist.args) != 3
-            error("Normal distribution has two parameters")
-        end
-        μ, σ = dist.args[2:3]
-        println(μ, σ)
-        if μ == :? && σ != :?
-            println("Changepoint distribution is Normal with changing mean and fixed variance")
-            return esc(:(PELT(NormalMeanSegment($data), length($data))))
-        elseif μ != :? && σ == :?
-            println("Changepoint distribution is Normal with fixed mean and changing variance")
-            #μ = eval(Main, μ)
-            return esc(:(PELT(NormalVarSegment($data, $μ), length($data))))
-        elseif μ == :? && σ == :?
-            println("Changepoint distribution is Normal with changing mean and changing variance")
-            return esc(:(PELT(NormalMeanVarSegment($(data)), length($data))))
-        else
-            error("Must mark at least one Normal parameter as changing with a ? symbol")
-        end
-    elseif dist_type == :Exponential
-        println("Changepoint distribution is Exponential with changing mean")
-        return esc(:(PELT(ExponentialSegment($data), length($data))))
-    else
-        error("Distribution $(dist_type) has no implemented cost functions")
-    end
-end

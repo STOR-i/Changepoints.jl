@@ -16,6 +16,7 @@ include("PELT.jl")
 include("CROPS.jl")
 include("BS.jl")
 include("sim_type.jl")
+include("macros.jl")
 include("plotting.jl")
 
 end # module
