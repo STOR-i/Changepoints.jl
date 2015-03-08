@@ -1,3 +1,20 @@
+# This documentation should apply to all cost functions...
+
+@doc """
+# Description
+Creates a cost function for a multiple changepoint model where
+mean is changing and the variance is fixed.
+
+The returned functions calculates the minimum negative log likelihood
+for the specified segment.
+
+# Arguments
+* `data::Array{Float64}`: Time series
+# Returns
+* `cost::Function`: Function which takes indices (s, t) where
+                    0 ≤ s < t < n and n is the length of the time series
+                    and returns the cost of the segment [s+1, ..., t]
+""" ->
 function NormalMeanSegment(data::Array{Float64})
     cd = [0,cumsum( data )]
     cd_2 = [0,cumsum( abs2(data) )]
