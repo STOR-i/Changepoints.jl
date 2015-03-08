@@ -11,7 +11,7 @@ function cost_function(data::Any, dist_expr::Expr)
             error("Normal distribution has two parameters")
         end
         μ, σ = dist_expr.args[2:3]
-        println(μ, σ)
+        #println(μ, σ)
         if μ == :? && σ != :?
             println("Changepoint distribution is Normal with changing mean and fixed variance")
             return :(NormalMeanSegment($data))
@@ -36,4 +36,9 @@ end
 macro PELT(data, dist)
     cost_func = cost_function(data, dist)
     return esc(:(PELT($(cost_func), length($data))))
+end
+
+macro BS(data, dist)
+    cost_func = cost_function(data, dist)
+    return esc(:(BS($(cost_func), length($data))))
 end

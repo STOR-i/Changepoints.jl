@@ -11,16 +11,17 @@ n = 1000        # Sample size
 
 μ, σ = Normal(0.0, 10.0), 1.0
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
-pelt_output = @PELT sample Normal(?, σ)
 
-println(pelt_output[1])
-println(cps)
+# Find changepoints via PELT
+pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
+
+# Find changepoints via BS
+bs_cps = @BS sample Normal(?, σ)
 
 p = plot(sample)
 for i in cps
     add(p, LineX(i, color = "red", linewidth=0.5))
 end
-
 
 for i in pelt_output[1]
     add(p, LineX(i, color = "green", linewidth=0.5))
