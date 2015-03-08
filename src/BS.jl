@@ -1,35 +1,40 @@
-# check this is correct!!
-# document
-# what happens when no change, more efficient
-
+@doc """
+# Description
+Runs Binary Segmentation algorithm on specified cost function for a given penalty
+# Arguments
+* `segment_cost::Function`: Calculates cost between two specified indices
+* `n::Int`: Length of time series
+* `pen::Float64`: Penalty of changepoints
+# Returns
+* `CP::Vector{Int}`: Vector of indices of detected changepoints
+""" ->
 function BS( segment_cost::Function , n::Int64; pen::Float64 = log(n) )
-    tau = [1,n]
+    tau = (Int, Int)[] # Segmentations to test
     CP = Array(Int64,0)
+
+    push!(tau, (0, n))
+    push!(CP, 0)
     
     # keep adding segments until none contain a changepoint
-    i = 1
-    while length(tau) > 0 
-        x = Array(Float64,0)
-        for j in (tau[1]):(tau[2] - 1)
-            push!(x , segment_cost(tau[1],j) + segment_cost(j+1,tau[2]) + pen)
+
+    while length(tau) > 0
+        a, b = pop!(tau)
+        x = Array(Float64, 0)
+        for j in (a+1):(b - 1)
+            push!(x , segment_cost(a,j) + segment_cost(j,b) + pen)
         end
         minval , ind = findmin(x)
-        if minval - segment_cost(tau[1],tau[2]) < 0
+        if minval - segment_cost(a,b) < 0
             # significant so add seg to tau
-            chpt = ind + tau[1] - 1
+            chpt = ind + a
             push!(CP,chpt)
-            if chpt != tau[1]
-                append!(tau, [ tau[1] , chpt ] )
+            if chpt != a + 1;
+                push!(tau, (a, chpt))
             end
-            if chpt != tau[2] - 1
-                append!(tau, [ chpt+1 , tau[2] ] )
+            if chpt != b - 1
+                push!(tau, (chpt,b))
             end
-            tau = tau[3:end]
-        else
-            tau = tau[3:end]
         end
-        i+=1
     end
-
     return sort(CP)
 end
