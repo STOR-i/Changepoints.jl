@@ -1,7 +1,7 @@
 # PELT for a range of penalties 
 # see http://arxiv.org/pdf/1412.3617.pdf
 
-function CROPS(segment_cost::Function , n::Int64, pen::(Real,Real) )  
+function CROPS(segment_cost::Function , n::Int64, pen::(Real,Real) )
 
     pen_interval = [ minimum(pen) , maximum(pen) ]
 
@@ -22,7 +22,7 @@ function CROPS(segment_cost::Function , n::Int64, pen::(Real,Real) )
             for i in 1:length(pen_interval)
 
                 # do PELT for each pen_interval
-                cpts , opt = PELT( segment_cost , n , pen_interval[i] )
+                cpts , opt = PELT( segment_cost , n , pen=pen_interval[i] )
 
                 # if there are already same no of chpts in out 
                 # see if penalty differentx

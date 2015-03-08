@@ -1,5 +1,5 @@
 # example of use
-using Distributions, Winston
+using Distributions
 using Changepoints
 
 # simulate chpts
