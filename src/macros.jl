@@ -33,12 +33,22 @@ function cost_function(data::Any, dist_expr::Expr)
     end
 end
                             
-macro PELT(data, dist)
+macro PELT(data, dist, args...)
     cost_func = cost_function(data, dist)
-    return esc(:(PELT($(cost_func), length($data))))
+    if length(args) == 0
+        return esc(:(PELT($(cost_func), length($data))))
+    elseif length(args) == 1
+        return esc(:(PELT($(cost_func), length($data), pen=$(args[1]))))
+    else
+        return esc(:(CROPS($(cost_func), length($data), $((args[1], args[2])))))
+    end
 end
 
-macro BS(data, dist)
+macro BS(data, dist, args...)
     cost_func = cost_function(data, dist)
-    return esc(:(BS($(cost_func), length($data))))
+    if length(args) == 0
+        return esc(:(BS($(cost_func), length($data))))
+    else
+        return esc(:(BS($(cost_func), length($data), pen=$(args[1]))))
+    end
 end
