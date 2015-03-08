@@ -12,7 +12,7 @@ end
 function ChangepointSampler(rand_dist_gen, λ::Int64 = 10)
     _current_dist = rand_dist_gen()
     self = ChangepointSampler(rand_dist_gen, λ, [], [], 0, rand_dist_gen(), rand(Poisson(λ)) + 1)
-    push!(self.changepoints, 1)
+    push!(self.changepoints, 0)
     push!(self.segment_params, params(_current_dist))
     self
 end
@@ -28,7 +28,7 @@ function rand(dist::ChangepointSampler, n::Int64)
             dist._next_change += 1 + rand(Poisson(dist.λ))
             dist._current_dist = dist.rand_dist_gen()
             # Sample and store new change parameters
-            push!(dist.changepoints, dist._counter + t+1)
+            push!(dist.changepoints, dist._counter + t)
             push!(dist.segment_params, params(dist._current_dist))
         end
         s = t
