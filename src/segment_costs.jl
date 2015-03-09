@@ -15,14 +15,14 @@ for the specified segment.
                     0 ≤ s < t < n and n is the length of the time series
                     and returns the cost of the segment [s+1, ..., t]
 """ ->
-function NormalMeanSegment(data::Array{Float64}, var::Real = 1)
+function NormalMeanSegment(data::Array{Float64}, σ::Real = 1.0)
     cd = [0,cumsum( data )]
     cd_2 = [0,cumsum( abs2(data) )]
-    cost(s::Int64, t::Int64) = ( cd_2[t+1] - cd_2[s+1] - abs2(cd[t+1] - cd[s+1])/(t-s) )/var
+    cost(s::Int64, t::Int64) = ( cd_2[t+1] - cd_2[s+1] - abs2(cd[t+1] - cd[s+1])/(t-s) )/(σ^2)
     return cost
 end
 
-function NormalVarSegment(data::Array{Float64}, μ::Float64)
+function NormalVarSegment(data::Array{Float64}, μ::Real)
     ss = [0,cumsum((data - μ).^2)]
     cost(s::Int64, t::Int64) = (t-s) * log( (ss[t+1] - ss[s+1])/(t-s) ) 
 end
