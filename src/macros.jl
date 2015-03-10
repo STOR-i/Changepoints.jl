@@ -28,6 +28,9 @@ function cost_function(data::Any, dist_expr::Expr)
     elseif dist_type == :Exponential
         println("Changepoint distribution is Exponential with changing mean")
         return :(ExponentialSegment($data))
+    elseif dist_type == :Nonparametric
+        println("Changepoint method is Nonparametric")
+        return :(NonparametricSegment($data, $K))
     else
         error("Distribution $(dist_type) has no implemented cost functions")
     end
