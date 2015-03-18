@@ -1,7 +1,7 @@
-# Resampling function -- takes a vector of weights that are < alpha 
+#= Resampling function -- takes a vector of weights that are < alpha 
 # to resample and does SRC resampling, then returns a vector with resampled 
-# weights 
-
+ weights 
+=#
 function resample(to.resample,alpha){ 
   
   log.alpha <- log(alpha)
