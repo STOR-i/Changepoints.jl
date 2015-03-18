@@ -6,15 +6,15 @@ function cost_function(data::Any, dist_expr::Expr)
     end
 
     dist_type = dist_expr.args[1]
+    
     if dist_type == :Normal
         if length(dist_expr.args) != 3
             error("Normal distribution has two parameters")
         end
         μ, σ = dist_expr.args[2:3]
-        #println(μ, σ)
         if μ == :? && σ != :?
             println("Changepoint distribution is Normal with changing mean and fixed variance")
-            return :(NormalMeanSegment($data))
+            return :(NormalMeanSegment($data , $σ))
         elseif μ != :? && σ == :?
             println("Changepoint distribution is Normal with fixed mean and changing variance")
             #μ = eval(Main, μ)
@@ -25,12 +25,30 @@ function cost_function(data::Any, dist_expr::Expr)
         else
             error("Must mark at least one Normal parameter as changing with a ? symbol")
         end
+
     elseif dist_type == :Exponential
         println("Changepoint distribution is Exponential with changing mean")
         return :(ExponentialSegment($data))
+
+    elseif dist_type == :Gamma
+         if length(dist_expr.args) != 3
+            error("Gamma distribution has two parameters")
+        end
+        alpha , beta = dist_expr.args[2:3]
+        if alpha == :? && beta != :?
+            println("Changepoint distribution is Gamma with changing shape and fixed rate")
+            return :(GammaShapeSegment($data, $beta))
+        elseif alpha != :? && beta == :?
+            println("Changepoint distribution is Gamma with fixed shape and changing rate")
+            return :(GammaRateSegment($data, $alpha))
+        else
+            error("Must mark at least one Gamma parameter as changing with a ? symbol")
+        end
+
     elseif dist_type == :Nonparametric
         println("Changepoint method is Nonparametric")
         return :(NonparametricSegment($data, $K))
+
     else
         error("Distribution $(dist_type) has no implemented cost functions")
     end
