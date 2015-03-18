@@ -50,22 +50,23 @@ function PoissonSegment(data::Array{Int64})
     return cost
 end
 
-function BetaSegment(data::Array{Float64})
-    # Method of moments
-    cd = [0,cumsum( data )]
-    cd_2 = [0,cumsum( abs2(data) )]
-    lcd = [0,cumsum( log(data) )]
-    clcd = [0,cumsum( log(1-data) )]
-    function cost(s::Int64, t::Int64) 
-        mu = (cd[t+1] - cd[s+1])/(t-s)
-        sig = ( cd_2[t+1] - cd_2[s+1] )/(t-s) - mu^2
-        alpha = mu*( mu*(1-mu)/sig - 1 )
-        beta = (1-mu)*( mu*(1-mu)/sig - 1 )
-        return (t-s)*lbeta(alpha,beta) - (alpha-1)*( lcd[t+1]-lcd[s+1] ) - (beta-1)*( clcd[t+1]-clcd[s+1] )
+function GammaShapeSegment(data::Array{Float64}, beta::Float64)
+     lcd = [0,cumsum( log(data) )]
+    function cost(s::Int64, t::Int64)
+        alpha_hat = invdigamma( log(beta) + (lcd[t+1] - lcd[s+1])/(t-s) )
+        cost = (t-s)*( alpha_hat*log(beta) - lgamma(alpha_hat) ) + (alpha_hat-1)*(lcd[t+1]-lcd[s+1])
+        return cost*-2
     end
-    return cost
 end
 
+function GammaRateSegment(data::Array{Float64}, alpha::Float64)
+    cd = [0,cumsum( data )]
+    function cost(s::Int64, t::Int64)
+        beta_hat = ( alpha * (t-s) )/( cd[t+1] - cd[s+1] )
+        cost = (t-s)*alpha*log(beta_hat) - beta_hat*( cd[t+1] - cd[s+1] )
+        return cost*-2
+    end
+end
 
 function NonparametricSegment(data::Array{Float64}, K::Int64)
     n = length(data)
