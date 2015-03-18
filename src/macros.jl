@@ -30,8 +30,12 @@ function cost_function(data::Any, dist_expr::Expr)
         println("Changepoint distribution is Exponential with changing mean")
         return :(ExponentialSegment($data))
 
+    elseif dist_type == :Poisson
+        println("Changepoint distribution is Poisson with changing mean")
+        return :(PoissonSegment($data))
+
     elseif dist_type == :Gamma
-         if length(dist_expr.args) != 3
+        if length(dist_expr.args) != 3
             error("Gamma distribution has two parameters")
         end
         alpha , beta = dist_expr.args[2:3]

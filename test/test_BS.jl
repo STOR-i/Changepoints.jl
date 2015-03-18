@@ -26,25 +26,17 @@ BS(seg_costs, n)
 ############################
 # Exponential changepoints #
 ############################
-# Generate sample
 μ = Uniform(0.0, 10.0)
 sample, cps = @changepoint_sampler n λ Exponential(μ)
 seg_costs = ExponentialSegment(sample)
 BS(seg_costs, n)
 @BS sample Exponential(?)
 
-# Integer output not currently compatable with ChangepointSampler
-
-## ###
-## # Poisson changepoints
-## ###
-
-## # Generate sample
-## μ = Uniform(0.0, 10.0)
-## Y = ChangepointSampler(()->Poisson(rand(μ)), λ)
-## sample = rand(Y, n)
-
-## # Run BS
-## seg_costs = PoissonSegment(sample)
-## BS(seg_costs, n)
-
+########################
+# Poisson changepoints #
+########################
+μ = Uniform(0.0, 10.0)
+sample, cps = @changepoint_sampler n λ Poisson(μ)
+seg_costs = PoissonSegment(sample)
+BS(seg_costs, n)
+@BS sample Poisson(?)
