@@ -21,7 +21,7 @@ end
 
 # Normal mean change
 
-println("Test Normal variance change...")
+println("Test Normal mean change...")
 data = read_data("$(dir)/Normal_change_in_mean_data")
 r_cpts = read_cpts("$(dir)/Normal_change_in_mean_cpts")
 cpts, cost = @PELT data Normal(?, 1.0) 2*log(length(data))
@@ -50,7 +50,7 @@ cpts, cost = @PELT data Poisson(?) 2*log(length(data))
 test_cpts(r_cpts, cpts)
 
 # Exponential change
-println("Test Poisson change...")
+println("Test Exponential  change...")
 data = read_data("$(dir)/Exponential_data")
 r_cpts = read_cpts("$(dir)/Exponential_change_in_mean_cpts")
 cpts, cost = @PELT data Exponential(?) 2*log(length(data))
@@ -63,8 +63,8 @@ r_cpts = read_cpts("$(dir)/Gamma_cpts")
 cpts, cost = @PELT data Gamma(1.0,?) 2*log(length(data))
 test_cpts(r_cpts, cpts)
 
-## println("Test Nonparametric change...")
-## data = read_data("$(dir)/Nonparametric_data")
-## r_cpts = read_cpts("$(dir)/Nonparametric_cpts")
-## cpts, cost = @PELT data Nonparametric( 1) 2*log(length(data))
-## test_cpts(r_cpts, cpts)
+println("Test Nonparametric change...")
+data = read_data("$(dir)/Nonparametric_data")
+r_cpts = read_cpts("$(dir)/Nonparametric_cpts")
+cpts, cost = @PELT data Nonparametric( 1) 2*log(length(data))
+test_cpts(r_cpts, cpts)
