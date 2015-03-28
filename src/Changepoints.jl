@@ -1,7 +1,6 @@
 module Changepoints
 
 using Distributions
-using Winston
 using Base.Meta
 import Base.rand
 
@@ -17,6 +16,17 @@ include("CROPS.jl")
 include("BS.jl")
 include("sim_type.jl")
 include("macros.jl")
-include("plotting.jl")
+
+# This approach to loading supported plotting packages is taken directly from the "KernelDensity" package
+macro glue(pkg)
+    path = joinpath(dirname(Base.source_path(nothing)),"glue",string(pkg,".jl"))
+    init = symbol(string(pkg,"_init"))
+    quote
+        $(esc(init))() = include($path)
+        isdefined(Main,$(QuoteNode(pkg))) && $(esc(init))()
+    end
+end
+
+@glue Winston
 
 end # module

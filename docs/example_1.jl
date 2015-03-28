@@ -18,11 +18,9 @@ pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
 # Find changepoints via BS
 bs_cps = @BS sample Normal(?, σ)
 
-p = plot(sample)
-for i in cps
-    add(p, LineX(i, color = "red", linewidth=0.5))
-end
-
-for i in pelt_output[1]
+# Plot data with true changepoints
+p = plot(sample, cps)
+# Add lines for PELT changepoints
+for i in pelt_cps
     add(p, LineX(i, color = "green", linewidth=0.5))
 end

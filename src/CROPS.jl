@@ -106,7 +106,7 @@ function CROPS(segment_cost::Function , n::Int64, pen::(Real,Real) )
     end
 
     # organise output into a dictionary
-    out = Dict()
+    out = Dict{ASCIIString, Array}()
     out["number"] = out_num_cpts
     out["penalty"] = out_max_pen
     out["constrained"] = out_constrain
