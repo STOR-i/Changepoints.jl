@@ -53,8 +53,7 @@ then we can use the following code:
 crops_output = @PELT data Normal(?, 1.0) pen1 pen2
 ```
 
-Having segmented the dataset for a range of penalties the problem now becomes one of model selection. I.e. finding the correct number of changepoints
-to help us do this we can plot a so called "elbow" plot using
+Having segmented the dataset for a range of penalties the problem now becomes one of model selection. Again, if Winston has been loaded, we can create a so called "elbow" plot from these results.
 
 ```
 elbow_plot(crops_output)
