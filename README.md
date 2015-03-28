@@ -56,6 +56,6 @@ crops_output = @PELT data Normal(?, 1.0) pen1 pen2
 Having segmented the dataset for a range of penalties the problem now becomes one of model selection. Again, if Winston has been loaded, we can create a so called "elbow" plot from these results.
 
 ```
-elbow_plot(crops_output)
+plot(crops_output)
 ```
 ![Winston plot of cost against number of changepoints](/docs/elbowplot.png?raw=true "Elbow plot")
