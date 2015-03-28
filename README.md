@@ -29,11 +29,11 @@ data, cps = @changepoint_sampler n λ Normal(μ, σ)
 
 ![Winston plot of simulated changepoints](/docs/example.png?raw=true "Simulated Changepoints")
 
-To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. The functions plot_cpts is provided to conveniently plot the results.
+To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Winston package for convenient plotting of the results. The Winston package must be explicity loaded to make use of this functionality. If the Winston package was loaded after Changepoints, then the user must run the command `Changepoints.Winston_init()` to load this functionality.
 
 ```
-x = @PELT data Normal(?, 1.0)
-plot_cpts(data,x[1]) 
+pelt_cps, cost = @PELT data Normal(?, 1.0)
+plot(data, pelt_cps) 
 ```
 
 ![Winston plot of Changepoints detected by PELT](/docs/example_pelt.png?raw=true "Changepoints detected by PELT")
@@ -50,13 +50,13 @@ To run the PELT algorithm for a range of penalties say pen1 to pen2 where pen1 <
 then we can use the following code:
 
 ```
-x = @PELT data Normal(?, 1.0) pen1 pen2
+crops_output = @PELT data Normal(?, 1.0) pen1 pen2
 ```
 
 Having segmented the dataset for a range of penalties the problem now becomes one of model selection. I.e. finding the correct number of changepoints
 to help us do this we can plot a so called "elbow" plot using
 
 ```
-elbow_plot(x)
+elbow_plot(crops_output)
 ```
 ![Winston plot of cost against number of changepoints](/docs/elbowplot.png?raw=true "Elbow plot")
