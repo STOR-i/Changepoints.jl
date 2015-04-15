@@ -7,6 +7,8 @@ BS(cost_function(data, distribtion), length(data), penalty = log(n))
 Can also call the Binary Segmentation function using the macro @BS data Segment_cost(?) Penalty where the ? replaces the parameter which changes.  For example to find a change in mean in data distributed from a Normal distribution with penalty equal to log(n) we would use
  @BS data Normal(?, σ) log(n)
 
+Choices of distribution are Normal(?, σ), Normal(μ, ?), Normal(?, ?), Exponential, Poisson, Gamma(?, beta), Gamma(alpha, ?) and Nonparametric
+
 # Arguments
 * `segment_cost::Function`: Calculates cost between two specified indices
 * `n::Int`: Length of time series
