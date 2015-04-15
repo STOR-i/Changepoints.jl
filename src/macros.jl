@@ -50,6 +50,7 @@ function cost_function(data::Any, dist_expr::Expr)
         end
 
     elseif dist_type == :Nonparametric
+        K = dist_expr.args[2]
         println("Changepoint method is Nonparametric")
         return :(NonparametricSegment($data, $K))
 
