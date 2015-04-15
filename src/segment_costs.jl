@@ -1,19 +1,32 @@
-# This documentation should apply to all cost functions...
 
 @doc """
 # Description
-Creates a cost function for a multiple changepoint model where
-mean is changing and the variance is fixed.
-
-The returned functions calculates the minimum negative log likelihood
-for the specified segment.
+Calculates the cost of the segments using twice the negative log likelihood
+for the specified segment. Usually called using the @PELT or @BS macro.
 
 # Arguments
 * `data::Array{Float64}`: Time series
+
+#Usage
+Distribtion(data, known_parameters)
+where Distribution is specified by the user for example to find a change in mean in normal data use NormalMeanSegment. Choices are NormalMeanSegment, NormalVarSegment, NormalMeanVarSegment, ExponentialSegment, PoissonSegment, GammaShapeSegment, GammaRateSegment and NonparametricSegment. 
+
 # Returns
 * `cost::Function`: Function which takes indices (s, t) where
                     0 ≤ s < t < n and n is the length of the time series
                     and returns the cost of the segment [s+1, ..., t]
+
+#Example
+Below is an example of a change in mean in normal data
+n = 1000       
+λ = 100        
+μ, σ = Normal(0.0, 10.0), 1.0
+data, cps = @changepoint_sampler n λ Normal(μ, σ)
+cost = NormalMeanSegment(data, σ = 1.0)
+
+#References
+For an example of the cost functions see
+Killick, R., Fearnhead, P. and Eckley, I.A. (2012) Optimal detection of changepoints with a linear computational cost, JASA 107(500), 1590-1598
 """ ->
 function NormalMeanSegment(data::Array{Float64}, σ::Real = 1.0)
     cd = [0,cumsum( data )]
