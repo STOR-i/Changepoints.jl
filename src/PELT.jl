@@ -71,6 +71,6 @@ function PELT( segment_cost::Function , n::Int; pen::Float64 = log(n) )
     end
     sort!(CP)  
 
-    return CP , F[n] 
+    return CP , F[n+1] 
 
 end
