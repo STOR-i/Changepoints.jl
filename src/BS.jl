@@ -1,12 +1,30 @@
 @doc """
 # Description
-Runs Binary Segmentation algorithm on specified cost function for a given penalty
+Runs the Binary Segmentation algorithm using a specified cost function for a given penalty to find the position and number of changepoints
+
+# Usage
+BS(cost_function(data, distribtion), length(data), penalty = log(n))
+Can also call the Binary Segmentation function using the macro @BS data Segment_cost(?) Penalty where the ? replaces the parameter which changes.  For example to find a change in mean in data distributed from a Normal distribution with penalty equal to log(n) we would use
+ @BS data Normal(?, σ) log(n)
+
 # Arguments
 * `segment_cost::Function`: Calculates cost between two specified indices
 * `n::Int`: Length of time series
 * `pen::Float64`: Penalty of changepoints
+
 # Returns
 * `CP::Vector{Int}`: Vector of indices of detected changepoints
+
+# Example
+Below is an example of a change in mean 
+n = 1000       
+λ = 100        
+μ, σ = Normal(0.0, 10.0), 1.0
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
+pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
+
+#References
+Scott, A.J. and Knott, M. (1974) A Cluster Analysis Method for Grouping Means in the Analysis of Variance, Biometrics 30(3), 507 - 512
 """ ->
 function BS( segment_cost::Function , n::Int64; pen::Float64 = log(n) )
     tau = (Int, Int)[] # Segmentations to test
