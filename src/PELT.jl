@@ -14,13 +14,15 @@ PELT(cost_function(data, distribtion), length(data), penalty = log(n))
 Can also call the PELT function using the macro @PELT data Segment_cost(?) Penalty where the ? replaces the parameter which changes.  For example to find a change in mean in data distributed from a Normal distribution with penalty equal to log(n) we would use
  @PELT data Normal(?, σ) log(n)
 
+Choices of distribution are Normal(?, σ), Normal(μ, ?), Normal(?, ?), Exponential, Poisson, Gamma(?, beta), Gamma(alpha, ?) and Nonparametric
+
 # Returns
 * `(CP::Vector{Int}, cost::Float64)`:
   * `CP::Vector{Int}`: Vector of indices of detected changepoints
   * `cost::Float64`: Cost of optimal segmentation
 
 # Example
-Below is an example of a change in mean 
+Below is an example of a change in mean in normal data 
 n = 1000       
 λ = 100        
 μ, σ = Normal(0.0, 10.0), 1.0
