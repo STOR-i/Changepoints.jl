@@ -58,7 +58,46 @@ function cost_function(data::Any, dist_expr::Expr)
         error("Distribution $(dist_type) has no implemented cost functions")
     end
 end
-                            
+
+@doc """
+Runs the PELT algorithm using a specified cost function and penalty value to find the position and number of changepoints
+
+# Usage
+
+1. `@PELT data changepoint_model`: Run PELT with default penalty value
+
+2. `@PELT data changepoint_model β`: Run PELT at penalty value β
+
+3. `@PELT data changepoint_model β₁ β₂`: Run CROPS algorithm for penalties between β₁ and β₂
+
+# Cost functions
+
+A changepoint model is an expression which describes what segment cost function
+should be constructed for use with PELT. For parametric segment cost functions,
+this is represented by the name of a distribution (as in the Distributions package)
+with some parameters replaced by '?' to indicate that a parameters is changing.
+Some examples are as follows:
+
+* `Normal(μ, ?)`: Normal model with fixed mean μ and changing standard deviation
+* `Exponential(?)`: Exponential model with changing mean
+* `Gamma(?, β)`: Gamma model with fixed rate parameter β and changing shape parameter
+
+A nonparametric cost function is also provided and the model is represented with
+the following expression:
+
+* `Nonparametric(k)`: Nonparametric cost function with parameter k
+
+# Example
+```
+n = 1000       
+λ = 100        
+μ, σ = Normal(0.0, 10.0), 1.0
+# Samples changepoints from Normal distribution with changing mean
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
+# Run PELT on sample
+pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
+```
+""" ->
 macro PELT(data, dist, args...)
     cost_func = cost_function(data, dist)
     if length(args) == 0

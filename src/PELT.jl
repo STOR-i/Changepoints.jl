@@ -9,27 +9,24 @@ Runs the PELT algorithm using a specified cost function for a given penalty valu
 * `n::Int`: Length of time series
 * `pen::Float64`: This is the penalty value used to avoid over/under -fitting the model.
 
-# Usage
-PELT(cost_function(data, distribtion), length(data), penalty = log(n))
-Can also call the PELT function using the macro @PELT data Segment_cost(?) Penalty where the ? replaces the parameter which changes.  For example to find a change in mean in data distributed from a Normal distribution with penalty equal to log(n) we would use
- @PELT data Normal(?, σ) log(n)
-
-Choices of distribution are Normal(?, σ), Normal(μ, ?), Normal(?, ?), Exponential, Poisson, Gamma(?, beta), Gamma(alpha, ?) and Nonparametric
-
 # Returns
 * `(CP::Vector{Int}, cost::Float64)`:
   * `CP::Vector{Int}`: Vector of indices of detected changepoints
   * `cost::Float64`: Cost of optimal segmentation
 
 # Example
-Below is an example of a change in mean in normal data 
-n = 1000       
-λ = 100        
+```
+n, λ = 1000, 100
 μ, σ = Normal(0.0, 10.0), 1.0
-sample, cps = @changepoint_sampler n λ Normal(μ, σ)
-pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)  # Sample changepoints
+seg_cost = NormalMeanChange(sample, σ)               # Create segment cost function
+pelt_cps, pelt_cost = PELT(seg_cost, n)              # Run PELT
+```
 
-#References
+# See also
+CROPS, @PELT
+
+# References
 Killick, R., Fearnhead, P. and Eckley, I.A. (2012) Optimal detection of changepoints with a linear computational cost, JASA 107(500), 1590-1598
 """ ->
 function PELT( segment_cost::Function , n::Int; pen::Float64 = log(n) )
@@ -38,6 +35,7 @@ function PELT( segment_cost::Function , n::Int; pen::Float64 = log(n) )
     F = Array(Float64, n+1)
     F[1] = - pen
     F[2] = 0
+
     # last chpt prior to time t 
     chpts =  Array(Int64, n)
     chpts[1] = 0
