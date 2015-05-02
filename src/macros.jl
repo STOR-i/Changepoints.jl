@@ -60,6 +60,53 @@ function cost_function(data::Any, dist_expr::Expr)
 end
 
 @doc """
+Creates a segment cost function given data and changepoint model expression
+
+# Usage
+@segement_cost data changepoint_model
+
+# Cost functions
+
+A changepoint model is an expression which describes what segment cost function
+should be constructed for use with PELT. For parametric segment cost functions,
+this is represented by the name of a distribution (as in the Distributions package)
+with some parameters replaced by '?' to indicate that a parameters is changing.
+The full list of available cost functions based on parametric distributions is
+as follows:
+
+* `Normal(?, σ): Normal model with changing mean and fixed standard deviation σ (see also NormalMeanSegment)
+* `Normal(μ, ?)`: Normal model with fixed mean μ and changing standard deviation (see also NormalVarSegment)
+* `Normal(?, ?)`: Normal model with changing mean and standard deviation (see also NormalMeanVarSegment)
+* `Exponential(?)`: Exponential model with changing mean (see also ExponentialSegment)
+* `Poisson(?)`: Poisson model with changing mean (see also PoissonSegment)
+* `Gamma(?, β)`: Gamma model with fixed rate parameter β and changing shape parameter (see also GammaShapeSegment)
+* `Gamma(α, ?)`: Gamma model with fixed shape parameter α and changing rate parameter (see also GammaRateSegment)
+
+A nonparametric cost function is also provided and the model is represented with
+the following expression:
+
+* `Nonparametric(k)`: Nonparametric cost function with parameter k (see also NonparametricSegment)
+
+# Example
+```julia
+n = 1000       
+λ = 100        
+μ, σ = Normal(0.0, 10.0), 1.0
+# Samples changepoints from Normal distribution with changing mean
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
+# Create cost function
+seg_cost = @segment_cost sample Normal(?, σ)
+# Calculate changepoints using PELT and BS
+pelt_cps, cost = PELT(seg_cost, n)
+bs_cps = BS(seg_cost, n)
+```
+""" ->
+macro segment_cost(data, dist)
+    cost_function(data, dist)
+end
+    
+    
+@doc """
 Runs the PELT algorithm using a specified cost function and penalty value to find the position and number of changepoints
 
 # Usage
@@ -69,23 +116,6 @@ Runs the PELT algorithm using a specified cost function and penalty value to fin
 2. `@PELT data changepoint_model β`: Run PELT at penalty value β
 
 3. `@PELT data changepoint_model β₁ β₂`: Run CROPS algorithm for penalties between β₁ and β₂
-
-# Cost functions
-
-A changepoint model is an expression which describes what segment cost function
-should be constructed for use with PELT. For parametric segment cost functions,
-this is represented by the name of a distribution (as in the Distributions package)
-with some parameters replaced by '?' to indicate that a parameters is changing.
-Some examples are as follows:
-
-* `Normal(μ, ?)`: Normal model with fixed mean μ and changing standard deviation
-* `Exponential(?)`: Exponential model with changing mean
-* `Gamma(?, β)`: Gamma model with fixed rate parameter β and changing shape parameter
-
-A nonparametric cost function is also provided and the model is represented with
-the following expression:
-
-* `Nonparametric(k)`: Nonparametric cost function with parameter k
 
 # Example
 ```
@@ -97,6 +127,9 @@ sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Run PELT on sample
 pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
 ```
+
+# See also
+PELT, @segment_cost
 """ ->
 macro PELT(data, dist, args...)
     cost_func = cost_function(data, dist)
@@ -109,6 +142,29 @@ macro PELT(data, dist, args...)
     end
 end
 
+@doc """
+# Description
+Runs the Binary Segmentation algorithm using a specified cost function for a given penalty
+
+# Usage
+1. `@BS data changepoint_model`: Run binary segmentation with default penalty value
+
+2. `@BS data changepoint_model β`: Run binary segmentation with penalty value β
+
+# Example
+```
+n = 1000   # Length of time series
+λ = 100    # Frequency of changepoints
+α, β = Uniform(0.0, 10.0), 1.0
+# Samples changepoints from Gamma distribution with changing shape
+sample, cps = @changepoint_sampler n λ Gamma(α, β)
+# Run binary segmentation on sample
+bs_cps = @BS sample Gamma(?, β)
+```
+
+# See also
+BS, @segment_cost
+""" ->
 macro BS(data, dist, args...)
     cost_func = cost_function(data, dist)
     if length(args) == 0
