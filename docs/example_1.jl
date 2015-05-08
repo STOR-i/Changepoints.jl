@@ -20,7 +20,3 @@ bs_cps = @BS sample Normal(?, σ)
 
 # Plot data with true changepoints
 p = plot(sample, cps)
-# Add lines for PELT changepoints
-for i in pelt_cps
-    add(p, LineX(i, color = "green", linewidth=0.5))
-end
