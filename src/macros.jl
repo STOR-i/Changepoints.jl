@@ -102,7 +102,7 @@ bs_cps = BS(seg_cost, n)
 ```
 """ ->
 macro segment_cost(data, dist)
-    cost_function(data, dist)
+    esc(cost_function(data, dist))
 end
     
     
