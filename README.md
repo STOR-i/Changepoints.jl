@@ -33,6 +33,42 @@ Documentation is accessible in the Julia REPL in help mode. Help mode can be sta
 ```julia
 julia> ?
 help?> @PELT
+Changepoints.@PELT(data, dist, args...)
+
+  Runs the PELT algorithm using a specified cost function and penalty value to
+  find the position and number of changepoints
+
+                                     Usage
+                                    -–––––-
+
+  1. @PELT data changepoint_model: Run PELT with default penalty value
+
+  2. @PELT data changepoint_model β: Run PELT at penalty value β
+
+  3. @PELT data changepoint_model β₁ β₂: Run CROPS algorithm for penalties
+  between β₁ and β₂
+
+                                    Example
+                                   -–––––––-
+
+  n = 1000       
+  λ = 100        
+  μ, σ = Normal(0.0, 10.0), 1.0
+  # Samples changepoints from Normal distribution with changing mean
+  sample, cps = @changepoint_sampler n λ Normal(μ, σ)
+  # Run PELT on sample
+  pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
+
+                                    See also
+                                   -––––––––-
+
+  PELT, @segment_cost 
+
+ Details:
+
+	signature: PELT(data,dist,args...)
+	source: (133,"/home/lawrence/.julia/v0.3/Changepoints/src/macros.jl")
+
 ```
 
 # Usage
