@@ -32,11 +32,8 @@ Documentation is accessible in the Julia REPL in help mode. Help mode can be sta
 
 ```julia
 julia> ?
-help?> GP
-
-[type]
-
-GaussianProcesses.GP
+help?> @PELT
+```
 
 # Usage
 
