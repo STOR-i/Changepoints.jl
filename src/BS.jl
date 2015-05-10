@@ -12,6 +12,7 @@ BS(cost_function(data, distribtion), length(data), penalty = log(n))
 
 # Returns
 * `CP::Vector{Int}`: Vector of indices of detected changepoints
+* `cost::Float64`: Cost of optimal segmentation
 
 # Example
 ```
@@ -21,13 +22,13 @@ n = 1000
 μ, σ = Normal(0.0, 10.0), 1.0
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Run binary segmentation
-pelt_cps, pelt_cost = @BS sample Normal(?, σ)
+BS_cps, BS_cost = @BS sample Normal(?, σ)
 ```
 
 # See also
 @segment_cost
 
-#References
+# References
 Scott, A.J. and Knott, M. (1974) A Cluster Analysis Method for Grouping Means in the Analysis of Variance, Biometrics 30(3), 507 - 512
 """ ->
 function BS( segment_cost::Function , n::Int64; pen::Float64 = log(n) )
@@ -58,5 +59,17 @@ function BS( segment_cost::Function , n::Int64; pen::Float64 = log(n) )
             end
         end
     end
-    return sort(CP)
+
+    cost::Float64
+    cost = 0.0
+
+    CP = sort(CP)
+    
+    for j in 1:(length(CP)-1)
+        cost = cost + segment_cost(CP[j]+1,CP[j+1])
+    end
+
+    cost = cost + segment_cost(CP[end]+1,n)
+
+    return CP, cost
 end
