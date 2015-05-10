@@ -1,3 +1,5 @@
+using Distributions
+
 module Changepoints
 
 using Distributions
