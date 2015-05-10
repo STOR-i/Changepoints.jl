@@ -27,6 +27,9 @@ n = 1000
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 pelt_cps, pelt_cost = @PELT sample Normal(?, σ) log(n) 4*log(n)
 
+# See also
+@PELT
+
 #References
 
 Haynes, K., Eckley. I.A., and Fearnhead, P., (2014) Efficient penalty search for multiple changepoint problems arXiv:1412.3617
