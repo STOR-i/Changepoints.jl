@@ -1,7 +1,5 @@
 # Changepoints.jl
 
-* Warning: This package is still in the early stages of development and is liable to break
-
 A Julia package for the detection of multiple changepoints in time series.
 
 - Detection is based on optimising a cost function over segments of the data.
