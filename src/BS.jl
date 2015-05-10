@@ -27,7 +27,7 @@ pelt_cps, pelt_cost = @BS sample Normal(?, σ)
 # See also
 @segment_cost
 
-#References
+# References
 Scott, A.J. and Knott, M. (1974) A Cluster Analysis Method for Grouping Means in the Analysis of Variance, Biometrics 30(3), 507 - 512
 """ ->
 function BS( segment_cost::Function , n::Int64; pen::Float64 = log(n) )

@@ -5,11 +5,38 @@
 A Julia package for the detection of multiple changepoints in time series.
 
 - Detection is based on optimising a cost function over segments of the data.
-- Implementations of the most efficient DP based search algorithms (PELT , Binary Segmentation and FPOP (coming soon)).
+- Implementations of the most efficient DP based search algorithms (PELT , Binary Segmentation).
 - A wide choice of parametric cost functions already implemented such as a change in mean/variance/mean and variance for Normal errors.
 - Changepoint algorithms have an interface which allows users to input their own cost functions
 
-For a general overview of the multiple changepoint problem and mathematical details see [PELT](http://arxiv.org/pdf/1101.1438.pdf) and [FPOP](http://arxiv.org/abs/1409.1842).
+For a general overview of the multiple changepoint problem and mathematical details see [PELT](http://arxiv.org/pdf/1101.1438.pdf).
+
+## Installation
+
+Changepoints requires Julia version 0.3. To install Changepoints run the following command inside a Julia session:
+
+```julia
+julia> Pkg.add("Changepoints")
+```
+
+## Documentation
+
+Most of the functionality of Changepoints has been documented using the [Docile](https://github.com/MichaelHatherly/Docile.jl) package. From Julia version 0.4 this functionality will form part of the Julia base. To view the documentation the user must install the [Lexicon](https://github.com/MichaelHatherly/Lexicon.jl) package and load it.
+
+```julia
+julia> Pkg.add("Lexicon")
+julia> using Lexicon
+```
+
+Documentation is accessible in the Julia REPL in help mode. Help mode can be started by typing '?' at the prompt.
+
+```julia
+julia> ?
+help?> GP
+
+[type]
+
+GaussianProcesses.GP
 
 # Usage
 
