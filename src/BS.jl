@@ -12,6 +12,7 @@ BS(cost_function(data, distribtion), length(data), penalty = log(n))
 
 # Returns
 * `CP::Vector{Int}`: Vector of indices of detected changepoints
+* `cost::Float64`: Cost of optimal segmentation
 
 # Example
 ```
