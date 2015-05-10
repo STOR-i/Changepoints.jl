@@ -21,7 +21,7 @@ n = 1000
 μ, σ = Normal(0.0, 10.0), 1.0
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Run binary segmentation
-pelt_cps, pelt_cost = @BS sample Normal(?, σ)
+BS_cps, BS_cost = @BS sample Normal(?, σ)
 ```
 
 # See also
@@ -58,5 +58,17 @@ function BS( segment_cost::Function , n::Int64; pen::Float64 = log(n) )
             end
         end
     end
-    return sort(CP)
+
+    cost::Float64
+    cost = 0.0
+
+    CP = sort(CP)
+    
+    for j in 1:(length(CP)-1)
+        cost = cost + segment_cost(CP[j],CP[j+1])
+    end
+
+    cost = cost + segment_cost(CP[j+1],n)
+
+    return CP, cost
 end
