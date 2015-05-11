@@ -10,7 +10,7 @@ VERSION < v"0.4-" && using Docile
 
 @document
 
-export PELT, @PELT, BS, @BS, CROPS, @segment_cost, NormalVarSegment, NormalMeanSegment, NormalMeanVarSegment, PoissonSegment, BetaSegment, ExponentialSegment, ChangepointSampler, GammaShapeSegment, GammaRateSegment, @changepoint_sampler
+export PELT, @PELT, BS, @BS, CROPS, @segment_cost, NormalVarSegment, NormalMeanSegment, NormalMeanVarSegment, PoissonSegment, BetaSegment, ExponentialSegment, ChangepointSampler, GammaShapeSegment, GammaRateSegment, NonparametricSegment, @changepoint_sampler
 
 include("segment_costs.jl")
 include("PELT.jl")
