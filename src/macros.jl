@@ -138,7 +138,7 @@ macro PELT(data, dist, args...)
     elseif length(args) == 1
         return esc(:(PELT($(cost_func), length($data), pen=$(args[1]))))
     else
-        return esc(:(CROPS($(cost_func), length($data), $((args[1], args[2])))))
+        return esc(:(CROPS($(cost_func), length($data), ($(args[1]), $(args[2])))))
     end
 end
 
