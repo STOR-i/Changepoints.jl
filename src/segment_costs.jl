@@ -1,32 +1,31 @@
 
 @doc """
 # Description
-Calculates the cost of the segments using twice the negative log likelihood
-for the specified segment. Usually called using the @PELT or @BS macro.
+Creates a segment cost function assuming times series data has Normal distribution with changing mean
+and variance. The returned function takes two indices and calculates twice the negative log-likelihood
+this model between these indices.
 
 # Arguments
 * `data::Array{Float64}`: Time series
 
-#Usage
-Distribtion(data, known_parameters)
-where Distribution is specified by the user for example to find a change in mean in normal data use NormalMeanSegment. Choices are NormalMeanSegment, NormalVarSegment, NormalMeanVarSegment, ExponentialSegment, PoissonSegment, GammaShapeSegment, GammaRateSegment and NonparametricSegment. 
 
 # Returns
 * `cost::Function`: Function which takes indices (s, t) where
                     0 ≤ s < t < n and n is the length of the time series
                     and returns the cost of the segment [s+1, ..., t]
 
-#Example
-Below is an example of a change in mean in normal data
+# Example
+```julia
 n = 1000       
 λ = 100        
 μ, σ = Normal(0.0, 10.0), 1.0
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 cost = NormalMeanSegment(data, σ = 1.0)
+cps, cost = BS(cost, n)
+```
 
-#References
-For an example of the cost functions see
-Killick, R., Fearnhead, P. and Eckley, I.A. (2012) Optimal detection of changepoints with a linear computational cost, JASA 107(500), 1590-1598
+# See also
+NormalVarSegment, NormalMeanVarSegment, ExponentialSegment, PoissonSegment, GammaRateSegment, GammaShapeSegment, Nonparametric, PELT, BS
 """ ->
 function NormalMeanSegment(data::Array{Float64}, σ::Real = 1.0)
     cd = [0,cumsum( data )]
@@ -35,11 +34,27 @@ function NormalMeanSegment(data::Array{Float64}, σ::Real = 1.0)
     return cost
 end
 
+
+@doc """
+# Description
+Creates a segment cost function assuming times series data has Normal distribution with changing variance
+and fixed mean.
+
+# See also
+NormalMeanSegment
+""" ->
 function NormalVarSegment(data::Array{Float64}, μ::Real)
     ss = [0,cumsum((data - μ).^2)]
     cost(s::Int64, t::Int64) = (t-s) * log( (ss[t+1] - ss[s+1])/(t-s) ) 
 end
 
+@doc """
+# Description
+Creates a segment cost function assuming times series data has Normal distribution with changing mean and variance.
+
+# See also
+NormalMeanSegment
+""" ->
 function NormalMeanVarSegment(data::Array{Float64})
     cd = [0,cumsum( data )]
     cd_2 = [0,cumsum( abs2(data) )]
@@ -51,18 +66,40 @@ function NormalMeanVarSegment(data::Array{Float64})
     return cost
 end
 
+@doc """
+# Description
+Creates a segment cost function assuming times series data has Exponential distribution with changing mean
+
+# See also
+NormalMeanSegment
+""" ->
+
 function ExponentialSegment(data::Array{Float64})
     cd = [0,cumsum( data )]
     cost(s::Int64, t::Int64) = -*(t-s) * ( log(t-s) - log(cd[t+1] - cd[s+1]))  
     return cost
 end
 
+@doc """
+# Description
+Creates a segment cost function assuming times series data has Poisson distribution with changing mean
+
+# See also
+NormalMeanSegment
+""" ->
 function PoissonSegment(data::Array{Float64})
     cd = [0,cumsum( data )]
     cost(s::Int64, t::Int64) = -2*(cd[t+1]-cd[s+1]) * ( log(cd[t+1]-cd[s+1]) - log(t-s) - 1 )
     return cost
 end
 
+@doc """
+# Description
+Creates a segment cost function assuming times series data has Gamma distribution with changing shape parameter
+
+# See also
+NormalMeanSegment
+""" ->
 function GammaShapeSegment(data::Array{Float64}, beta::Float64)
      lcd = [0,cumsum( log(data) )]
     function cost(s::Int64, t::Int64)
@@ -72,6 +109,13 @@ function GammaShapeSegment(data::Array{Float64}, beta::Float64)
     end
 end
 
+@doc """
+# Description
+Creates a segment cost function assuming times series data has Gamma distribution with changing rate parameter
+
+# See also
+NormalMeanSegment
+""" ->
 function GammaRateSegment(data::Array{Float64}, alpha::Float64)
     cd = [0,cumsum( data )]
     function cost(s::Int64, t::Int64)
@@ -81,6 +125,17 @@ function GammaRateSegment(data::Array{Float64}, alpha::Float64)
     end
 end
 
+@doc """
+# Description
+Creates a segment cost function based on the Nonparametric model
+
+# Arguments
+`data::Array{Float64}`: time series
+`K::Int`: nonparametric model parameter
+
+# See also
+NormalMeanSegment
+""" ->
 function NonparametricSegment(data::Array{Float64}, K::Int64)
     n = length(data)
     if (K > n) K=n end
