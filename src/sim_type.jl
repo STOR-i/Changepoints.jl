@@ -1,15 +1,15 @@
 type ChangepointSampler <: Sampleable
     rand_dist_gen::Function                  # Function which generates a random distribution
-    λ::Int64                                 # Frequency of changepoints
+    λ::Int                                   # Frequency of changepoints
     changepoints::Array{Int64,1}               # Changepoints indices
     segment_params::Array{Any}               # Params of segments
     # Current state of sampler
-    _counter::Int64                          # number of changepoints
+    _counter::Int                            # number of changepoints
     _current_dist::Sampleable                # Current distribution
-    _next_change::Int64                      # Index of next changepoint
+    _next_change::Int                        # Index of next changepoint
 end
 
-function ChangepointSampler(rand_dist_gen, λ::Int64 = 10)
+function ChangepointSampler(rand_dist_gen, λ::Int = 10)
     _current_dist = rand_dist_gen()
     self = ChangepointSampler(rand_dist_gen, λ, [], [], 0, rand_dist_gen(), rand(Poisson(λ)) + 1)
     push!(self.changepoints, 0)
@@ -17,7 +17,7 @@ function ChangepointSampler(rand_dist_gen, λ::Int64 = 10)
     self
 end
 
-function rand(dist::ChangepointSampler, n::Int64)
+function rand(dist::ChangepointSampler, n::Int)
     s = 0
     x = Array(Float64, n)
     while s < n
@@ -37,30 +37,28 @@ function rand(dist::ChangepointSampler, n::Int64)
     return x
 end
 
+cp_rand(dist::ChangepointSampler, n::Int) = rand(dist, n), dist.changepoints
+
+function ran_dist(dist_type::Type, args...)
+    newargs = Any[]
+    for a in args[2:end]
+        if isa(a, Sampleable)
+            push!(newargs, rand(a))
+        else push!(newargs, a) end
+    end
+        return dist_type(newargs...)
+end
 
 macro changepoint_sampler(n, λ, dist)
     if !isexpr(dist, :call)
         error("Syntax error: expected distribution construction in second argument")
     end
-    n = eval(Main, n)
-    λ = eval(Main, λ)
-#println(dist.args)
+    
     if length(dist.args) == 1
         return Expr(:call, :rand, dist, n)
     else
-        dtype = dist.args[1]
-        args = Any[]
-        for a in dist.args[2:end]
-            val = eval(Main,a)
-            if isa(val, Sampleable) push!(args, :(rand($a)))
-            else push!(args, :($a)) end
-        end
-        X = Expr(:call, dtype, args...)
-        #lam = Expr(:->, :(()), quote $X end)
-        lam = :(()-> $X)
-
+        nargs = length(dist.args)
+        args = Array(Any, nargs)
+        return esc(:(Changepoints.cp_rand(ChangepointSampler(()->Changepoints.ran_dist($(dist.args...)), $(λ)), $(n))))
     end
-    sampler = eval(Main, Expr(:call, :ChangepointSampler, lam, λ))
-    #sampler = eval(:(ChangepointSampler($(lam), λ)))
-    return :(rand($(sampler), $n), $(sampler).changepoints)
 end
