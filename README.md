@@ -3,7 +3,7 @@
 A Julia package for the detection of multiple changepoints in time series.
 
 - Detection is based on optimising a cost function over segments of the data.
-- Implementations of the most efficient DP based search algorithms (PELT , Binary Segmentation).
+- Implementations of the most efficient search algorithms (PELT , Binary Segmentation).
 - A wide choice of parametric cost functions already implemented such as a change in mean/variance/mean and variance for Normal errors.
 - Changepoint algorithms have an interface which allows users to input their own cost functions
 
