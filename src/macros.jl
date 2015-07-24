@@ -54,6 +54,10 @@ function cost_function(data::Any, dist_expr::Expr)
         println("Changepoint method is Nonparametric")
         return :(NonparametricSegment($data, $K))
 
+    elseif dist_type == :OLS
+        println("Changepoints in peicewise linear regressions")
+        return :(OLSSegment($data))
+
     else
         error("Distribution $(dist_type) has no implemented cost functions")
     end

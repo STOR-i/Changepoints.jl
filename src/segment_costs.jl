@@ -164,3 +164,28 @@ function NonparametricSegment(data::Array{Float64}, K::Int64)
         return 2*c*cost/K
     end
 end
+
+
+@doc """
+# Description
+Create a segment cost function for peicewise linear regressions, fitted using OLS (assuming Normally distributed errors).
+
+# Arguments
+`data::Array{Float64}`: time series
+
+# See also
+NormalMeanSegment
+""" ->
+function OLSSegment(data:Array{Float64})
+
+    function cost(s::Int64, t::Int64)
+        y = data[s:t]
+	m = length(y)
+	x = 1:m
+	a = ( 2*(2*m+1)*sum(y) - 6*sum(x.*y) )/( m*(m-1) )
+	b = ( 12*sum(x.*y) - 6*(m+1)*sum(y) )/( m*(m-1)*(m+1) )
+	sig = sum( (y-a-b*x).^2 )/m
+	return m/2 * ( log(sig) + 1 )   
+    end
+
+end  
