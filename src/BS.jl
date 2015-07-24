@@ -69,7 +69,7 @@ function BS( segment_cost::Function , n::Int64; pen::Float64 = log(n) )
         cost = cost + segment_cost(CP[j]+1,CP[j+1]) + pen 
     end
 
-    cost = cost + segment_cost(CP[end]+1,n) + pen
+    cost = cost + segment_cost(CP[end]+1,n) 
 
     return CP, cost
 end
