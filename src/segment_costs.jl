@@ -176,7 +176,7 @@ Create a segment cost function for peicewise linear regressions, fitted using OL
 # See also
 NormalMeanSegment
 """ ->
-function OLSSegment(data:Array{Float64})
+function OLSSegment(data::Array{Float64})
 
     function cost(s::Int64, t::Int64)
         y = data[s:t]
