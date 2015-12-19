@@ -1,5 +1,5 @@
-read_data(fn::String) = vec(readdlm(fn, skipstart=1))
-read_cpts(fn::String) = vec([0, readdlm(fn, Int, skipstart=1)])
+read_data(fn::AbstractString) = vec(readdlm(fn, skipstart=1))
+read_cpts(fn::AbstractString) = vec([0; readdlm(fn, Int, skipstart=1)])
 
 dir = "Test_Files"
 

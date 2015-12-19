@@ -35,17 +35,7 @@ pelt_cps, pelt_cost = @PELT sample Normal(?, σ) log(n) 4*log(n)
 Haynes, K., Eckley. I.A., and Fearnhead, P., (2014) Efficient penalty search for multiple changepoint problems arXiv:1412.3617
 
 """ ->
-
-
-
-
-
-
-
-# PELT for a range of penalties 
-# see http://arxiv.org/pdf/1412.3617.pdf
-
-function CROPS(segment_cost::Function , n::Int64, pen::(Real,Real) )
+function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
 
     pen_interval = [ minimum(pen) , maximum(pen) ]
 
@@ -169,8 +159,6 @@ function CROPS(segment_cost::Function , n::Int64, pen::(Real,Real) )
             beta_e = push!(beta_e,(sort_out_constrain[k] - sort_out_constrain[k+1])/(sort_out_num_cpts[k+1] - sort_out_num_cpts[k]))
         end
     end
-    
-    
         
     # organise output into a dictionary
     out = Dict{ASCIIString, Array}()
@@ -181,5 +169,3 @@ function CROPS(segment_cost::Function , n::Int64, pen::(Real,Real) )
     return out
 
 end
-
-

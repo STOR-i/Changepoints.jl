@@ -32,7 +32,7 @@ BS_cps, BS_cost = @BS sample Normal(?, σ)
 Scott, A.J. and Knott, M. (1974) A Cluster Analysis Method for Grouping Means in the Analysis of Variance, Biometrics 30(3), 507 - 512
 """ ->
 function BS( segment_cost::Function , n::Int64; pen::Float64 = log(n) )
-    tau = (Int, Int)[] # Segmentations to test
+    tau = Tuple{Int, Int}[] # Segmentations to test
     CP = Array(Int64,0)
 
     push!(tau, (0, n))
