@@ -1,42 +1,51 @@
-read_data(fn::String) = vec(readdlm(fn, skipstart=1))read_cpts(fn::String) = vec([0, readdlm(fn, Int, skipstart=1)])
+println("Running CROPS tests...")
 
-dir = "Test_Files"
+n = 1000;        # Number of samples
+λ = 100;         # Frequencey of changes
+pen = (1.1, 6.1)
 
-comp_handler(r::Test.Success) = true
-comp_handler(r::Test.Failure) = false
-comp_handler(r::Test.Error) = rethrow(r)
-
-function test_cpts(r_cpts, cpts)
-    Test.with_handler(comp_handler) do    
-        if @test r_cpts == cpts
-            println("\tSuccess!")
-        else
-            println("Fail:")
-            println("\tR Changepoints: $(r_cpts)")
-            println("\tJulia Changepoints: $(cpts)")
-        end
-    end    
+function test_CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real})
+    out = CROPS(segment_cost, n, pen)
+    @test all(pen[1] .≤ out["penalty"] .≤ pen[2])
+    for (i, β) in enumerate(out["penalty"])
+        cps, cost = PELT(segment_cost, n; pen=β)
+        @test_approx_eq out["constrained"][i] cost
+        @test out["changepoints"][i] == cps
+    end
 end
 
-println("Test CROPS for change in mean")
-data = read_data("$(dir)/Normal_change_in_mean_data")
-segmentations = @PELT data Normal(?,1.0) 2.0
+########################
+# Normal mean segments #
+########################
+μ, σ = Normal(0.0, 10.0), 1.0
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
+segment_cost = NormalMeanSegment(sample);
+test_CROPS(segment_cost, n, pen)
+out=@PELT sample Normal(?,σ) pen[1] pen[2]
 
-pen = (1.0, 20.0)
-segment_cost = NormalMeanSegment(data)
+#######################
+# Normal var segments #
+#######################
+μ, σ = 1.0, Uniform(2.0, 15.0)
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
+seg_costs = NormalVarSegment(sample, μ)
+test_CROPS(seg_costs, n, pen)
+@PELT sample Normal(μ, ?) pen[1] pen[2]
 
+############################
+# Exponential changepoints #
+############################
+μ = Uniform(0.0, 10.0)
+sample, cps = @changepoint_sampler n λ Exponential(μ)
+seg_costs = ExponentialSegment(sample)
+CROPS(seg_costs, n, pen)
+@PELT sample Exponential(?) pen[1] pen[2]
 
-lastchangecpts, cpts, lastchangelike, numchangecpts = @K_PELT data Normal(?,1) 2*log(length(data))
-
-x = 1
-y = (2,3)
-
-function K_Test(x,y,args...)
-    x + y + args[1]
-end
-
-
- F = Array(Float64, n+1)
- chpts =  Array(Int64, n+1)
- numchpts = Array(Int64,n+1)
-    
+########################
+# Poisson changepoints #
+########################
+μ = Uniform(0.0, 10.0)
+sample, cps = @changepoint_sampler n λ Poisson(μ)
+seg_costs = PoissonSegment(sample)
+CROPS(seg_costs, n, pen)
+@PELT sample Poisson(?) pen[1] pen[2]

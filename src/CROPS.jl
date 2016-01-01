@@ -59,11 +59,11 @@ function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
                 cpts , opt = PELT( segment_cost , n , pen=pen_interval[i] )
                
                 # if there are already same no of chpts in out 
-                # see if penalty differentx
-                if ( in(  length(cpts) , out_num_cpts ) )
-                    index = findin(out_num_cpts,length(cpts))[1]
+                # see if penalty different
+                if length(cpts) ∈ out_num_cpts
+                    index = findin(out_num_cpts, length(cpts))[1]
                  
-                    # check for penalty is it bigger than max penalty
+                    # check for penalty: is it bigger than max penalty
                     if pen_interval[i] > out_max_pen[index]
                         out_max_pen[index] = pen_interval[i]
                     else
