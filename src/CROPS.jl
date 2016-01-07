@@ -1,3 +1,65 @@
+import Base.length
+import Base.append!
+
+# Singly-linked list object taken from http://rosettacode.org
+type Node{T}
+    data::T
+    next::Node{T}
+    function Node(data::T)
+        n = new()
+        n.data = data
+        # mark the end of the list. Julia does not have nil or null.
+        n.next = n
+        n
+    end
+end
+ 
+# convenience. Let use write Node(10) or Node(10.0) instead of Node{Int64}(10), Node{Float64}(10.0)
+function Node(data)
+    return Node{typeof(data)}(data)
+end
+
+islast(n::Node) = (n == n.next)
+ 
+function append!{T}(n::Node{T}, data::T)
+    tmp = Node(data)
+    if !islast(n)
+        tmp.next = n.next
+    end
+    n.next = tmp  
+end
+
+function length(n::Node)
+    l = 1
+    while !islast(n)
+        l+=1
+        n=n.next
+    end
+    return l
+end
+
+function create_output_dictionary(results::Node)
+    l = length(results)
+    out = Dict{ASCIIString, Array}()
+    out["number"] = Array(Int64,l)
+    out["penalty"] = Array(Float64,l)
+    out["constrained"] = Array(Float64, l)
+    out["changepoints"] = Array(Array{Int64},l)
+
+    n = results
+    i = 0
+    while true
+        i+=1
+        out["number"][i] = length(n.data["changepoints"])
+        out["penalty"][i] = n.data["penalty"]
+        out["constrained"][i] = n.data["cost"]
+        out["changepoints"][i] = n.data["changepoints"]
+        if islast(n) break end
+        n=n.next
+    end
+    return out
+end
+
 @doc """
 # Description
 Runs the CROPS algorithm using a specified cost function for a given minimum and maximum penalty value to find a range of segmentations. Function can also be invoked through @PELT macro.
@@ -36,136 +98,55 @@ Haynes, K., Eckley. I.A., and Fearnhead, P., (2014) Efficient penalty search for
 
 """ ->
 function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
-
-    pen_interval = [ minimum(pen) , maximum(pen) ]
-
-    # these are what we output
-    out_num_cpts = Array(Int64,0)
-    out_max_pen = Array(Float64,0)
-    out_constrain = Array(Float64,0)
-    out_cpts = Array(Array{Int64},0) 
-   
-    while true
-
-        stop = 0
-
-        if length(pen_interval) > 0
-
-            # do PELT and record no of chpts and                        
-            # calculates the cost of the constrained problem
-            for i in 1:length(pen_interval)
-
-                # do PELT for each pen_interval
-                cpts , opt = PELT( segment_cost , n , pen=pen_interval[i] )
-               
-                # if there are already same no of chpts in out 
-                # see if penalty different
-                if length(cpts) ∈ out_num_cpts
-                    index = findin(out_num_cpts, length(cpts))[1]
-                 
-                    # check for penalty: is it bigger than max penalty
-                    if pen_interval[i] > out_max_pen[index]
-                        out_max_pen[index] = pen_interval[i]
-                    else
-                        # no change
-                        stop+=1
-                    end
-                    
-                else
-                    # number of chpts not seen before add to output and constrained likelihood
-
-                    push!( out_num_cpts , length(cpts) )
-                    push!( out_constrain , opt - (length(cpts)-1)*pen_interval[i] )
-                    push!( out_max_pen , pen_interval[i])
-                    push!( out_cpts, cpts) 
-            
-                   
-                end         
-                
-            end
-	# end of if length(pen_interval) > 0
-        end
-        
-      
-        # leave loop and finish subject to output if no changes
-        if stop == length(pen_interval)
-            break
-        end
-
-        # look through out_num_cpts and calc beta_int and put these in pen_interval
-        ord_ind = sortperm(out_num_cpts)
-        out_num_cpts = out_num_cpts[ord_ind]
-        out_constrain = out_constrain[ord_ind]
-        out_max_pen = out_max_pen[ord_ind]
-        out_cpts = out_cpts[ord_ind]
-        
-        # make pen_interval 
-        pen_interval = Array(Float64,0)
-        
-        for i in 1:(length(out_num_cpts)-1) 
-
-            # if they differ by 1, then just calc beta_int and extend range of pen for large no of chpts
-            if out_num_cpts[i] ==  out_num_cpts[i+1] + 1
-                beta_int =  (out_constrain[i+1] - out_constrain[i])
-                out_max_pen[i] = beta_int
-	    else
-                # difference in no of chpts is >= 1 so add to pen_interval to check how many
-                beta_int =  ( out_constrain[i+1] - out_constrain[i] )/( out_num_cpts[i] - out_num_cpts[i+1] )
-                push!( pen_interval , beta_int )
-             end
-            
-        end
-
-       if length(pen_interval) > 0
-           i = 1
-           while i <= length(pen_interval)
-               for j in 1:length(out_max_pen) 
-                   if abs(pen_interval[i] - out_max_pen[j]) < 1e-2
-                       splice!(pen_interval,i)
-                       i = i - 1
-                       break
-                   end
-               end
-               i = i + 1
-           end
-           
-       end
-              
-
-    # end of while loop    
-    end
-
-    # Calculate beta intervals
-    nb = length(out_max_pen)
-    beta_e= Array(Float64,0)
-    beta_int = Array(Float64,0)
-    sort_out_max_pen = sort(out_max_pen);
-    sort_out_constrain = sort(out_constrain);
-    sort_out_num_cpts = sort(out_num_cpts, rev = true);
+    @assert pen[1] < pen[2]
     
-    for k in 1:nb
-        if k == 1
-            beta_int = push!(beta_int, sort_out_max_pen[1])
-        
-        else 
-            beta_int = push!(beta_int, beta_e[k-1])
-        end
-        
-   
-        if k == nb
-            beta_e = push!(sort_out_max_pen[k])
-   
+    # Run PELT for min and maximum penalty
+    min_cps, min_cost = PELT( segment_cost, n, pen=pen[1])
+    max_cps, max_cost = PELT( segment_cost, n, pen=pen[2])
+    
+    results = Node(Dict("changepoints"=>min_cps, "cost"=>min_cost, "penalty"=>pen[1]))
+
+    if length(min_cps) == length(max_cps)
+        return create_output_dictionary(results)
+    end
+    
+    append!(results, Dict("changepoints"=>max_cps, "cost"=>max_cost, "penalty"=>pen[2]))
+
+    function run_crops!(node::Node)
+        β0, β1 = node.data["penalty"], node.next.data["penalty"]
+        m0, m1 = length(node.data["changepoints"]), length(node.next.data["changepoints"])
+        # Optimal "constrained" costs
+        q0, q1 = node.data["cost"] - m0*β0, node.next.data["cost"] - m1*β1
+
+        βint = (q1 - q0)/(m0 - m1)
+        println("β₀ = $(β0), β₁ = $(β1)")
+        println("m(β₀) = $(m0), m(β₁) = $(m1)")
+        println("βint = $(βint)")
+        #sleep(0.3)
+        if length(node.data["changepoints"]) == length(node.next.data["changepoints"]) + 1
+            # Update penalty and cost of next penalty
+            println("Consecutive penalties adjacent (difference one)\n")
+            node.next.data["cost"] = q1 +  βint*m1
+            node.next.data["penalty"] = βint
+            return
         else
-            beta_e = push!(beta_e,(sort_out_constrain[k] - sort_out_constrain[k+1])/(sort_out_num_cpts[k+1] - sort_out_num_cpts[k]))
+            cps, cost = PELT(segment_cost, n, pen=βint)
+            println("mβint = $(length(cps))")
+            if length(cps) == m1 || length(cps) == m0
+                println("Consecutive penalties adjacent (difference greater than one)\n")
+                node.next.data["penalty"] = βint
+                node.next.data["cost"] = cost
+                return
+            else
+                println("Consecutive penalties not adjacent - splitting on βint\n")
+                append!(node, Dict("changepoints"=>cps, "cost"=>cost, "penalty"=>βint))
+                run_crops!(node)
+                run_crops!(node.next)
+            end
         end
     end
-        
-    # organise output into a dictionary
-    out = Dict{ASCIIString, Array}()
-    out["number"] = out_num_cpts
-    out["penalty"] = sort(beta_int, rev = true)
-    out["constrained"] = out_constrain
-    out["changepoints"] = out_cpts
-    return out
+
+    run_crops!(results)
+    return create_output_dictionary(results)
 
 end

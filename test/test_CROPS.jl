@@ -1,8 +1,11 @@
+using Base.Test, Changepoints, Changepoints.Node, Changepoints.create_output_dictionary, Changepoints.islast
+
 println("Running CROPS tests...")
 
+srand(1)
 n = 1000;        # Number of samples
 λ = 100;         # Frequencey of changes
-pen = (1.1, 6.1)
+pen = (1.0, 6.1)
 
 function test_CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real})
     out = CROPS(segment_cost, n, pen)
@@ -20,8 +23,9 @@ end
 μ, σ = Normal(0.0, 10.0), 1.0
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 segment_cost = NormalMeanSegment(sample);
-test_CROPS(segment_cost, n, pen)
 out=@PELT sample Normal(?,σ) pen[1] pen[2]
+test_CROPS(segment_cost, n, pen)
+
 
 #######################
 # Normal var segments #
