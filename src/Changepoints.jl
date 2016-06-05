@@ -28,5 +28,6 @@ macro glue(pkg)
 end
 
 @glue Winston
+@glue Gadfly
 
 end # module
