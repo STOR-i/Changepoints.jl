@@ -1,6 +1,7 @@
-# example of use
-using Winston, Distributions
+using Gadfly, Distributions
 using Changepoints
+
+srand(1)
 
 # Simulate time series with changepoints
 n = 1000          # Sample size
@@ -9,7 +10,7 @@ n = 1000          # Sample size
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 
 # Find the Changepoints for a specific penalty
-pelt_cps, pelt_cost = @PELT data Normal(?, 1.0) 10.0
+pelt_cps, pelt_cost = @PELT data Normal(?, 1.0) 6.0
 
 # For a range of penalties construct a cost function and use the CROPS function
 seg_cost = NormalMeanSegment(data)
@@ -17,10 +18,14 @@ crops_output = CROPS(seg_cost , n, (4.0,100.0))
 # ...or use the PELT macro
 @PELT data Normal(?, 1.0) 4.0 100.0
 
-# 1st plot in readme (with chpt)
-plot(data, pelt_cps)
-# savefig("example_pelt.png",width=750)
+# 1st plot: time series
+p1 = plot(y=data, Geom.line, Theme(default_color=colorant"black"))
+draw(PDF("example.pdf", 5inch, 5inch), p1)
 
-# elbow plot
-plot(crops_output)
-# savefig("elbow_plot.png",width=750)
+# 2nd plot: time series with chpts
+p2 = plot(data, pelt_cps)
+draw(PDF("example_pelt.pdf", 5inch, 5inch), p2)
+
+# 3rd: elbow plot
+p3 = plot(crops_output)
+draw(PDF("elbowplot.pdf", 5inch, 5inch), p3)

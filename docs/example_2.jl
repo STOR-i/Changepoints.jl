@@ -1,10 +1,10 @@
 # This script provides an example of simulating changepoint data,
 # using PELT to find these changepoints, and plotting the results
 #
-# Requires Winston plotting package
+# Requires Gadfly plotting package
 
 using Changepoints, Distributions
-using Winston
+using Gadfly
 
 n = 1000           # Sample size
 λ = 100            # Frequencey of changes
