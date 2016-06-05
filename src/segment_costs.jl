@@ -168,7 +168,7 @@ end
 
 @doc """
 # Description
-Create a segment cost function for peicewise linear regressions, fitted using OLS (assuming Normally distributed errors).
+Create a segment cost function for piecewise linear regressions, fitted using OLS (assuming Normally distributed errors).
 
 # Arguments
 `data::Array{Float64}`: time series
