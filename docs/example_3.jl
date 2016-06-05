@@ -20,12 +20,12 @@ crops_output = CROPS(seg_cost , n, (4.0,100.0))
 
 # 1st plot: time series
 p1 = plot(y=data, Geom.line, Theme(default_color=colorant"black"))
-draw(PDF("example.pdf", 5inch, 5inch), p1)
+draw(PNG("example.png", 5inch, 5inch), p1)
 
 # 2nd plot: time series with chpts
 p2 = plot(data, pelt_cps)
-draw(PDF("example_pelt.pdf", 5inch, 5inch), p2)
+draw(PNG("example_pelt.png", 5inch, 5inch), p2)
 
 # 3rd: elbow plot
 p3 = plot(crops_output)
-draw(PDF("elbowplot.pdf", 5inch, 5inch), p3)
+draw(PNG("elbowplot.png", 5inch, 5inch), p3)

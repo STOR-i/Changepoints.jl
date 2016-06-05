@@ -78,7 +78,7 @@ n = 1000                   # Sample size
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 ```
 
-![Gadfly plot of simulated changepoints](/docs/example.pdf?raw=true "Simulated Changepoints")
+![Gadfly plot of simulated changepoints](/docs/example.png?raw=true "Simulated Changepoints")
 
 To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Gadfly and Winston packages for the convenient plotting of the results. These packages must be explicity loaded to make use of this functionality. If the plotting package was loaded after Changepoints, then the user must run an additional command to load the plotting functionaly, e.g.  `Changepoints.Gadfly_init()`.
 
@@ -87,7 +87,7 @@ pelt_cps, cost = @PELT data Normal(?, 1.0)
 plot(data, pelt_cps) 
 ```
 
-![Gadfly plot of Changepoints detected by PELT](/docs/example_pelt.pdf?raw=true "Changepoints detected by PELT")
+![Gadfly plot of Changepoints detected by PELT](/docs/example_pelt.png?raw=true "Changepoints detected by PELT")
 
 ## Penalty selection
 
@@ -109,4 +109,4 @@ Having segmented the dataset for a range of penalties the problem now becomes on
 ```
 plot(crops_output)
 ```
-![Gadfly plot of cost against number of changepoints](/docs/elbowplot.pdf?raw=true "Elbow plot")
+![Gadfly plot of cost against number of changepoints](/docs/elbowplot.png?raw=true "Elbow plot")
