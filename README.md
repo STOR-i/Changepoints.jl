@@ -11,7 +11,7 @@ For a general overview of the multiple changepoint problem and mathematical deta
 
 ## Installation
 
-Changepoints requires Julia version 0.3. To install Changepoints run the following command inside a Julia session:
+Changepoints requires Julia version 0.4. To install Changepoints run the following command inside a Julia session:
 
 ```julia
 julia> Pkg.add("Changepoints")
@@ -19,14 +19,7 @@ julia> Pkg.add("Changepoints")
 
 ## Documentation
 
-Most of the functionality of Changepoints has been documented using the [Docile](https://github.com/MichaelHatherly/Docile.jl) package. From Julia version 0.4 this functionality will form part of the Julia base. To view the documentation the user must install the [Lexicon](https://github.com/MichaelHatherly/Lexicon.jl) package and load it.
-
-```julia
-julia> Pkg.add("Lexicon")
-julia> using Lexicon
-```
-
-Documentation is accessible in the Julia REPL in help mode. Help mode can be started by typing '?' at the prompt.
+Most of the functionality of Changepoints has been documented. This is accessible in the Julia REPL in help mode. Help mode can be started by typing '?' at the prompt.
 
 ```julia
 julia> ?
@@ -85,16 +78,16 @@ n = 1000                   # Sample size
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 ```
 
-![Winston plot of simulated changepoints](/docs/example.png?raw=true "Simulated Changepoints")
+![Gadfly plot of simulated changepoints](/docs/example.pdf?raw=true "Simulated Changepoints")
 
-To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Winston package for convenient plotting of the results. The Winston package must be explicity loaded to make use of this functionality. If the Winston package was loaded after Changepoints, then the user must run the command `Changepoints.Winston_init()` to load this functionality.
+To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Gadfly and Winston packages for the convenient plotting of the results. These packages must be explicity loaded to make use of this functionality. If the plotting package was loaded after Changepoints, then the user must run an additional command to load the plotting functionaly, e.g.  `Changepoints.Gadfly_init()`.
 
 ```
 pelt_cps, cost = @PELT data Normal(?, 1.0)
 plot(data, pelt_cps) 
 ```
 
-![Winston plot of Changepoints detected by PELT](/docs/example_pelt.png?raw=true "Changepoints detected by PELT")
+![Gadfly plot of Changepoints detected by PELT](/docs/example_pelt.pdf?raw=true "Changepoints detected by PELT")
 
 ## Penalty selection
 
@@ -111,9 +104,9 @@ then we can use the following code:
 crops_output = @PELT data Normal(?, 1.0) pen1 pen2
 ```
 
-Having segmented the dataset for a range of penalties the problem now becomes one of model selection. Again, if Winston has been loaded, we can create a so called "elbow" plot from these results.
+Having segmented the dataset for a range of penalties the problem now becomes one of model selection. Again, if a plotting package has been loaded, we can create a so called "elbow" plot from these results.
 
 ```
 plot(crops_output)
 ```
-![Winston plot of cost against number of changepoints](/docs/elbowplot.png?raw=true "Elbow plot")
+![Gadfly plot of cost against number of changepoints](/docs/elbowplot.pdf?raw=true "Elbow plot")
