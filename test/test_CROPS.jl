@@ -23,7 +23,7 @@ using Changepoints, Base.Test
     sample, cps = @changepoint_sampler n λ Normal(μ, σ)
     segment_cost = NormalMeanSegment(sample);
     #test_CROPS(segment_cost, n, pen)
-    out=@PELT sample Normal(?,σ) pen[1] pen[2]
+    out = @PELT sample Normal(?,σ) pen[1] pen[2]
 
     # num,cons = Int[], Float64[]
     # for (i, β) in enumerate(out["penalty"])

@@ -35,7 +35,7 @@ PELT, @PELT
 Haynes, K., Eckley. I.A., and Fearnhead, P., (2014) Efficient penalty search for multiple changepoint problems arXiv:1412.3617
 
 """
-function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
+function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Float64,Float64})
 
     pen_interval = [ minimum(pen) , maximum(pen) ]
 
@@ -61,7 +61,7 @@ function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
                 # if there are already same no of chpts in out
                 # see if penalty different
                 if length(cpts) ∈ out_num_cpts
-                    index = findin(out_num_cpts, length(cpts))[1]
+                    index = findall((in)(length(cpts)), out_num_cpts)[1]
 
                     # check for penalty: is it bigger than max penalty
                     if pen_interval[i] > out_max_pen[index]
@@ -161,7 +161,7 @@ function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
     end
 
     # organise output into a dictionary
-    out = Dict{ASCIIString, Array}()
+    out = Dict{String, Array}()
     out["number"] = out_num_cpts
     out["penalty"] = sort(beta_int, rev = true)
     out["constrained"] = out_constrain

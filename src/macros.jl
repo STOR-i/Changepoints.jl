@@ -12,18 +12,18 @@ function cost_function(data::Any, dist_expr::Expr)
             error("Normal distribution has two parameters")
         end
         μ, σ = dist_expr.args[2:3]
-        if μ == :? && σ != :?
+        if μ == :(:?) && σ != :(:?)
             println("Changepoint distribution is Normal with changing mean and fixed variance")
             return :(NormalMeanSegment($data , $σ))
-        elseif μ != :? && σ == :?
+        elseif μ != :(:?) && σ == :(:?)
             println("Changepoint distribution is Normal with fixed mean and changing variance")
             #μ = eval(Main, μ)
             return :(NormalVarSegment($data, $μ))
-        elseif μ == :? && σ == :?
+        elseif μ == :(:?) && σ == :(:?)
             println("Changepoint distribution is Normal with changing mean and changing variance")
             return :(NormalMeanVarSegment($data))
         else
-            error("Must mark at least one Normal parameter as changing with a ? symbol")
+            error("Must mark at least one Normal parameter as changing with a :? symbol")
         end
 
     elseif dist_type == :Exponential
@@ -39,14 +39,14 @@ function cost_function(data::Any, dist_expr::Expr)
             error("Gamma distribution has two parameters")
         end
         alpha , beta = dist_expr.args[2:3]
-        if alpha == :? && beta != :?
+        if alpha == :(:?) && beta != :(:?)
             println("Changepoint distribution is Gamma with changing shape and fixed rate")
             return :(GammaShapeSegment($data, $beta))
-        elseif alpha != :? && beta == :?
+        elseif alpha != :(:?) && beta == :(:?)
             println("Changepoint distribution is Gamma with fixed shape and changing rate")
             return :(GammaRateSegment($data, $alpha))
         else
-            error("Must mark at least one Gamma parameter as changing with a ? symbol")
+            error("Must mark at least one Gamma parameter as changing with a :? symbol")
         end
 
     elseif dist_type == :Nonparametric
