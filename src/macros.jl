@@ -6,7 +6,7 @@ function cost_function(data::Any, dist_expr::Expr)
     end
 
     dist_type = dist_expr.args[1]
-    
+
     if dist_type == :Normal
         if length(dist_expr.args) != 3
             error("Normal distribution has two parameters")
@@ -63,7 +63,7 @@ function cost_function(data::Any, dist_expr::Expr)
     end
 end
 
-@doc """
+"""
 Creates a segment cost function given data and changepoint model expression
 
 # Usage
@@ -93,8 +93,8 @@ the following expression:
 
 # Example
 ```julia
-n = 1000       
-λ = 100        
+n = 1000
+λ = 100
 μ, σ = Normal(0.0, 10.0), 1.0
 # Samples changepoints from Normal distribution with changing mean
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
@@ -104,13 +104,13 @@ seg_cost = @segment_cost sample Normal(?, σ)
 pelt_cps, cost = PELT(seg_cost, n)
 bs_cps = BS(seg_cost, n)
 ```
-""" ->
+"""
 macro segment_cost(data, dist)
     esc(cost_function(data, dist))
 end
-    
-    
-@doc """
+
+
+"""
 Runs the PELT algorithm using a specified cost function and penalty value to find the position and number of changepoints
 
 # Usage
@@ -123,8 +123,8 @@ Runs the PELT algorithm using a specified cost function and penalty value to fin
 
 # Example
 ```
-n = 1000       
-λ = 100        
+n = 1000
+λ = 100
 μ, σ = Normal(0.0, 10.0), 1.0
 # Samples changepoints from Normal distribution with changing mean
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
@@ -134,7 +134,7 @@ pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
 
 # See also
 PELT, @segment_cost
-""" ->
+"""
 macro PELT(data, dist, args...)
     cost_func = cost_function(data, dist)
     if length(args) == 0
@@ -146,7 +146,7 @@ macro PELT(data, dist, args...)
     end
 end
 
-@doc """
+"""
 # Description
 Runs the Binary Segmentation algorithm using a specified cost function for a given penalty
 
@@ -168,7 +168,7 @@ bs_cps = @BS sample Gamma(?, β)
 
 # See also
 BS, @segment_cost
-""" ->
+"""
 macro BS(data, dist, args...)
     cost_func = cost_function(data, dist)
     if length(args) == 0

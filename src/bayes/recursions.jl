@@ -11,23 +11,23 @@ algorithm but it is suited at looking at retrospective
 function recursions( data::Array{Real}, LOS::DiscreteUnivariateDistribution,  segment_ML::Function )
 	n=length(data)
 	# weights and last cpt locations
-	weights = Array( Array{Float64} , n)
-	cpt_locations =  Array( Array{Int64} , n)
-	weights[1] = 
+	weights = Array{Array{Float64} }(undef, n)
+	cpt_locations =  Array{Array{Int64}}(undef, n)
+	weights[1] =
 	cpt_locations[1] = [0,1]
-	for t in 2:n 
+	for t in 2:n
 
 		for j in cpt_locations[t-1]
 			logccdf(LOS , t-j) - logccdf(LOS, t-j-1)
 		end
 
-		if t > 20 
+		if t > 20
 
 		else
 		# resample
 
 		end
-	
+
 	end
 
 

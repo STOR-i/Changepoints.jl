@@ -12,7 +12,7 @@ n = 1000;        # Number of samples
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 seg_costs = NormalMeanSegment(sample);
 PELT(seg_costs, n);
-@PELT sample Normal(?,σ)
+@PELT sample Normal(?, σ)
 
 #######################
 # Normal var segments #
