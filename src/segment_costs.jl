@@ -44,7 +44,7 @@ and fixed mean.
 NormalMeanSegment
 """
 function NormalVarSegment(data::Array{Float64}, μ::Real)
-    ss = [0;cumsum((data - μ).^2)]
+    ss = [0;cumsum((data .- μ) .^ 2)]
     cost(s::Int64, t::Int64) = (t-s) * log( (ss[t+1] - ss[s+1])/(t-s) )
 end
 

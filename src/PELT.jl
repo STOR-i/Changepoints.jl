@@ -39,9 +39,9 @@ function PELT( segment_cost::Function , n::Int; pen::Float64 = log(n) )
     # last chpt prior to time t
     chpts =  Array{Int64}(undef, n)
     chpts[1] = 0
+
     # vector of candidate chpts at t
-    R = Array{Int64}(undef, 1)
-    R = [0]
+    R = Int64[0]
 
     for t in 2:n
         cpt_cands = R
@@ -50,13 +50,12 @@ function PELT( segment_cost::Function , n::Int; pen::Float64 = log(n) )
             seg_costs[i] = segment_cost(cpt_cands[i], t)
         end
 
-        F[t+1] , tau = findmin( F[cpt_cands+1] + seg_costs + pen )
+        F[t+1] , tau = findmin( F[cpt_cands .+ 1] .+ seg_costs .+ pen )
         chpts[t] = cpt_cands[tau]
 
         # pruning step
-        ineq_prune = (F[cpt_cands + 1] .+ seg_costs) .< F[t+1]
-        R =  push!(cpt_cands[ineq_prune], t - 1)
-
+        ineq_prune = (F[cpt_cands .+ 1] .+ seg_costs) .< F[t+1]
+        R = push!(cpt_cands[ineq_prune], t - 1)
     end
 
     # get changepoints

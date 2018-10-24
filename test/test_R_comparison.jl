@@ -1,3 +1,5 @@
+using DelimitedFiles: readdlm
+
 read_data(fn::AbstractString) = vec(readdlm(fn, skipstart=1))
 read_cpts(fn::AbstractString) = vec([0; readdlm(fn, Int, skipstart=1)])
 
