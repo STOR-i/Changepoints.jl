@@ -1,13 +1,9 @@
-# PELT algorithm
-
 """
-# Description
-Runs the PELT algorithm using a specified cost function for a given penalty value to find the position and number of changepoints
+    PELT(segment_cost, n[, β = log(n)])
 
-# Arguments
-* `segment_cost::Function`: Calculates cost between two specified indices
-* `n::Int`: Length of time series
-* `pen::Float64`: This is the penalty value used to avoid over/under -fitting the model.
+Runs the PELT algorithm using cost function `segment_cost` for a time series of length `n` and a penalty `β` and returns the position of changepoints and optimal segmentation cost.
+
+See also: [`@PELT`](@ref), [`@segment_cost`](@ref), [`CROPS`](@ref)
 
 # Returns
 * `(CP::Vector{Int}, cost::Float64)`:
@@ -15,16 +11,13 @@ Runs the PELT algorithm using a specified cost function for a given penalty valu
   * `cost::Float64`: Cost of optimal segmentation
 
 # Example
-```
+```julia-repl
 n, λ = 1000, 100
 μ, σ = Normal(0.0, 10.0), 1.0
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)  # Sample changepoints
 seg_cost = NormalMeanChange(sample, σ)               # Create segment cost function
 pelt_cps, pelt_cost = PELT(seg_cost, n)              # Run PELT
 ```
-
-# See also
-CROPS, @PELT
 
 # References
 Killick, R., Fearnhead, P. and Eckley, I.A. (2012) Optimal detection of changepoints with a linear computational cost, JASA 107(500), 1590-1598

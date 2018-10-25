@@ -64,42 +64,42 @@ function cost_function(data::Any, dist_expr::Expr)
 end
 
 """
-Creates a segment cost function given data and changepoint model expression
+    @segement_cost data changepoint_model
 
-# Usage
-@segement_cost data changepoint_model
+Creates a segment cost function given data and changepoint model expression.
 
 # Cost functions
 
-A changepoint model is an expression which describes what segment cost function
+`changepoint_model` is an expression which describes what segment cost function
 should be constructed for use with PELT. For parametric segment cost functions,
 this is represented by the name of a distribution (as in the Distributions package)
-with some parameters replaced by '?' to indicate that a parameters is changing.
+with some parameters replaced by ':?' to indicate that the parameters change.
 The full list of available cost functions based on parametric distributions is
 as follows:
 
-* `Normal(?, σ): Normal model with changing mean and fixed standard deviation σ (see also NormalMeanSegment)
-* `Normal(μ, ?)`: Normal model with fixed mean μ and changing standard deviation (see also NormalVarSegment)
-* `Normal(?, ?)`: Normal model with changing mean and standard deviation (see also NormalMeanVarSegment)
-* `Exponential(?)`: Exponential model with changing mean (see also ExponentialSegment)
-* `Poisson(?)`: Poisson model with changing mean (see also PoissonSegment)
-* `Gamma(?, β)`: Gamma model with fixed rate parameter β and changing shape parameter (see also GammaShapeSegment)
-* `Gamma(α, ?)`: Gamma model with fixed shape parameter α and changing rate parameter (see also GammaRateSegment)
+* `Normal(:?, σ)`: Normal model with changing mean and fixed standard deviation `σ` (see also [`NormalMeanSegment`](@ref))
+* `Normal(μ, :?)`: Normal model with fixed mean `μ` and changing standard deviation (see also [`NormalVarSegment`](@ref))
+* `Normal(:?, :?)`: Normal model with changing mean and standard deviation (see also [`NormalMeanVarSegment`](@ref))
+* `Exponential(:?)`: Exponential model with changing mean (see also [`ExponentialSegment`](@ref))
+* `Poisson(:?)`: Poisson model with changing mean (see also [`PoissonSegment`](@ref))
+* `Gamma(:?, β)`: Gamma model with fixed rate parameter `β` and changing shape parameter (see also [`GammaShapeSegment`](@ref))
+* `Gamma(α, :?)`: Gamma model with fixed shape parameter `α` and changing rate parameter (see also [`GammaRateSegment`](@ref))
 
-A nonparametric cost function is also provided and the model is represented with
-the following expression:
+The following others models are also available:
 
-* `Nonparametric(k)`: Nonparametric cost function with parameter k (see also NonparametricSegment)
+* `Nonparametric(k)`: Nonparametric cost function with parameter `k` (see also [`NonparametricSegment`](@ref))
+* `OLS` : Cost function for piecewise linear regressions (see also [`OLSSegment`](@ref))
+
 
 # Example
-```julia
+```julia-repl
 n = 1000
 λ = 100
 μ, σ = Normal(0.0, 10.0), 1.0
 # Samples changepoints from Normal distribution with changing mean
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Create cost function
-seg_cost = @segment_cost sample Normal(?, σ)
+seg_cost = @segment_cost sample Normal(:?, σ)
 # Calculate changepoints using PELT and BS
 pelt_cps, cost = PELT(seg_cost, n)
 bs_cps = BS(seg_cost, n)
@@ -111,15 +111,14 @@ end
 
 
 """
-Runs the PELT algorithm using a specified cost function and penalty value to find the position and number of changepoints
+    @PELT data changepoint_model [β₁ [β₂] ]
+    
+Runs the PELT algorithm on time series `data` using a specified `changepoint_model` and penalties.
+If no penalty `β₁` provided, a default of value `log(length(data))` is used.
+If two penalties `β₁` and `β₂` are provided then the CROPS algorithm is run which finds
+all optimal segmentations for all penalties between `β₁` and `β₂`.
 
-# Usage
-
-1. `@PELT data changepoint_model`: Run PELT with default penalty value
-
-2. `@PELT data changepoint_model β`: Run PELT at penalty value β
-
-3. `@PELT data changepoint_model β₁ β₂`: Run CROPS algorithm for penalties between β₁ and β₂
+See also: [`PELT`](@ref), [`CROPS`](@ref)
 
 # Example
 ```
@@ -129,11 +128,8 @@ n = 1000
 # Samples changepoints from Normal distribution with changing mean
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Run PELT on sample
-pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
+pelt_cps, pelt_cost = @PELT sample Normal(:?, σ)
 ```
-
-# See also
-PELT, @segment_cost
 """
 macro PELT(data, dist, args...)
     cost_func = cost_function(data, dist)
@@ -142,18 +138,17 @@ macro PELT(data, dist, args...)
     elseif length(args) == 1
         return esc(:(PELT($(cost_func), length($data), pen=$(args[1]))))
     else
-        return esc(:(CROPS($(cost_func), length($data), ($(args[1]), $(args[2])))))
+        return esc(:(CROPS($(cost_func), length($data), $(args[1]), $(args[2]))))
     end
 end
 
 """
-# Description
-Runs the Binary Segmentation algorithm using a specified cost function for a given penalty
+    @BS data changepoint_model [β₁]
 
-# Usage
-1. `@BS data changepoint_model`: Run binary segmentation with default penalty value
+Runs the Binary Segmentation algorithm using a specified `changepoint_model` for a given penalty `β₁`.
+If no penalty specified, use penalty `log(length(data))` by default.
 
-2. `@BS data changepoint_model β`: Run binary segmentation with penalty value β
+See also: [`BS`](@ref), [`@segment_cost`](@ref)
 
 # Example
 ```
@@ -163,11 +158,8 @@ n = 1000   # Length of time series
 # Samples changepoints from Gamma distribution with changing shape
 sample, cps = @changepoint_sampler n λ Gamma(α, β)
 # Run binary segmentation on sample
-bs_cps = @BS sample Gamma(?, β)
+bs_cps = @BS sample Gamma(:?, β)
 ```
-
-# See also
-BS, @segment_cost
 """
 macro BS(data, dist, args...)
     cost_func = cost_function(data, dist)

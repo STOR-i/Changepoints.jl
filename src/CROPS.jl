@@ -1,14 +1,17 @@
-"""
-# Description
-Runs the CROPS algorithm using a specified cost function for a given minimum and maximum penalty value to find a range of segmentations. Function can also be invoked through @PELT macro.
+CROPS(segment_cost::Function , n::Int64, pen::Tuple{Float64,Float64}) =  CROPS(segment_cost, n, pen[1], pen[2])
 
-# Arguments
-* `segment_cost::Function`: Calculates cost between two specified indices
-* `n::Int`: Length of time series
-* `pen::Tuple{Real,Real}`: Tuple containing minimum and maximum penalty values
+
+"""
+    CROPS(segment_cost, n, β₁, β₂)
+
+Runs the CROPS algorithm for cost function `segment_cost` for range of penalties
+between `β₁` and `β₂`. This calculates optimal segmentations using PELT for all penalties
+between `β₁` and `β₂`.
+
+See also: [`PELT`](@ref), [`@PELT`](@ref), [`@segment_cost`](@ref)
 
 # Returns
-* `out::Dict{ASCIIString,Array{T,N}}`:
+* `out::Dict{String,Any}`:
   * `out["penalty"]` : vector of penalties between minimum and maximum pen
   * `out["number"]` : vector of number of changepoints for each penalty
   * `out["constrained"]` : vector of optimal segmentation costs for each penalty
@@ -28,16 +31,13 @@ pen = (4.0,100.0)
 crops_output = CROPS(seg_cost, n, pen)
 ```
 
-# See also
-PELT, @PELT
-
 # References
 Haynes, K., Eckley. I.A., and Fearnhead, P., (2014) Efficient penalty search for multiple changepoint problems arXiv:1412.3617
 
 """
-function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Float64,Float64})
-
-    pen_interval = [ minimum(pen) , maximum(pen) ]
+function CROPS(segment_cost::Function , n::Int64, β₁::Float64, β₂::Float64)
+    
+    pen_interval = [ min(β₁,β₂) , max(β₁,β₂) ]
 
     # these are what we output
     out_num_cpts = Array{Int64}(undef,0)

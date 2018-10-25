@@ -49,6 +49,27 @@ function ran_dist(dist_type::Type, args...)
         return dist_type(newargs...)
 end
 
+"""
+    @changepoint_sampler(n, λ, Distribution(param1, param2, ...))
+
+Generates sample of size `n` from `Distribution` with changes in
+parameters generated at random intervals. `param1, param2, ...` are parameters of the sampleable
+`Distribution` type, and may be fixed values, or themselves sampleable distributions. Changepoints
+occur at random times whose separation follows a Poisson distribution with rate `λ`.
+At each changepoint, new values for all parameters in `param1, param2, ...`, which
+are distributions are sampled.
+
+# Returns
+* (data::Array, cps::Array{Int}) :
+  * data : generated time series
+  * cps : array of indices of changepoints
+
+# Example
+```julia-repl
+n, λ = 1000, 100
+μ, σ = Normal(0.0, 10.0), 1.0
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)  # Sample changepoints
+"""
 macro changepoint_sampler(n, λ, dist)
     if !isexpr(dist, :call)
         error("Syntax error: expected distribution construction in second argument")
