@@ -1,6 +1,6 @@
 # PELT algorithm
 
-@doc """
+"""
 # Description
 Runs the PELT algorithm using a specified cost function for a given penalty value to find the position and number of changepoints
 
@@ -28,47 +28,46 @@ CROPS, @PELT
 
 # References
 Killick, R., Fearnhead, P. and Eckley, I.A. (2012) Optimal detection of changepoints with a linear computational cost, JASA 107(500), 1590-1598
-""" ->
+"""
 function PELT( segment_cost::Function , n::Int; pen::Float64 = log(n) )
-   
+
     # F[t] is optimal cost of segmentation upto time t
-    F = Array(Float64, n+1)
-    F[1] = - pen
+    F = Array{Float64}(undef, n+1)
+    F[1] = -pen
     F[2] = 0
 
-    # last chpt prior to time t 
-    chpts =  Array(Int64, n)
+    # last chpt prior to time t
+    chpts =  Array{Int64}(undef, n)
     chpts[1] = 0
-    # vector of candidate chpts at t 
-    R = Array(Int64, 1)
-    R = [0]
+
+    # vector of candidate chpts at t
+    R = Int64[0]
 
     for t in 2:n
         cpt_cands = R
-        seg_costs = Array(Float64, length(cpt_cands))
+        seg_costs = Array{Float64}(undef, length(cpt_cands))
         for i in 1:length(cpt_cands)
             seg_costs[i] = segment_cost(cpt_cands[i], t)
         end
-        
-        F[t+1] , tau = findmin( F[cpt_cands+1] + seg_costs + pen )
-        chpts[t] = cpt_cands[tau]  
-        
-        # pruning step 
-        ineq_prune = F[cpt_cands+1] + seg_costs .< F[t+1]
-        R =  push!( cpt_cands[ineq_prune] , t-1 )
-        
+
+        F[t+1] , tau = findmin( F[cpt_cands .+ 1] .+ seg_costs .+ pen )
+        chpts[t] = cpt_cands[tau]
+
+        # pruning step
+        ineq_prune = (F[cpt_cands .+ 1] .+ seg_costs) .< F[t+1]
+        R = push!(cpt_cands[ineq_prune], t - 1)
     end
 
     # get changepoints
-    CP = Array(Int64,0)
+    CP = Array{Int64}(undef,0)
     last = chpts[n]
     push!(CP,last)
     while last > 0
-      last = chpts[last]
-      push!(CP,last)
+        last = chpts[last]
+        push!(CP,last)
     end
-    sort!(CP)  
+    sort!(CP)
 
-    return CP , F[n+1] 
+    return CP , F[n+1]
 
 end

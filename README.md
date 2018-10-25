@@ -42,18 +42,18 @@ Changepoints.@PELT(data, dist, args...)
                                     Example
                                    -–––––––-
 
-  n = 1000       
-  λ = 100        
+  n = 1000
+  λ = 100
   μ, σ = Normal(0.0, 10.0), 1.0
   # Samples changepoints from Normal distribution with changing mean
   sample, cps = @changepoint_sampler n λ Normal(μ, σ)
   # Run PELT on sample
-  pelt_cps, pelt_cost = @PELT sample Normal(?, σ)
+  pelt_cps, pelt_cost = @PELT sample Normal(:?, σ)
 
                                     See also
                                    -––––––––-
 
-  PELT, @segment_cost 
+  PELT, @segment_cost
 
  Details:
 
@@ -74,7 +74,7 @@ is fixed in this case as one but for each new segment a new mean is drawn from a
 ```
 n = 1000                   # Sample size
 λ = 70                     # freq of changepoints
-μ, σ = Normal(0,1), 1.0 
+μ, σ = Normal(0,1), 1.0
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 ```
 
@@ -83,25 +83,25 @@ data, cps = @changepoint_sampler n λ Normal(μ, σ)
 To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Gadfly and Winston packages for the convenient plotting of the results. These packages must be explicity loaded to make use of this functionality. If the plotting package was loaded after Changepoints, then the user must run an additional command to load the plotting functionaly, e.g.  `Changepoints.Gadfly_init()`.
 
 ```
-pelt_cps, cost = @PELT data Normal(?, 1.0)
-plot(data, pelt_cps) 
+pelt_cps, cost = @PELT data Normal(:?, 1.0)
+plot(data, pelt_cps)
 ```
 
 ![Gadfly plot of Changepoints detected by PELT](/docs/example_pelt.png?raw=true "Changepoints detected by PELT")
 
 ## Penalty selection
 
-The methods implemented view the problem as one of optimising a penalised cost function where the penalty comes in whenever a new changepoint is added. Assuming 
-we have specified the correct parametric (non-parametric cost coming soon) model/cost function then the only area of possible misspecification is in the 
+The methods implemented view the problem as one of optimising a penalised cost function where the penalty comes in whenever a new changepoint is added. Assuming
+we have specified the correct parametric (non-parametric cost coming soon) model/cost function then the only area of possible misspecification is in the
 value of the penalty. There is no "correct" choice of penalty however it can be very instructive to look at the segmentations and especially the number of changepoints
-for a range of penalties. The Changepoints for a Range Of Penalties (CROPS) method allows us to do this efficiently using PELT, by exploiting the relationship 
+for a range of penalties. The Changepoints for a Range Of Penalties (CROPS) method allows us to do this efficiently using PELT, by exploiting the relationship
 between the penalised and constrained versions of the same optimisation problem. For more information see [CROPS](http://arxiv.org/abs/1412.3617).
 
-To run the PELT algorithm for a range of penalties say pen1 to pen2 where pen1 < pen2 
+To run the PELT algorithm for a range of penalties say pen1 to pen2 where pen1 < pen2
 then we can use the following code:
 
 ```
-crops_output = @PELT data Normal(?, 1.0) pen1 pen2
+crops_output = @PELT data Normal(:?, 1.0) pen1 pen2
 ```
 
 Having segmented the dataset for a range of penalties the problem now becomes one of model selection. Again, if a plotting package has been loaded, we can create a so called "elbow" plot from these results.

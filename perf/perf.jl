@@ -1,7 +1,7 @@
 using Changepoints
 using BenchmarkLite
 
-type CP_Benchmark <: Proc
+mutable struct CP_Benchmark <: Proc
     alg::Function
     name::String
 end

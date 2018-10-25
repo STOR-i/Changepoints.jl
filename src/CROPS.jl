@@ -1,4 +1,4 @@
-@doc """
+"""
 # Description
 Runs the CROPS algorithm using a specified cost function for a given minimum and maximum penalty value to find a range of segmentations. Function can also be invoked through @PELT macro.
 
@@ -34,35 +34,35 @@ PELT, @PELT
 # References
 Haynes, K., Eckley. I.A., and Fearnhead, P., (2014) Efficient penalty search for multiple changepoint problems arXiv:1412.3617
 
-""" ->
-function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
+"""
+function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Float64,Float64})
 
     pen_interval = [ minimum(pen) , maximum(pen) ]
 
     # these are what we output
-    out_num_cpts = Array(Int64,0)
-    out_max_pen = Array(Float64,0)
-    out_constrain = Array(Float64,0)
-    out_cpts = Array(Array{Int64},0) 
-   
+    out_num_cpts = Array{Int64}(undef,0)
+    out_max_pen = Array{Float64}(undef,0)
+    out_constrain = Array{Float64}(undef,0)
+    out_cpts = Array{Array{Int64}}(undef,0)
+
     while true
 
         stop = 0
 
         if length(pen_interval) > 0
 
-            # do PELT and record no of chpts and                        
+            # do PELT and record no of chpts and
             # calculates the cost of the constrained problem
             for i in 1:length(pen_interval)
 
                 # do PELT for each pen_interval
                 cpts , opt = PELT( segment_cost , n , pen=pen_interval[i] )
-               
-                # if there are already same no of chpts in out 
+
+                # if there are already same no of chpts in out
                 # see if penalty different
                 if length(cpts) ∈ out_num_cpts
-                    index = findin(out_num_cpts, length(cpts))[1]
-                 
+                    index = findall((in)(length(cpts)), out_num_cpts)[1]
+
                     # check for penalty: is it bigger than max penalty
                     if pen_interval[i] > out_max_pen[index]
                         out_max_pen[index] = pen_interval[i]
@@ -70,23 +70,23 @@ function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
                         # no change
                         stop+=1
                     end
-                    
+
                 else
                     # number of chpts not seen before add to output and constrained likelihood
 
                     push!( out_num_cpts , length(cpts) )
                     push!( out_constrain , opt - (length(cpts)-1)*pen_interval[i] )
                     push!( out_max_pen , pen_interval[i])
-                    push!( out_cpts, cpts) 
-            
-                   
-                end         
-                
+                    push!( out_cpts, cpts)
+
+
+                end
+
             end
 	# end of if length(pen_interval) > 0
         end
-        
-      
+
+
         # leave loop and finish subject to output if no changes
         if stop == length(pen_interval)
             break
@@ -98,11 +98,11 @@ function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
         out_constrain = out_constrain[ord_ind]
         out_max_pen = out_max_pen[ord_ind]
         out_cpts = out_cpts[ord_ind]
-        
-        # make pen_interval 
-        pen_interval = Array(Float64,0)
-        
-        for i in 1:(length(out_num_cpts)-1) 
+
+        # make pen_interval
+        pen_interval = Array{Float64}(undef,0)
+
+        for i in 1:(length(out_num_cpts)-1)
 
             # if they differ by 1, then just calc beta_int and extend range of pen for large no of chpts
             if out_num_cpts[i] ==  out_num_cpts[i+1] + 1
@@ -113,13 +113,13 @@ function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
                 beta_int =  ( out_constrain[i+1] - out_constrain[i] )/( out_num_cpts[i] - out_num_cpts[i+1] )
                 push!( pen_interval , beta_int )
              end
-            
+
         end
 
        if length(pen_interval) > 0
            i = 1
            while i <= length(pen_interval)
-               for j in 1:length(out_max_pen) 
+               for j in 1:length(out_max_pen)
                    if abs(pen_interval[i] - out_max_pen[j]) < 1e-2
                        splice!(pen_interval,i)
                        i = i - 1
@@ -128,40 +128,40 @@ function CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real} )
                end
                i = i + 1
            end
-           
-       end
-              
 
-    # end of while loop    
+       end
+
+
+    # end of while loop
     end
 
     # Calculate beta intervals
     nb = length(out_max_pen)
-    beta_e= Array(Float64,0)
-    beta_int = Array(Float64,0)
+    beta_e= Array{Float64}(undef,0)
+    beta_int = Array{Float64}(undef,0)
     sort_out_max_pen = sort(out_max_pen);
     sort_out_constrain = sort(out_constrain);
     sort_out_num_cpts = sort(out_num_cpts, rev = true);
-    
+
     for k in 1:nb
         if k == 1
             beta_int = push!(beta_int, sort_out_max_pen[1])
-        
-        else 
+
+        else
             beta_int = push!(beta_int, beta_e[k-1])
         end
-        
-   
+
+
         if k == nb
             beta_e = push!(sort_out_max_pen[k])
-   
+
         else
             beta_e = push!(beta_e,(sort_out_constrain[k] - sort_out_constrain[k+1])/(sort_out_num_cpts[k+1] - sort_out_num_cpts[k]))
         end
     end
-        
+
     # organise output into a dictionary
-    out = Dict{ASCIIString, Array}()
+    out = Dict{String, Array}()
     out["number"] = out_num_cpts
     out["penalty"] = sort(beta_int, rev = true)
     out["constrained"] = out_constrain

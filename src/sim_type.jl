@@ -1,4 +1,4 @@
-type ChangepointSampler <: Sampleable
+mutable struct ChangepointSampler <: Sampleable{Univariate, Continuous}
     rand_dist_gen::Function                  # Function which generates a random distribution
     λ::Int                                   # Frequency of changepoints
     changepoints::Array{Int64,1}               # Changepoints indices
@@ -19,7 +19,7 @@ end
 
 function rand(dist::ChangepointSampler, n::Int)
     s = 0
-    x = Array(Float64, n)
+    x = Array{Float64}(undef, n)
     while s < n
         t = min(dist._next_change - dist._counter - 1, n)
         x[s+1:t] = rand(dist._current_dist, t - s)
@@ -53,12 +53,12 @@ macro changepoint_sampler(n, λ, dist)
     if !isexpr(dist, :call)
         error("Syntax error: expected distribution construction in second argument")
     end
-    
+
     if length(dist.args) == 1
         return Expr(:call, :rand, dist, n)
     else
         nargs = length(dist.args)
-        args = Array(Any, nargs)
+        args = Array{Any}(undef, nargs)
         return esc(:(Changepoints.cp_rand(ChangepointSampler(()->Changepoints.ran_dist($(dist.args...)), $(λ)), $(n))))
     end
 end
