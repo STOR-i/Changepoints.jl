@@ -25,7 +25,8 @@ Most of the functionality of Changepoints has been documented. This is accessibl
 help?> @PELT
   @PELT data changepoint_model [β₁ [β₂] ]
 
-  Runs the PELT algorithm on time series data using a specified changepoint_model and penalties. If no penalty β₁ provided, a default of value log(length(data)) is used. If two penalties β₁ and β₂ are provided
+  Runs the PELT algorithm on time series data using a specified changepoint_model and penalties. 
+  If no penalty β₁ provided, a default of value log(length(data)) is used. If two penalties β₁ and β₂ are provided
   then the CROPS algorithm is run which finds all optimal segmentations for all penalties between β₁ and β₂.
 
   See also: PELT, CROPS
