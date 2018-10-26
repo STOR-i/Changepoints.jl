@@ -4,10 +4,10 @@ using Changepoints, Base.Test
 
     n = 1000;        # Number of samples
     λ = 100;         # Frequencey of changes
-    pen = (1.1, 6.1)
+    β₁, β₂ = (1.1, 6.1)
 
-    function test_CROPS(segment_cost::Function , n::Int64, pen::Tuple{Real,Real})
-        out = CROPS(segment_cost, n, pen)
+    function test_CROPS(segment_cost::Function , n::Int64, β₁::Real, β₂::Real)
+        out = CROPS(segment_cost, n, β₁, β₂)
         for (i, β) in enumerate(out["penalty"])
             #println("i=$i, β=$β")
             cps, cost = PELT(segment_cost, n; pen=β)
@@ -22,8 +22,8 @@ using Changepoints, Base.Test
     μ, σ = Normal(0.0, 10.0), 1.0
     sample, cps = @changepoint_sampler n λ Normal(μ, σ)
     segment_cost = NormalMeanSegment(sample);
-    #test_CROPS(segment_cost, n, pen)
-    out = @PELT sample Normal(?,σ) pen[1] pen[2]
+    #test_CROPS(segment_cost, n, β₁, β₂)
+    out = @PELT sample Normal(?,σ) β₁ β₂
 
     # num,cons = Int[], Float64[]
     # for (i, β) in enumerate(out["penalty"])
@@ -43,8 +43,8 @@ using Changepoints, Base.Test
     μ, σ = 1.0, Uniform(2.0, 15.0)
     sample, cps = @changepoint_sampler n λ Normal(μ, σ)
     seg_costs = NormalVarSegment(sample, μ)
-    test_CROPS(seg_costs, n, pen)
-    @PELT sample Normal(μ, ?) pen[1] pen[2]
+    test_CROPS(seg_costs, n, β₁, β₂)
+    @PELT sample Normal(μ, ?) β₁ β₂
 
     ############################
     # Exponential changepoints #
@@ -52,8 +52,8 @@ using Changepoints, Base.Test
     μ = Uniform(0.0, 10.0)
     sample, cps = @changepoint_sampler n λ Exponential(μ)
     seg_costs = ExponentialSegment(sample)
-    CROPS(seg_costs, n, pen)
-    @PELT sample Exponential(?) pen[1] pen[2]
+    CROPS(seg_costs, n, β₁, β₂)
+    @PELT sample Exponential(?) β₁ β₂
 
     ########################
     # Poisson changepoints #
@@ -61,6 +61,6 @@ using Changepoints, Base.Test
     μ = Uniform(0.0, 10.0)
     sample, cps = @changepoint_sampler n λ Poisson(μ)
     seg_costs = PoissonSegment(sample)
-    CROPS(seg_costs, n, pen)
-    @PELT sample Poisson(?) pen[1] pen[2]
+    CROPS(seg_costs, n, β₁, β₂)
+    @PELT sample Poisson(?) β₁ β₂
 end
