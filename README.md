@@ -11,36 +11,27 @@ For a general overview of the multiple changepoint problem and mathematical deta
 
 ## Installation
 
-Changepoints requires Julia version 0.4. To install Changepoints run the following command inside a Julia session:
+Changepoints requires Julia version 0.7 or above. To install Changepoints simply run the following command inside Julia package mode (started by typing`]` in the Julia REPL):
 
-```julia
-julia> Pkg.add("Changepoints")
+```julia-repl
+(v0.7) pkg>  add Changepoints
 ```
 
 ## Documentation
 
-Most of the functionality of Changepoints has been documented. This is accessible in the Julia REPL in help mode. Help mode can be started by typing '?' at the prompt.
+Most of the functionality of Changepoints has been documented. This is accessible in the Julia REPL in help mode. (started by typing '?' in the Julia REPL):
 
-```julia
-julia> ?
+```julia-repl
 help?> @PELT
-Changepoints.@PELT(data, dist, args...)
+  @PELT data changepoint_model [β₁ [β₂] ]
 
-  Runs the PELT algorithm using a specified cost function and penalty value to
-  find the position and number of changepoints
+  Runs the PELT algorithm on time series data using a specified changepoint_model and penalties. If no penalty β₁ provided, a default of value log(length(data)) is used. If two penalties β₁ and β₂ are provided
+  then the CROPS algorithm is run which finds all optimal segmentations for all penalties between β₁ and β₂.
 
-                                     Usage
-                                    -–––––-
+  See also: PELT, CROPS
 
-  1. @PELT data changepoint_model: Run PELT with default penalty value
-
-  2. @PELT data changepoint_model β: Run PELT at penalty value β
-
-  3. @PELT data changepoint_model β₁ β₂: Run CROPS algorithm for penalties
-  between β₁ and β₂
-
-                                    Example
-                                   -–––––––-
+  Example
+  ≡≡≡≡≡≡≡≡≡
 
   n = 1000
   λ = 100
@@ -49,17 +40,6 @@ Changepoints.@PELT(data, dist, args...)
   sample, cps = @changepoint_sampler n λ Normal(μ, σ)
   # Run PELT on sample
   pelt_cps, pelt_cost = @PELT sample Normal(:?, σ)
-
-                                    See also
-                                   -––––––––-
-
-  PELT, @segment_cost
-
- Details:
-
-	signature: PELT(data,dist,args...)
-	source: (133,"/home/lawrence/.julia/v0.3/Changepoints/src/macros.jl")
-
 ```
 
 # Usage
