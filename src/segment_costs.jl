@@ -158,32 +158,32 @@ See also: [`NormalMeanSegment`](@ref)
 """
 function NonparametricSegment(data::Array{Float64}, k::Int64)
     n = length(data)
-    if (K > n)
-        K = n
+    if (k > n)
+        k = n
     end
     x = sort(data)
-    yk = -1 .+ (2 .* collect(1:K) ./ K .- 1/K)
+    yk = -1 .+ (2 .* collect(1:k) ./ k .- 1/k)
     c = -log(2*n-1)
-    pK = (1 .+ exp.(c .* yk)) .^ -1.0
-    j = floor(Int64, (n-1)*pK[1]+1)
+    pk = (1 .+ exp.(c .* yk)) .^ -1.0
+    j = floor(Int64, (n-1)*pk[1]+1)
     Q = vcat(0,cumsum(data .< x[j]) .+ 0.5 .* cumsum(data.==x[j]))
-    for i in 2:K
-        j = convert(Int64,floor((n-1)*pK[i]+1))
+    for i in 2:k
+        j = convert(Int64,floor((n-1)*pk[i]+1))
         Q =vcat(Q,(vcat(0,cumsum(data .< x[j]) + 0.5*cumsum(data.==x[j]))))
     end
 
     function cost(s::Int64, t::Int64)
-        Fkl = zeros(Float64, K)
-        for i in 1:K
+        Fkl = zeros(Float64, k)
+        for i in 1:k
             Fkl[i] = ((Q[(t+1)+(i-1)*(n+1)]) -  (Q[(s+1)+(i-1)*(n+1)]))/(t-s)
         end
         cost = 0
-        for i in 1:K
+        for i in 1:k
             if (Fkl[i] > 0 && Fkl[i] < 1)
                 cost  = cost + (t-s)*(Fkl[i]*log(Fkl[i]) + (1-Fkl[i])*log(1-Fkl[i]))
             end
         end
-        return 2*c*cost/K
+        return 2*c*cost/k
     end
 end
 
