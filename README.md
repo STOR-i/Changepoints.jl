@@ -1,5 +1,7 @@
 # Changepoints.jl
 
+[![Build Status](https://travis-ci.org/STOR-i/Changepoints.jl.png)](https://travis-ci.org/STOR-i/Changepoints.jl)
+
 A Julia package for the detection of multiple changepoints in time series.
 
 - Detection is based on optimising a cost function over segments of the data.
