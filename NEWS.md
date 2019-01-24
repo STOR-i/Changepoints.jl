@@ -1,3 +1,6 @@
+# Version 0.3.1 (2019-01-24)
+* Bug fix to CROPS function
+
 # Version 0.3 (2018-10-26)
 * Increased minimum Julia requirement to v0.7
 * In specification of changepoint models in `@PELT`, `@BS`, `@segment_cost` macros, changing
