@@ -153,7 +153,7 @@ function CROPS(segment_cost::Function , n::Int64, β₁::Float64, β₂::Float64
 
 
         if k == nb
-            beta_e = push!(sort_out_max_pen[k])
+            beta_e = push!(beta_e, sort_out_max_pen[k])
 
         else
             beta_e = push!(beta_e,(sort_out_constrain[k] - sort_out_constrain[k+1])/(sort_out_num_cpts[k+1] - sort_out_num_cpts[k]))
