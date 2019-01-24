@@ -1,5 +1,3 @@
-using Changepoints, Base.Test
-
 @testset "Running CROPS tests..." begin
 
     n = 1000;        # Number of samples
@@ -11,7 +9,7 @@ using Changepoints, Base.Test
         for (i, β) in enumerate(out["penalty"])
             #println("i=$i, β=$β")
             cps, cost = PELT(segment_cost, n; pen=β)
-            @test_approx_eq_eps out["constrained"][i] (cost-(length(cps)-1)*β) 1e-3
+            @test out["constrained"][i] ≈ (cost-(length(cps)-1)*β) atol=1e-3
         end
     end
 
@@ -23,7 +21,7 @@ using Changepoints, Base.Test
     sample, cps = @changepoint_sampler n λ Normal(μ, σ)
     segment_cost = NormalMeanSegment(sample);
     #test_CROPS(segment_cost, n, β₁, β₂)
-    out = @PELT sample Normal(?,σ) β₁ β₂
+    out = @PELT sample Normal(:?,σ) β₁ β₂
 
     # num,cons = Int[], Float64[]
     # for (i, β) in enumerate(out["penalty"])
@@ -44,7 +42,7 @@ using Changepoints, Base.Test
     sample, cps = @changepoint_sampler n λ Normal(μ, σ)
     seg_costs = NormalVarSegment(sample, μ)
     test_CROPS(seg_costs, n, β₁, β₂)
-    @PELT sample Normal(μ, ?) β₁ β₂
+    @PELT sample Normal(μ, :?) β₁ β₂
 
     ############################
     # Exponential changepoints #
@@ -53,7 +51,7 @@ using Changepoints, Base.Test
     sample, cps = @changepoint_sampler n λ Exponential(μ)
     seg_costs = ExponentialSegment(sample)
     CROPS(seg_costs, n, β₁, β₂)
-    @PELT sample Exponential(?) β₁ β₂
+    @PELT sample Exponential(:?) β₁ β₂
 
     ########################
     # Poisson changepoints #
@@ -62,5 +60,5 @@ using Changepoints, Base.Test
     sample, cps = @changepoint_sampler n λ Poisson(μ)
     seg_costs = PoissonSegment(sample)
     CROPS(seg_costs, n, β₁, β₂)
-    @PELT sample Poisson(?) β₁ β₂
+    @PELT sample Poisson(:?) β₁ β₂
 end
