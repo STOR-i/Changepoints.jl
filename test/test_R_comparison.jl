@@ -80,3 +80,12 @@ end
     @test r_cpts == cpts
 end
 
+# Normal var change
+@testset "Test MOSUM change..." begin
+    data = read_data("$(dir)/Normal_change_in_mean_data")
+
+    r_cpts = read_cpts("$(dir)/MOSUM_cpts")
+    cpts = MOSUM(data,40)["changepoints"]
+
+    @test r_cpts == cpts
+end

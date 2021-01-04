@@ -18,3 +18,13 @@ function Gadfly.plot(crops_object::Dict{ASCIIString, Array})
              Theme(default_color=colorant"black"))
     return p
 end
+
+function Gadfly.plot(mosum_object::Dict{String,Union{Bool, Float64, Int64, Array}})
+    y=mosum_object["detector"]
+    xintercept=mosum_object["changepoints"]
+    yintercept= [mosum_object["threshold"]]
+    p = plot(layer(y=y, Geom.line, Theme(default_color=colorant"black")),
+             layer(xintercept=xintercept, Geom.vline, Theme(default_color=colorant"red")) ,
+             layer(yintercept=yintercept, Geom.hline, Theme(default_color=colorant"blue")) )
+    return p
+end

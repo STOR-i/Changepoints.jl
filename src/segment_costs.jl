@@ -26,7 +26,7 @@ end
 """
     NormalMeanSegment(data[, σ = 1.0])
 
-Constructs a function which calculates the cost of fitting a Normal distribution 
+Constructs a function which calculates the cost of fitting a Normal distribution
 with unknown mean, and known standard deviation `σ` for a specified segment of `data`.
 By default, `sigma` is set to `1.0`.
 
@@ -209,4 +209,33 @@ function OLSSegment(data::Array{Float64})
 	          return Inf
 	      end
     end
+end
+
+"""
+    CUSUM(data)
+
+Create a segment cost function for univariate mean change setting
+
+See also: [`NormalMeanSegment`](@ref)
+"""
+function CUSUM(data::Array{Float64}, σ::Real = 1.0)
+    cd = Changepoints.zero_cumsum(data)
+	n = length(data)
+    cost(s::Int64, t::Int64, b::Int64) =
+		abs(sqrt((t-b)/(n*(b-s+1))) *(cd[b+1]-cd[s] ) - sqrt((b-s+1)/(n*(t-b)))*(cd[t+1]-cd[b]) )/σ
+    return cost
+end
+
+
+"""
+    sSIC(data)
+
+Create a segment cost function for univariate mean change setting
+
+See also: [`NormalMeanSegment`](@ref)
+"""
+function sSIC(data::Array{Float64})
+	n = length(data)
+    cost(s::Int64, t::Int64) = (n/2) * log(median(abs.(data[s:t] .- mean(data[s:t])))^2)
+    return cost
 end
