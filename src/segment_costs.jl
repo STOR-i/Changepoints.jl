@@ -214,7 +214,7 @@ end
 """
     CUSUM(data)
 
-Create a segment cost function for univariate mean change setting
+Create a cumulative sum segment cost function for univariate mean change setting
 
 See also: [`NormalMeanSegment`](@ref)
 """
@@ -230,9 +230,12 @@ end
 """
     sSIC(data)
 
-Create a segment cost function for univariate mean change setting
+Create a strengthened Schwartz segment cost function for univariate mean change setting
 
 See also: [`NormalMeanSegment`](@ref)
+
+# References
+Fryzlewicz, P. (2014) Wild binary segmentation for multiple change-point detection, Annals of Statistics 42(6), 2243-2281
 """
 function sSIC(data::Array{Float64})
 	n = length(data)

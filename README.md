@@ -8,8 +8,9 @@ A Julia package for the detection of multiple changepoints in time series.
 - Implementations of the most efficient search algorithms (PELT , Binary Segmentation).
 - A wide choice of parametric cost functions already implemented such as a change in mean/variance/mean and variance for Normal errors.
 - Changepoint algorithms have an interface which allows users to input their own cost functions
+- Implementations of testing-based segmentation algorithms (Wild/Seeded Binary Segmentation, MOSUM) for the univariate mean change problem
 
-For a general overview of the multiple changepoint problem and mathematical details see [PELT](http://arxiv.org/pdf/1101.1438.pdf).
+For a general overview of the multiple changepoint problem and mathematical details see [PELT](http://arxiv.org/pdf/1101.1438.pdf). For an overview of segmentation algorithms, see [Data segmentation algorithms: Univariate mean change and beyond](https://arxiv.org/pdf/2012.12814).
 
 ## Installation
 
@@ -27,7 +28,7 @@ Most of the functionality of Changepoints has been documented. This is accessibl
 help?> @PELT
   @PELT data changepoint_model [β₁ [β₂] ]
 
-  Runs the PELT algorithm on time series data using a specified changepoint_model and penalties. 
+  Runs the PELT algorithm on time series data using a specified changepoint_model and penalties.
   If no penalty β₁ provided, a default of value log(length(data)) is used. If two penalties β₁ and β₂ are provided
   then the CROPS algorithm is run which finds all optimal segmentations for all penalties between β₁ and β₂.
 
@@ -93,3 +94,20 @@ Having segmented the dataset for a range of penalties the problem now becomes on
 plot(crops_output)
 ```
 ![Gadfly plot of cost against number of changepoints](/docs/elbowplot.png?raw=true "Elbow plot")
+
+## Segmentation
+
+By instead using segmentation algorithms, we can avoid specifying a cost function or penalty. These algorithms use local information to form test statistics, which are compared to a threshold for detection, and maximising locations are used as change point estimates.
+
+The MOSUM procedure requires specifying a bandwidth `G`, which should be at most half of the true minimum segment length. To run the procedure we use the following code:
+```
+G = 35
+MOSUM_output = MOSUM(data, G)
+Gadfly.plot(MOSUM_output)
+```
+
+The Wild Binary Segmentation procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval. The following code runs the procedure, first by calculating a CUSUM cost function for the data:
+```
+seg_cost_CUSUM = CUSUM(data, 1.0)
+WBS_return = WBS(seg_cost_CUSUM, n)
+```

@@ -1,16 +1,23 @@
 """
-    WBS(segment_cost, n[, β = log(n)^1.01, M = 5000])
+    WBS( segment_cost, n[,th_const = 1.3, sigma = 1.0, M = 5000, do_seeded = false, shrink = 1/sqrt(2)])
 
-Runs the Wild Binary segmentation algorithm for the cost function `segment_cost` for a time series of length `n`, with penalty `β` and drawing `M` random intervals, and returns the position of found changepoints, and
+Runs the Wild Binary segmentation algorithm for the CUSUM cost function `segment_cost` for a time series of length `n`.
+    The test threshold is determined by `th_const` and the known or estimated standard deviation `sigma`.
+    `do_seeded` determined whether to use seeded intervals. If true, `shrink` is the decay factor for interval length; if not, `M` random intervals are drawn, and returns the position of found changepoints, and
 the cost of this segmentation.
 
 See also: [`@BS`](@ref), [`@segment_cost`](@ref)
 
 # Returns
-* `CP::Vector{Int}`: Vector of indices of detected changepoints
-* `cost::Float64`: Cost of optimal segmentation
-
+* `result::Array{NamedTuple{s::Int64, e::Int64, cpt::Int64, CUSUM::Float64, min_th::Float64, scale::Int64}}`:
+    * `s::Int64`: Start of window in which maximum CUSUM was located
+    * `e::Int64`: End of window in which maximum CUSUM was located
+    * `cpt::Int64`: Location of maximum CUSUM
+    * `CUSUM::Float64`: Value of maximum CUSUM
+    * `min_th::Float64`: Threshold used
+    * `scale::Int64`: Number of recursion iterations before the change point was detected
 # Example
+
 ```julia-repl
 # Sample Normal time series with changing mean
 n = 1000
@@ -18,8 +25,8 @@ n = 1000
 μ, σ = Normal(0.0, 10.0), 1.0
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Run wild binary segmentation
-seg_cost = NormalMeanChange(sample, σ)
-WBS_cps, WBS_cost = WBS(seg_cost, n)
+seg_cost = CUSUM(sample, σ)
+WBS_return = WBS(seg_cost, n)
 ```
 
 # References
@@ -97,6 +104,43 @@ function WBS_RECUR(segment_cost::Function, s::Int64, e::Int64, th::Float64,
     return result #CUSUM, CP
 end
 
+
+"""
+    get_WBS_changepoints(segment_cost, object, Kmax = 1,  alpha = 1.01)
+
+Obtains changepoints from an `object` (output by the WBS function) by minimising an information criterion.
+`segment_cost` is a cost function, normally sSIC, and `alpha` is the penalty exponent. `Kmax` determines the maximum number of changepoints to detect.
+
+See also: [`@WBS`](@ref), [`@segment_cost`](@ref)
+
+# Returns
+* `out_cps`: Vector of changepoint locations under optimal segmentation
+* `optimal_number`: Integer number of changepoints which optimises the criterion
+* `cost`: Vector of segmentations cost for 0, ..., Kmax  changes
+* `object[1:optimal]`: WBS object truncated at optimal number
+# Example
+
+```julia-repl
+# Sample Normal time series with changing mean
+n = 1000
+λ = 100
+μ, σ = Normal(0.0, 10.0), 1.0
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
+
+# Run wild binary segmentation
+seg_cost_CUSUM = CUSUM(sample, σ)
+WBS_return = WBS(seg_cost_CUSUM, n)
+
+# Obtain changepoints
+seg_cost_sSIC = sSIC(sample)
+get_WBS_changepoints(seg_cost_sSIC, WBS_return, 10)
+```
+
+# References
+Fryzlewicz, P. (2014) Wild binary segmentation for multiple change-point detection, Annals of Statistics 42(6), 2243-2281
+"""
+
+
 function get_WBS_changepoints(segment_cost::Function, object::Array{NamedTuple{(:s, :e, :cpt, :CUSUM, :min_th, :scale),Tuple{Int64,Int64,Int64,Float64,Float64,Int64}},1}, Kmax::Int64 = 1,  alpha::Float64 = 1.01)
     #result = Array{result_type}(undef,0)
     Kmax = min(Kmax,length(object))
@@ -120,10 +164,15 @@ function get_WBS_changepoints(segment_cost::Function, object::Array{NamedTuple{(
         penvec = collect(0:Kmax) * pen
         cost += penvec
 
-        optimal = findmin(cost)[2] -1 #optimal number
-        #out_cps = sort(object[1:(optimal+2)], lt = (a, b) -> (a[1][2] < b[1][2]) )
+        optimal_number = findmin(cost)[2] -1
 
-        return  optimal , cost, object[1:optimal]
+        out_cps = Vector{Int64}()
+        for i in 1:optimal_number
+            push!(out_cps, sorted[i][3])
+        end
+        out_cps = sort(out_cps)
+
+        return  out_cps, optimal_number, cost, object[1:optimal_number]
     else
          println("no changepoints detected")
     end
