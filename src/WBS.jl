@@ -36,11 +36,11 @@ Kovács, S., Li, H., Bühlmann, P., & Munk, A. (2020). Seeded Binary Segmentatio
 #import StatsBase
 #using StatsBase
 # sigma = StatsBase.mad(x)
-result_type = @NamedTuple{s::Int64, e::Int64, cpt::Int64, CUSUM::Float64, min_th::Float64, scale::Int64}
 
 
 function WBS( segment_cost::Function , n::Int64, th_const::Float64 = 1.3, sigma::Float64 = 1.0,
     M::Int64 = 5000, do_seeded::Bool = false, shrink::Float64 = 1/sqrt(2))
+    result_type = @NamedTuple{s::Int64, e::Int64, cpt::Int64, CUSUM::Float64, min_th::Float64, scale::Int64}
     result = Array{result_type}(undef,0)
 
     # thresulthold
@@ -55,6 +55,7 @@ end
 
 
 function WBS_RECUR(segment_cost::Function, s::Int64, e::Int64, th::Float64,
+    result_type = @NamedTuple{s::Int64, e::Int64, cpt::Int64, CUSUM::Float64, min_th::Float64, scale::Int64}
     result::Array{result_type}, scale::Int64, M::Int64 = 5000, do_seeded::Bool = false, shrink::Float64 = 1/sqrt(2))
     #k = length(CP) - 2 #current number of change points
     minlength = 20 #minimum interval length
