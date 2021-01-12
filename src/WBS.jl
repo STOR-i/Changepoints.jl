@@ -36,7 +36,7 @@ Kovács, S., Li, H., Bühlmann, P., & Munk, A. (2020). Seeded Binary Segmentatio
 #import StatsBase
 #using StatsBase
 # sigma = StatsBase.mad(x)
-result_type = NamedTuple{s::Int64, e::Int64, cpt::Int64, CUSUM::Float64, min_th::Float64, scale::Int64}
+result_type = @NamedTuple{s::Int64, e::Int64, cpt::Int64, CUSUM::Float64, min_th::Float64, scale::Int64}
 
 
 function WBS( segment_cost::Function , n::Int64, th_const::Float64 = 1.3, sigma::Float64 = 1.0,
