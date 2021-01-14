@@ -1,0 +1,15 @@
+name = "Changepoints"
+uuid = "98700a41-f20d-59c7-9e81-44d0470ae598"
+
+[compat]
+julia = "≥ 1.5.0"
+
+[deps]
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+
+[extras]
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test", "DelimitedFiles"]
