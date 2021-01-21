@@ -55,16 +55,31 @@ function cost_function(data::Any, dist_expr::Expr)
         return :(NonparametricSegment($data, $K))
 
     elseif dist_type == :OLS
-        println("Changepoints in peicewise linear regressions")
+        println("Changepoints in piecewise linear regressions")
         return :(OLSSegment($data))
+
+    elseif dist_type == :CUSUM
+        println("CUSUM cost function")
+        sigma = dist_expr.args[2]
+        return :(CUSUM($data , $sigma))
 
     else
         error("Distribution $(dist_type) has no implemented cost functions")
     end
 end
 
+function cost_function_CUSUM(data::Any, sigma::Any)#dist_expr::Expr)
+    println("CUSUM cost function")    #sigma = dist_expr.args[2]
+    return :(CUSUM($data , $sigma))
+end
+
+macro mad(data::Any)
+    println("Estimate sigma by MAD")
+    return   :(mad($data) )
+end
+
 """
-    @segement_cost data changepoint_model
+    @segment_cost data changepoint_model
 
 Creates a segment cost function given data and changepoint model expression.
 
@@ -112,7 +127,7 @@ end
 
 """
     @PELT data changepoint_model [β₁ [β₂] ]
-    
+
 Runs the PELT algorithm on time series `data` using a specified `changepoint_model` and penalties.
 If no penalty `β₁` provided, a default of value `log(length(data))` is used.
 If two penalties `β₁` and `β₂` are provided then the CROPS algorithm is run which finds
@@ -167,5 +182,85 @@ macro BS(data, dist, args...)
         return esc(:(BS($(cost_func), length($data))))
     else
         return esc(:(BS($(cost_func), length($data), pen=$(args[1]))))
+    end
+end
+
+"""
+    @WBS data [th_const = 1.3, sigma = 1.0, M = 5000, do_seeded = false, shrink = 1/sqrt(2) ]
+
+Runs the Wild Binary Segmentation algorithm for `data` with default arguments and optional argument `σ`.
+If no `sigma` is specified, estimates via Median Absolute Deviation (MAD).
+
+See also: [`WBS`](@ref), [`@segment_cost`](@ref)
+
+# Example
+```
+n = 1000   # Length of time series
+λ = 100    # Frequency of changepoints
+μ, σ = Normal(0.0, 10.0), 1.0
+# Samples changepoints from Normal distribution with changing mean
+data, cps = @changepoint_sampler n λ Normal(μ, σ)
+# Run WBS on sample with estimated sigma
+wbs_out = @WBS data sigma = 1.0
+```
+"""
+macro WBS(data, args...)
+
+    aakws = Pair{Symbol,Any}[]
+    sent_sigma = false #has user submitted sigma?
+    for el in args
+        if Meta.isexpr(el, :(=))
+            push!(aakws, Pair(el.args...))
+            if el.args.first == :sigma
+                sent_sigma = true
+                sigma  = el.args.second
+            end
+        end
+    end
+    if !sent_sigma
+        sigma =  @mad data
+        push!(aakws, Pair(:sigma, sigma))
+    end
+
+    cost_func = cost_function_CUSUM(data, sigma) #:sigma =>
+
+
+    return esc(:(WBS($(cost_func), length($data);  $aakws...)))
+end
+
+
+
+"""
+    @MOSUM data, G, [,var_est_method = "mosum",
+         alpha = 0.1, criterion = "eta", eta = 0.4, epsilon = 0.2]
+
+Runs the MOSUM algorithm for `data` with bandwidth `G` and optional arguments.
+
+See also: [`MOSUM`](@ref)
+
+# Example
+```
+n = 1000   # Length of time series
+λ = 100    # Frequency of changepoints
+G = 35     # Bandwidth
+alpha = 0.05 # optional keyword argument
+μ, σ = Normal(0.0, 10.0), 1.0
+# Samples changepoints from Normal distribution with changing mean
+sample, cps = @changepoint_sampler n λ Normal(μ, σ)
+# Run MOSUM on sample with bandwidth G and significance alpha
+mosum_out = @MOSUM sample G alpha
+```
+"""
+macro MOSUM(data, G, args...)
+    aakws = Pair{Symbol,Any}[]
+    for el in args
+        if Meta.isexpr(el, :(=))
+            push!(aakws, Pair(el.args...))
+        end
+    end
+    if length(args) > 0
+        return esc(:(MOSUM($(data), $(G); $aakws... ))) #, $(var_est_method), alpha, criterion, eta, epsilon)
+    else
+        return esc(:(MOSUM($(data), $(G))))
     end
 end

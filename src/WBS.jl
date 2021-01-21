@@ -19,6 +19,8 @@ See also: [`@BS`](@ref), [`@segment_cost`](@ref)
 # Example
 
 ```julia-repl
+using Statistics
+
 # Sample Normal time series with changing mean
 n = 1000
 λ = 100
@@ -26,6 +28,7 @@ n = 1000
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Run wild binary segmentation
 seg_cost = CUSUM(sample, σ)
+sigma = mad(sample)
 WBS_return = WBS(seg_cost, n)
 ```
 
@@ -38,17 +41,29 @@ Kovács, S., Li, H., Bühlmann, P., & Munk, A. (2020). Seeded Binary Segmentatio
 # sigma = StatsBase.mad(x)
 result_type = @NamedTuple{s::Int64, e::Int64, cpt::Int64, CUSUM::Float64, min_th::Float64, scale::Int64}
 
+function mad(data::Array)
+    return  median(abs.(data .- median(data)))
+end
 
-function WBS( segment_cost::Function , n::Int64, th_const::Float64 = 1.3, sigma::Float64 = 1.0,
-    M::Int64 = 5000, do_seeded::Bool = false, shrink::Float64 = 1/sqrt(2))
+function WBS( segment_cost::Function , n::Int64; kwargs...)
+    default_args = Dict(:th_const =>  1.3,
+        :sigma => 0.0,
+        :M => 5000,
+        :do_seeded => false,
+        :shrink => 1/sqrt(2))
+
+    kwargs = Dict(kwargs)
+    merge!(default_args, kwargs)
+
+
     result = Array{result_type}(undef,0)
 
-    # thresulthold
-    th = sigma * th_const * sqrt(2 * log(n))
+
+    # threshold
+    th = default_args[:sigma] * default_args[:th_const] * sqrt(2 * log(n))
     scale = 0
     # call WBS
-    result = WBS_RECUR(segment_cost, 1, n, th, result, scale, M, do_seeded, shrink)
-
+    result = WBS_RECUR(segment_cost, 1, n, th, result, scale, default_args[:M], default_args[:do_seeded], default_args[:shrink])
 
     return result
 end

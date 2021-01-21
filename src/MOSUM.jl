@@ -1,7 +1,7 @@
 """
-    MOSUM(x, G, var_est_method, alpha, criterion, eta, epsilon)
+    MOSUM(x, G[, var_est_method, alpha, criterion, eta, epsilon])
 
-Runs the MOSUM procedure for the univariate data x with bandwidth G, and returns the number and position of found changepoints.
+Runs the MOSUM procedure for the univariate data `x` with bandwidth `G`, and returns the number and position of found changepoints.
 
 See also: [`@BS`](@ref), [`@WBS`](@ref)
 
@@ -32,8 +32,18 @@ Gadfly.plot(MOSUM_out)
 Eichinger, Birte, and Claudia Kirch. "A MOSUM procedure for the estimation of multiple random change points." Bernoulli 24.1 (2018): 526-564.
 Meier, Alexander, Claudia Kirch, and Haeran Cho. "mosum: A package for moving sums in change point analysis." (2018).
 """
-function MOSUM( x::Array{Float64} , G::Int64; var_est_method::String = "mosum",
-     alpha::Float64 = 0.1, criterion::String = "eta", eta::Float64 = 0.4, epsilon::Float64 = 0.2)
+function MOSUM( x::Array{Float64} , G::Int64; kwargs...)
+    #Default arguments
+    default_args = Dict(:var_est_method => "mosum",
+        :alpha => 0.1,
+        :criterion => "eta",
+        :eta => 0.4,
+        :epsilon => 0.2)
+
+    kwargs = Dict(kwargs)
+    merge!(default_args, kwargs)
+
+
 
     CP = Array{Int64}(undef,0)
     q = 0
@@ -66,10 +76,10 @@ function MOSUM( x::Array{Float64} , G::Int64; var_est_method::String = "mosum",
 
     # normalise
     for t in (G+1):(n-G)
-        if var_est_method == "mosum"
+        if default_args[:var_est_method] == "mosum"
             variance[t] = (rvar[t] + lvar[t])/ 2
         end
-        if var_est_method == "mosum.min"
+        if default_args[:var_est_method] == "mosum.min"
             variance[t] = min( rvar[t], lvar[t])
         end
         detector[t] = abs(rsums[t] - lsums[t])/ sqrt(2*G*variance[t])
@@ -77,13 +87,13 @@ function MOSUM( x::Array{Float64} , G::Int64; var_est_method::String = "mosum",
 
     #threshold
     a = sqrt(2*n/G); b = 2log(n/G) + log(log(n/G))/2 + log(3/2) - log(pi)/2
-    c = - log(log( (1-alpha)^(-.5) ))
+    c = - log(log( (1- default_args[:alpha])^(-.5) ))
     D = (b+c)/a
 
     mosum_stat, k = findmax(detector)
 
     if mosum_stat > D
-        got_cps = get_cps_mosum(detector, D, G, criterion, eta, epsilon)
+        got_cps = get_cps_mosum(detector, D, G, default_args[:criterion], default_args[:eta], default_args[:epsilon])
         CP = got_cps[1]
         q = got_cps[2]
         Reject = got_cps[3]
