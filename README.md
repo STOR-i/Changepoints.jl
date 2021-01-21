@@ -14,10 +14,10 @@ For a general overview of the multiple changepoint problem and mathematical deta
 
 ## Installation
 
-Changepoints requires Julia version 0.7 or above. To install Changepoints simply run the following command inside Julia package mode (started by typing`]` in the Julia REPL):
+Changepoints requires Julia version 1.5 or above. To install Changepoints simply run the following command inside Julia package mode (started by typing`]` in the Julia REPL):
 
 ```julia-repl
-(v0.7) pkg>  add Changepoints
+(v1.5) pkg>  add Changepoints
 ```
 
 ## Documentation
@@ -99,15 +99,31 @@ plot(crops_output)
 
 By instead using segmentation algorithms, we can avoid specifying a cost function or penalty. These algorithms use local information to form test statistics, which are compared to a threshold for detection, and maximising locations are used as change point estimates.
 
-The MOSUM procedure requires specifying a bandwidth `G`, which should be at most half of the true minimum segment length. To run the procedure we use the following code:
+The MOSUM procedure requires specifying a bandwidth `G`, which should be at most half of the true minimum segment length (see [MOSUM](https://projecteuclid.org/euclid.bj/1501142454)). To run the procedure we use the following code:
 ```
 G = 35
-MOSUM_output = MOSUM(data, G)
+MOSUM_output = @MOSUM data G
 Gadfly.plot(MOSUM_output)
 ```
 
-The Wild Binary Segmentation procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval. The following code runs the procedure, first by calculating a CUSUM cost function for the data:
+The Wild Binary Segmentation (WBS) procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)). The following code runs the procedure, estimating the variance with MAD:
 ```
-seg_cost_CUSUM = CUSUM(data, 1.0)
-WBS_return = WBS(seg_cost_CUSUM, n)
+WBS_return = @WBS data
+```
+
+Alternatively, we may use a series of fixed intervals via Seeded Binary Segmentation (SeedBS), which gives reproducible results and is less costly (see [SeedBS](https://arxiv.org/abs/2002.06633)).
+```
+SeedBS_return = @WBS data seeded=true
+```
+
+
+We can extract estimated changepoints from both objects based on the strengthened Schwartz Information Criterion (sSIC), using `Kmax` as an upper bound of the number to be returned
+```
+WBS_cps = get_WBS_changepoints(WBS_return, Kmax = 10)
+plot(data, WBS_cps[1])
+```
+
+```
+SeedBS_cps = get_WBS_changepoints(WBS_return, Kmax = 10)
+plot(data, SeedBS_cps[1])
 ```

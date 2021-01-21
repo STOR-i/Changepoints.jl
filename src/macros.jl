@@ -186,9 +186,9 @@ macro BS(data, dist, args...)
 end
 
 """
-    @WBS data [th_const = 1.3, sigma = 1.0, M = 5000, do_seeded = false, shrink = 1/sqrt(2) ]
+    @WBS data [th_const = 1.3 sigma = 1.0 M = 5000 do_seeded = false shrink = 1/sqrt(2) ]
 
-Runs the Wild Binary Segmentation algorithm for `data` with default arguments and optional argument `σ`.
+Runs the Wild Binary Segmentation algorithm for `data` with optional named arguments.
 If no `sigma` is specified, estimates via Median Absolute Deviation (MAD).
 
 See also: [`WBS`](@ref), [`@segment_cost`](@ref)
@@ -201,7 +201,7 @@ n = 1000   # Length of time series
 # Samples changepoints from Normal distribution with changing mean
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Run WBS on sample with estimated sigma
-wbs_out = @WBS data sigma = 1.0
+wbs_out = @WBS data
 ```
 """
 macro WBS(data, args...)
@@ -231,10 +231,10 @@ end
 
 
 """
-    @MOSUM data, G, [,var_est_method = "mosum",
-         alpha = 0.1, criterion = "eta", eta = 0.4, epsilon = 0.2]
+    @MOSUM data G [var_est_method = "mosum"
+         alpha = 0.1 criterion = "eta" eta = 0.4 epsilon = 0.2]
 
-Runs the MOSUM algorithm for `data` with bandwidth `G` and optional arguments.
+Runs the MOSUM algorithm for `data` with bandwidth `G` and optional named arguments.
 
 See also: [`MOSUM`](@ref)
 
@@ -243,12 +243,11 @@ See also: [`MOSUM`](@ref)
 n = 1000   # Length of time series
 λ = 100    # Frequency of changepoints
 G = 35     # Bandwidth
-alpha = 0.05 # optional keyword argument
 μ, σ = Normal(0.0, 10.0), 1.0
 # Samples changepoints from Normal distribution with changing mean
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Run MOSUM on sample with bandwidth G and significance alpha
-mosum_out = @MOSUM sample G alpha
+mosum_out = @MOSUM sample G alpha = 0.05
 ```
 """
 macro MOSUM(data, G, args...)

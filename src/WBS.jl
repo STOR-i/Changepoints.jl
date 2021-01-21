@@ -121,7 +121,7 @@ end
 
 
 """
-    get_WBS_changepoints(segment_cost, object, Kmax = 1,  alpha = 1.01)
+    get_WBS_changepoints(segment_cost, object [, Kmax = 1,  alpha = 1.01])
 
 Obtains changepoints from an `object` (output by the WBS function) by minimising an information criterion.
 `segment_cost` is a cost function, normally sSIC, and `alpha` is the penalty exponent. `Kmax` determines the maximum number of changepoints to detect.
