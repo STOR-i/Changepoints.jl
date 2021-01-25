@@ -3,6 +3,7 @@ module Changepoints
 using Distributions
 using Distributions: Sampleable
 using Base.Meta
+using RecipesBase
 using Statistics
 using Statistics: median
 import Base.rand
@@ -17,18 +18,6 @@ include("sim_type.jl")
 include("macros.jl")
 include("WBS.jl")
 include("MOSUM.jl")
-
-# This approach to loading supported plotting packages is taken directly from the "KernelDensity" package
-macro glue(pkg)
-    path = joinpath(dirname(@__FILE__),"glue",string(pkg,".jl"))
-    init = Symbol(string(pkg,"_init"))
-    quote
-        $(esc(init))() = Base.include($path)
-        isdefined(Main,$(QuoteNode(pkg))) && $(esc(init))()
-    end
-end
-
-@glue Winston
-@glue Gadfly
+include("plots.jl")
 
 end # module
