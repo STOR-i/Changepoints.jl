@@ -62,7 +62,7 @@ n = 1000                   # Sample size
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 ```
 
-![Plot of simulated changepoints](/docs/example.png?raw=true "Simulated Changepoints")
+![Plot of simulated changepoints](/docs/Plots_example.png?raw=true "Simulated Changepoints")
 
 To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Plots package for the convenient plotting of the results. This package must be explicity loaded to make use of this functionality. If the plotting package was loaded after Changepoints, then the user must run an additional command to load the plotting functionaly, e.g.  `Changepoints.Gadfly_init()`.
 
