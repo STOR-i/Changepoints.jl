@@ -13,6 +13,6 @@
 
     @test_nowarn WBS(seg_cost_CUSUM, n);
     @test_nowarn get_WBS_changepoints(seg_cost_sSIC, WBS(seg_cost_CUSUM, n) );
-    @test_nowarn WBS(seg_cost_CUSUM, n, 1.3, 1.0, 5000, true , 1/sqrt(2) );
+    @test_nowarn WBS(seg_cost_CUSUM, n; do_seeded = true);
 
 end
