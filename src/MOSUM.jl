@@ -24,8 +24,7 @@ G = 150
 # Run MOSUM procedure
 MOSUM_out = MOSUM(x, G)
 # Plot MOSUM detector
-using Gadfly
-Gadfly.plot(MOSUM_out)
+mosum_plot(MOSUM_out)
 ```
 
 # References

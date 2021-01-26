@@ -67,8 +67,9 @@ data, cps = @changepoint_sampler n λ Normal(μ, σ)
 To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Gadfly and Winston packages for the convenient plotting of the results. These packages must be explicity loaded to make use of this functionality. If the plotting package was loaded after Changepoints, then the user must run an additional command to load the plotting functionaly, e.g.  `Changepoints.Gadfly_init()`.
 
 ```
+Using Plots
 pelt_cps, cost = @PELT data Normal(:?, 1.0)
-plot(data, pelt_cps)
+changepoint_plot(data, pelt_cps)
 ```
 
 ![Gadfly plot of Changepoints detected by PELT](/docs/example_pelt.png?raw=true "Changepoints detected by PELT")
@@ -91,7 +92,7 @@ crops_output = @PELT data Normal(:?, 1.0) pen1 pen2
 Having segmented the dataset for a range of penalties the problem now becomes one of model selection. Again, if a plotting package has been loaded, we can create a so called "elbow" plot from these results.
 
 ```
-plot(crops_output)
+elbow_plot(crops_output)
 ```
 ![Gadfly plot of cost against number of changepoints](/docs/elbowplot.png?raw=true "Elbow plot")
 
@@ -103,8 +104,9 @@ The MOSUM procedure requires specifying a bandwidth `G`, which should be at most
 ```
 G = 35
 MOSUM_output = @MOSUM data G
-Gadfly.plot(MOSUM_output)
+mosum_plot(MOSUM_output)
 ```
+![MOSUM plot]()
 
 The Wild Binary Segmentation (WBS) procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)). The following code runs the procedure, estimating the variance with MAD:
 ```
