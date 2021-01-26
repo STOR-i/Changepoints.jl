@@ -15,8 +15,8 @@
 
     @series begin
         seriestype := :vline
-        label := ""
         linecolor   --> :red
+        label := ""
         cps
     end
 end
