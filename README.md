@@ -62,9 +62,9 @@ n = 1000                   # Sample size
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 ```
 
-![Gadfly plot of simulated changepoints](/docs/example.png?raw=true "Simulated Changepoints")
+![Plot of simulated changepoints](/docs/example.png?raw=true "Simulated Changepoints")
 
-To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Gadfly and Winston packages for the convenient plotting of the results. These packages must be explicity loaded to make use of this functionality. If the plotting package was loaded after Changepoints, then the user must run an additional command to load the plotting functionaly, e.g.  `Changepoints.Gadfly_init()`.
+To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Plots package for the convenient plotting of the results. This package must be explicity loaded to make use of this functionality. If the plotting package was loaded after Changepoints, then the user must run an additional command to load the plotting functionaly, e.g.  `Changepoints.Gadfly_init()`.
 
 ```
 Using Plots
@@ -72,7 +72,7 @@ pelt_cps, cost = @PELT data Normal(:?, 1.0)
 changepoint_plot(data, pelt_cps)
 ```
 
-![Gadfly plot of Changepoints detected by PELT](/docs/example_pelt.png?raw=true "Changepoints detected by PELT")
+![Plot of Changepoints detected by PELT](/docs/Plots_example_pelt.png?raw=true "Changepoints detected by PELT")
 
 ## Penalty selection
 
@@ -94,7 +94,7 @@ Having segmented the dataset for a range of penalties the problem now becomes on
 ```
 elbow_plot(crops_output)
 ```
-![Gadfly plot of cost against number of changepoints](/docs/elbowplot.png?raw=true "Elbow plot")
+![Elbow plot of cost against number of changepoints](/docs/Plots_elbow_plot.png?raw=true "Elbow plot")
 
 ## Segmentation
 
@@ -106,7 +106,7 @@ G = 35
 MOSUM_output = @MOSUM data G
 mosum_plot(MOSUM_output)
 ```
-![MOSUM plot]()
+![MOSUM plot](/docs/Plots_mosum_plot.png?raw=true "MOSUM plot")
 
 The Wild Binary Segmentation (WBS) procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)). The following code runs the procedure, estimating the variance with MAD:
 ```
@@ -115,17 +115,20 @@ WBS_return = @WBS data
 
 Alternatively, we may use a series of fixed intervals via Seeded Binary Segmentation (SeedBS), which gives reproducible results and is less costly (see [SeedBS](https://arxiv.org/abs/2002.06633)).
 ```
-SeedBS_return = @WBS data seeded=true
+SeedBS_return = @WBS data do_seeded=true
 ```
 
 
 We can extract estimated changepoints from both objects based on the strengthened Schwartz Information Criterion (sSIC), using `Kmax` as an upper bound of the number to be returned
 ```
-WBS_cps = get_WBS_changepoints(WBS_return, Kmax = 10)
-plot(data, WBS_cps[1])
+seg_cost_sSIC = sSIC(data)
+WBS_cps = get_WBS_changepoints(seg_cost_sSIC, WBS_return, 5)
+changepoint_plot(data, WBS_cps[1])
 ```
+![WBS plot](/docs/Plots_WBS.png?raw=true "WBS plot")
 
 ```
-SeedBS_cps = get_WBS_changepoints(WBS_return, Kmax = 10)
-plot(data, SeedBS_cps[1])
+SeedBS_cps = get_WBS_changepoints(seg_cost_sSIC, SeedBS_return, 5)
+changepoint_plot(data, SeedBS_cps[1])
 ```
+![SeedBS plot](/docs/Plots_SeedBS.png?raw=true "SeedBS plot")
