@@ -48,7 +48,7 @@ help?> @PELT
 
 # Usage
 
-As an example first we simulate a time series with multiple changes in mean and then segment it using PELT plotting the time series as we go.
+As an example first we simulate a time series with multiple changes in mean and then segment it, using PELT and segmentation methods, plotting the time series as we go.
 
 ## Simulation
 
@@ -64,7 +64,9 @@ data, cps = @changepoint_sampler n λ Normal(μ, σ)
 
 ![Plot of simulated changepoints](/docs/Plots_example.png?raw=true "Simulated Changepoints")
 
-To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Plots package for the convenient plotting of the results. This package must be explicity loaded to make use of this functionality. If the plotting package was loaded after Changepoints, then the user must run an additional command to load the plotting functionaly, e.g.  `Changepoints.Gadfly_init()`.
+## Segmentation with PELT
+
+To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Plots package for the convenient plotting of the results. This package must be explicity loaded to make use of this functionality.
 
 ```
 Using Plots
@@ -74,7 +76,7 @@ changepoint_plot(data, pelt_cps)
 
 ![Plot of Changepoints detected by PELT](/docs/Plots_example_pelt.png?raw=true "Changepoints detected by PELT")
 
-## Penalty selection
+## Penalty selection with CROPS
 
 The methods implemented view the problem as one of optimising a penalised cost function where the penalty comes in whenever a new changepoint is added. Assuming
 we have specified the correct parametric (non-parametric cost coming soon) model/cost function then the only area of possible misspecification is in the
@@ -96,7 +98,7 @@ elbow_plot(crops_output)
 ```
 ![Elbow plot of cost against number of changepoints](/docs/Plots_elbow_plot.png?raw=true "Elbow plot")
 
-## Segmentation
+## Segmentation with MOSUM
 
 By instead using segmentation algorithms, we can avoid specifying a cost function or penalty. These algorithms use local information to form test statistics, which are compared to a threshold for detection, and maximising locations are used as change point estimates.
 
@@ -107,6 +109,10 @@ MOSUM_output = @MOSUM data G
 mosum_plot(MOSUM_output)
 ```
 ![MOSUM plot](/docs/Plots_mosum_plot.png?raw=true "MOSUM plot")
+
+We intend to incorporate the multi-scale merging procedure of [Cho and Kirch 2019](https://arxiv.org/abs/1910.12486) to allow detection at a range of bandwidths.
+
+## Segmentation with WBS and SeedBS
 
 The Wild Binary Segmentation (WBS) procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)). The following code runs the procedure, estimating the variance with MAD:
 ```
