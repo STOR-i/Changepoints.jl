@@ -110,7 +110,15 @@ mosum_plot(MOSUM_output)
 ```
 ![MOSUM plot](/docs/Plots_mosum_plot.png?raw=true "MOSUM plot")
 
-We intend to incorporate the multi-scale merging procedure of [Cho and Kirch 2019](https://arxiv.org/abs/1910.12486) to allow detection at a range of bandwidths.
+
+We can perform the MOSUM procedure with a series of increasing bandwiths to detect smaller or awkwardly-arranged signals.
+We have implemented the multi-scale merging procedure of [Messer et. al.]("https://arxiv.org/pdf/1303.3594.pdf") and intend to incorporate the pruning procedure of [Cho and Kirch 2019](https://arxiv.org/abs/1910.12486).
+```
+Gset = [20, 30, 50, 80, 130]
+MOSUM_multi_scale_output = @MOSUM_multi_scale data Gset
+changepoint_plot(data, MOSUM_multi_scale_output)
+```
+![MOSUM multi scale plot](/docs/Plots_mosum_mutli_scale.png?raw=true "MOSUM multi-scale plot")
 
 ## Segmentation with WBS and SeedBS
 

@@ -42,7 +42,7 @@ function MOSUM( x::Array{Float64} , G::Int64; kwargs...)
     kwargs = Dict(kwargs)
     merge!(default_args, kwargs)
 
-
+    #return_jump_size = haskey(kwargs, :return_jump_size)
 
     CP = Array{Int64}(undef,0)
     q = 0
@@ -57,6 +57,7 @@ function MOSUM( x::Array{Float64} , G::Int64; kwargs...)
     lsqsums = zeros(Float64, n)
     rsqsums =  zeros(Float64, n)
     detector = zeros(Float64, n)
+    #jump_size = zeros(Float64, n)
     lsums = zeros(Float64, n)
     rsums = zeros(Float64, n)
 
@@ -81,6 +82,7 @@ function MOSUM( x::Array{Float64} , G::Int64; kwargs...)
         if default_args[:var_est_method] == "mosum.min"
             variance[t] = min( rvar[t], lvar[t])
         end
+        #jump_size[t] =
         detector[t] = abs(rsums[t] - lsums[t])/ sqrt(2*G*variance[t])
     end
 
@@ -112,8 +114,9 @@ function MOSUM( x::Array{Float64} , G::Int64; kwargs...)
     out["changepoints"] = CP
     out["threshold"] = D
     out["var.estimation"] = variance
+    #multi-scale
+    #if(return_jump_size) out["jump_size"] = jump_size
     return out
-
 end
 
 
@@ -164,4 +167,82 @@ function get_cps_mosum(stat::Array{Float64} , D_n::Float64, G::Int64,  criterion
 
 
   return cps, q, Reject
+end
+
+
+
+
+"""
+    MOSUM_multi_scale(x, Gset[, var_est_method, alpha, criterion, eta, epsilon])
+
+Runs the Multiple Filtre MOSUM procedure for the univariate data `x` with multiple bandwidths `Gset`, and returns the position of found changepoints.
+
+See also: [`@MOSUM_multi_scale`](@ref), [`@MOSUM`](@ref), [`MOSUM`](@ref)
+
+# Returns
+* `cps` : Integer array of estimated change points
+
+# Example
+```julia-repl
+# Sample Normal time series with changing mean
+n = 1000
+λ = 300
+μ, σ = Normal(0.0, 10.0), 1.0
+x, cps = @changepoint_sampler n λ Normal(μ, σ)
+Gset = [25, 50, 100, 150]
+# Run MOSUM procedure
+multi_scale_out = MOSUM_multi_scale(x, Gset; alpha = 0.05)
+# Plot change points
+changepoint_plot(x, multi_scale_out)
+```
+
+# References
+Messer M, Kirchner M, Schiemann J, Roeper J, Neininger R, Schneider G (2014). “A Multiple Filter Test for the Detection of Rate Changes in Renewal Processes with Varying Variance.” The Annals of Applied Statistics, 8(4), 2027–2067.
+"""
+function MOSUM_multi_scale(x::Array{Float64}, Gset::Array{Int64}; kwargs...)
+    #default_args = Dict(:return_jump_size => true)
+
+    sort!(Gset)
+    cps = Array{Int64}[]
+    for G in Gset
+        mosum_G = MOSUM(x, G; kwargs)
+        cps_G = mosum_G["changepoints"]
+        if G == Gset[1]
+            cps = cps_G
+        else
+            for k in cps_G
+                min_dist = minimum(abs.(cps .- k))
+                if min_dist >= G
+                    push!(cps, k)
+                end
+            end # for
+        end
+    end
+
+
+#    #step 1
+#    PairSet = Array{Union{Float64, Int64}}[]
+#    for G in Gset
+#        mosum_G = MOSUM(x, G; default_args)
+#        cps = mosum_G["changepoints"]
+#        for k in cps
+#            h = mosum_G["detector"][k]
+#            push!(PairSet, [h, k, G])
+#        end # for
+#    end
+#    sort!(Pairset)
+#    #step 2
+#    D = Array{Union{Float64, Int64}}[] #conflicting
+#    Cset = PairSet
+#    while length(PairSet) > 0
+#        candidate = pop!(Pairset) #current max jump
+#        for i in 1:length(PairSet)
+#            if  abs(PairSet[i,2] -. candidate[2]) < min(candidate[3], PairSet[i,3])
+#                take = popat(PairSet, i)
+#                push!(D, take)
+#            end
+#        end
+#    end
+    return(cps)
+    #2
 end

@@ -263,3 +263,46 @@ macro MOSUM(data, G, args...)
         return esc(:(MOSUM($(data), $(G))))
     end
 end
+
+
+"""
+    @MOSUM_multi_scale data Gset [var_est_method = "mosum"
+         alpha = 0.1 criterion = "eta" eta = 0.4 epsilon = 0.2]
+
+Runs the Multiple Filtre MOSUM procedure for the univariate data `x` with multiple bandwidths `Gset`, and returns the position of found changepoints.
+
+See also: [`MOSUM_multi_scale`](@ref), [`@MOSUM`](@ref), [`MOSUM`](@ref)
+
+# Returns
+* `cps` : Integer array of estimated change points
+
+# Example
+```julia-repl
+# Sample Normal time series with changing mean
+n = 1000
+λ = 300
+μ, σ = Normal(0.0, 10.0), 1.0
+x, cps = @changepoint_sampler n λ Normal(μ, σ)
+Gset = [25, 50, 100, 150]
+# Run MOSUM procedure
+multi_scale_out = @MOSUM_multi_scale x Gset alpha = 0.05
+# Plot change points
+changepoint_plot(x, multi_scale_out)
+```
+
+# References
+Messer M, Kirchner M, Schiemann J, Roeper J, Neininger R, Schneider G (2014). “A Multiple Filter Test for the Detection of Rate Changes in Renewal Processes with Varying Variance.” The Annals of Applied Statistics, 8(4), 2027–2067.
+"""
+macro MOSUM_multi_scale(data, Gset, args...)
+    aakws = Pair{Symbol,Any}[]
+    for el in args
+        if Meta.isexpr(el, :(=))
+            push!(aakws, Pair(el.args...))
+        end
+    end
+    if length(args) > 0
+        return esc(:(MOSUM_multi_scale($(data), $(Gset); $aakws... ))) #, $(var_est_method), alpha, criterion, eta, epsilon)
+    else
+        return esc(:(MOSUM_multi_scale($(data), $(Gset))))
+    end
+end
