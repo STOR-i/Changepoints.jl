@@ -118,7 +118,7 @@ Gset = [20, 30, 50, 80, 130]
 MOSUM_multi_scale_output = @MOSUM_multi_scale data Gset
 changepoint_plot(data, MOSUM_multi_scale_output)
 ```
-![MOSUM multi scale plot](/docs/Plots_mosum_mutli_scale.png?raw=true "MOSUM multi-scale plot")
+![MOSUM multi scale plot](/docs/Plots_mosum_multi_scale.png?raw=true "MOSUM multi-scale plot")
 
 ## Segmentation with WBS and SeedBS
 
