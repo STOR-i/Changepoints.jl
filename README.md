@@ -52,8 +52,8 @@ As an example first we simulate a time series with multiple changes in mean and 
 
 ## Simulation
 
-This code simulates a time series of length n with segments that have lengths drawn from a Poisson distribution with mean lambda. The variance
-is fixed in this case as one but for each new segment a new mean is drawn from a standard gaussian distribution.
+This code simulates a time series of length `n` with segments that have lengths drawn from a Poisson distribution with mean lambda.
+The variance is fixed in this case as one but for each new segment a new mean is drawn from a standard Gaussian distribution.
 
 ```
 n = 1000                   # Sample size
@@ -66,10 +66,47 @@ data, cps = @changepoint_sampler n λ Normal(μ, σ)
 
 ## Segmentation with PELT
 
-To segment the data assuming it is Normally distributed and has a constant variance of one, using a default penalty (the log of the length of the data) can be done using the @PELT macro. Currently, this package supports the Plots package for the convenient plotting of the results. This package must be explicity loaded to make use of this functionality.
+To segment a time series using PELT we need a cost function for segments of our data, and optionally a penalty for each changepoint.
+Twice the negative log-likelihood is a commonly used cost function in changepoint detection, and this package provides a variety of these for different parametric models.
+
+The following code constructs a log-likelihood based cost function for segments of the data generated above which are assumed to follow a Normal distribution with unknown mean and a known fixed variance (1 in this case):
 
 ```
-Using Plots
+σ = 1.0
+seg_cost = NormalMeanChange(data, σ)  # Create segment cost function
+
+```
+
+We can now run PELT for this cost function with the `PELT` function which requires a cost function and the length of our sequence of data:
+
+```
+pelt_cps, pelt_cost = PELT(seg_cost, length(data))   # Run PELT
+```
+
+The `PELT` function returns an integer array containing the indices of the changepoints, and the total cost of the segmentation.
+By default, the `PELT` function uses a penalty of `log(n)` where `n` is the length of the sequence of data, but this can also be specified by the user as an optional third argument.
+
+For convenience, we also provide a macro for running PELT, `@PELT`,  which allows one to construct a cost function and run PELT in a single line:
+
+```
+pelt_cps, cost = @PELT data Normal(:?, 1.0)
+```
+
+This takes as arguments the data to be segmented and a model to construct a cost function, and returns the same output as the `PELT` function.
+Again, an optional third argument can be used to specify a changepoint penalty.
+The model specified in the second argument is a distribution (using the same distribution names as in the `Distributions` package`) with the symbol `:?` replacing any parameters whose values are assumed to change at changepoints.
+Some other examples of expressions which can be used with PELT in this way are:
+
+
+- `Normal(μ, :?)`: Normally distributed data with known mean (μ) and changing variance
+- `Normal(:?, :?)`: Normally distributed data with changing mean and variance
+- `Exponential(:?)`: data distributed as Exponential distribution with changing mean
+- `Gamma(:?, β)`: data distributed as Gamma distribution with changing shape parameter and known rate parameter `β`
+
+Currently, this package supports the Plots package for the convenient plotting of the results. This package must be explicity loaded to make use of this functionality.
+
+```
+using Plots
 pelt_cps, cost = @PELT data Normal(:?, 1.0)
 changepoint_plot(data, pelt_cps)
 ```
@@ -78,20 +115,30 @@ changepoint_plot(data, pelt_cps)
 
 ## Penalty selection with CROPS
 
-The methods implemented view the problem as one of optimising a penalised cost function where the penalty comes in whenever a new changepoint is added. Assuming
-we have specified the correct parametric (non-parametric cost coming soon) model/cost function then the only area of possible misspecification is in the
-value of the penalty. There is no "correct" choice of penalty however it can be very instructive to look at the segmentations and especially the number of changepoints
-for a range of penalties. The Changepoints for a Range Of Penalties (CROPS) method allows us to do this efficiently using PELT, by exploiting the relationship
-between the penalised and constrained versions of the same optimisation problem. For more information see [CROPS](http://arxiv.org/abs/1412.3617).
+The methods implemented view the problem as one of optimising a penalised cost function where the penalty comes in whenever a new changepoint is added.
+Assuming we have specified the correct model/cost function then the only area of possible misspecification is in the value of the penalty.
+There is no "correct" choice of penalty however, but it can be very instructive to look at the segmentations and especially the number of changepoints for a range of penalties.
+The Changepoints for a Range Of Penalties (CROPS) method allows us to do this efficiently using PELT, by exploiting the relationship between the penalised and constrained versions of the same optimisation problem.
+For more information see [CROPS](http://arxiv.org/abs/1412.3617).
 
-To run the PELT algorithm for a range of penalties say pen1 to pen2 where pen1 < pen2
-then we can use the following code:
+To run the PELT algorithm for a range of penalties say pen1 to pen2 where pen1 < pen2 then we can use the `CROPS` function
+which takes as input a segment cost function, the length of the data set and the two penalties:
+```
+seg_cost = NormalMeanSegment(data, σ) 
+pen1, pen2 = 4.0, 100.0 # Penalty range
+crops_output = CROPS(seg_cost, n, pen1, pen2)
+```
+
+The `CROPS` function returns a dictionary containing outputs such as the penalties for which PELT was run, and the corresponding changepoints.
+See the function documentation for more details.
+For convenience, CROPS can also be run using the `@PELT` macro by simply specifying a second penalty:
 
 ```
 crops_output = @PELT data Normal(:?, 1.0) pen1 pen2
 ```
 
-Having segmented the dataset for a range of penalties the problem now becomes one of model selection. Again, if a plotting package has been loaded, we can create a so called "elbow" plot from these results.
+Having segmented the data set for a range of penalties the problem now becomes one of model selection.
+Again, if a plotting package has been loaded, we can create a so called "elbow" plot from these results.
 
 ```
 elbow_plot(crops_output)
@@ -100,9 +147,11 @@ elbow_plot(crops_output)
 
 ## Segmentation with MOSUM
 
-By instead using segmentation algorithms, we can avoid specifying a cost function or penalty. These algorithms use local information to form test statistics, which are compared to a threshold for detection, and maximising locations are used as change point estimates.
+By instead using segmentation algorithms, we can avoid specifying a cost function or penalty.
+These algorithms use local information to form test statistics, which are compared to a threshold for detection, and maximising locations are used as changepoint estimates.
 
-The MOSUM procedure requires specifying a bandwidth `G`, which should be at most half of the true minimum segment length (see [MOSUM](https://projecteuclid.org/euclid.bj/1501142454)). To run the procedure we use the following code:
+The MOSUM procedure requires specifying a bandwidth `G`, which should be at most half of the true minimum segment length (see [MOSUM](https://projecteuclid.org/euclid.bj/1501142454)).
+To run the procedure we use the following code:
 ```
 G = 35
 MOSUM_output = @MOSUM data G
@@ -110,9 +159,8 @@ mosum_plot(MOSUM_output)
 ```
 ![MOSUM plot](/docs/Plots_mosum_plot.png?raw=true "MOSUM plot")
 
-
 We can perform the MOSUM procedure with a series of increasing bandwiths to detect smaller or awkwardly-arranged signals.
-We have implemented the multi-scale merging procedure of [Messer et. al. 2014](https://arxiv.org/pdf/1303.3594.pdf) and intend to incorporate the pruning procedure of [Cho and Kirch 2019](https://arxiv.org/abs/1910.12486).
+We have implemented the multi-scale merging procedure of [Messer et. al. 2014](https://arxiv.org/pdf/1303.3594.pdf):
 ```
 Gset = [20, 30, 50, 80, 130]
 MOSUM_multi_scale_output = @MOSUM_multi_scale data Gset
@@ -120,9 +168,12 @@ changepoint_plot(data, MOSUM_multi_scale_output)
 ```
 ![MOSUM multi scale plot](/docs/Plots_mosum_multi_scale.png?raw=true "MOSUM multi-scale plot")
 
+In the future we intend to incorporate the pruning procedure of [Cho and Kirch 2019](https://arxiv.org/abs/1910.12486).
+
 ## Segmentation with WBS and SeedBS
 
-The Wild Binary Segmentation (WBS) procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)). The following code runs the procedure, estimating the variance with MAD:
+The Wild Binary Segmentation (WBS) procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)).
+The following code runs the procedure, estimating the variance with MAD:
 ```
 WBS_return = @WBS data
 ```
@@ -132,8 +183,7 @@ Alternatively, we may use a series of fixed intervals via Seeded Binary Segmenta
 SeedBS_return = @WBS data do_seeded=true
 ```
 
-
-We can extract estimated changepoints from both objects based on the strengthened Schwartz Information Criterion (sSIC), using `Kmax` as an upper bound of the number to be returned
+We can extract estimated changepoints from both objects based on the strengthened Schwartz Information Criterion (sSIC), using `Kmax` as an upper bound of the number to be returned:
 ```
 seg_cost_sSIC = sSIC(data)
 WBS_cps = get_WBS_changepoints(seg_cost_sSIC, WBS_return, 5)
@@ -146,3 +196,9 @@ SeedBS_cps = get_WBS_changepoints(seg_cost_sSIC, SeedBS_return, 5)
 changepoint_plot(data, SeedBS_cps[1])
 ```
 ![SeedBS plot](/docs/Plots_SeedBS.png?raw=true "SeedBS plot")
+
+
+## Package development
+
+This package was originally developed by Jamie Fairbrother (@fairbrot), Lawrence Bardwell (@bardwell) and Kaylea Haynes (@kayleahaynes) in 2015.
+It is currently being maintained and extended by Jamie Fairbrother and Dom Owens (@Dom-Owens-UoB).
