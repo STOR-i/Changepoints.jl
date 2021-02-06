@@ -1,20 +1,31 @@
 # This script provides an example of simulating changepoint data,
 # using PELT to find these changepoints, and plotting the results
 #
-# Requires Gadfly plotting package
+# Requires Plots package
 
 using Changepoints, Distributions
-using Gadfly
+using Plots
+
+#########################
+# Simulate changepoints #
+#########################
 
 n = 1000           # Sample size
 λ = 100            # Frequencey of changes
 
-# Generate a sample with changing 
+# Sigma parameter sampled from a Uniform(2,15) distribution for each changepoint
 μ, σ = 1.0, Uniform(2.0, 15.0)
+# Generate a sample with from Normal distribution with changing variance
 y, cps = @changepoint_sampler n λ Normal(μ, σ)
-pelt_cps, cost = @PELT y Normal(μ, ?)
 
-println(pelt_cps)
-println(cps)
+########################
+# Finding changepoints #
+########################
 
-p = plot(y, pelt_cps)
+pelt_cps, cost = @PELT y Normal(μ, :?)
+
+println("True changepoints:", cps)
+println("Changepoint found by PELT:", pelt_cps)
+
+changepoint_plot(y, pelt_cps)
+gui()

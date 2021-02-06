@@ -1,31 +1,39 @@
-using Gadfly, Distributions
+# This script provides an example of simulating changepoint data,
+# using CROPS to find changepoints for a range of penalties,
+# and plotting the results of this.
+#
+# Requires Plots package
+
+using Random
+using Distributions, Plots
 using Changepoints
 
-srand(1)
+Random.seed!(1) # Fix random seed
+
+#########################
+# Simulate changepoints #
+#########################
 
 # Simulate time series with changepoints
 n = 1000          # Sample size
 λ = 25            # Freq of changepoints
+
+# Mu parameter sampled from a N(0, 1) distribution for each changepoint
 μ, σ = Normal(0,1), 1.0 
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 
-# Find the Changepoints for a specific penalty
-pelt_cps, pelt_cost = @PELT data Normal(?, 1.0) 6.0
+########################
+# Finding changepoints #
+########################
 
 # For a range of penalties construct a cost function and use the CROPS function
 seg_cost = NormalMeanSegment(data)
 crops_output = CROPS(seg_cost , n, (4.0,100.0))
 # ...or use the PELT macro
-@PELT data Normal(?, 1.0) 4.0 100.0
+# crops_output = @PELT data Normal(?, 1.0) 4.0 100.0
 
-# 1st plot: time series
-p1 = plot(y=data, Geom.line, Theme(default_color=colorant"black"))
-draw(PNG("example.png", 5inch, 5inch), p1)
-
-# 2nd plot: time series with chpts
-p2 = plot(data, pelt_cps)
-draw(PNG("example_pelt.png", 5inch, 5inch), p2)
-
-# 3rd: elbow plot
-p3 = plot(crops_output)
-draw(PNG("elbowplot.png", 5inch, 5inch), p3)
+p1 = plot(data, label="Simulated time series with changepoint")
+p2 = plot()
+elbow_plot!(p2, crops_output)
+p = plot(p1, p2, layout=(2,1))
+gui()
