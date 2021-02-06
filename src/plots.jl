@@ -39,8 +39,8 @@ changepoint_plot
     x = h.args[1]["number"]
     y = h.args[1]["constrained"]
     title := "Elbow Plot for Range of Penalties"
-    ylabel := "Cost"
-    xlabel := "Number of Segments"
+    yguide := "Cost"
+    xguide := "Number of Segments"
     @series begin
         seriestype := :line
         markershape := :circle
