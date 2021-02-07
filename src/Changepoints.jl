@@ -8,7 +8,7 @@ using Statistics
 using Statistics: median
 import Base.rand
 
-export PELT, @PELT, BS, @BS, CROPS, @segment_cost, NormalVarSegment, NormalMeanSegment, NormalMeanVarSegment, PoissonSegment, BetaSegment, ExponentialSegment, ChangepointSampler, GammaShapeSegment, GammaRateSegment, NonparametricSegment, OLSSegment, @changepoint_sampler, WBS, @WBS, get_WBS_changepoints, MOSUM, @MOSUM, get_cps_mosum
+export PELT, @PELT, BS, @BS, CROPS, @segment_cost, NormalVarSegment, NormalMeanSegment, NormalMeanVarSegment, PoissonSegment, BetaSegment, ExponentialSegment, ChangepointSampler, GammaShapeSegment, GammaRateSegment, NonparametricSegment, OLSSegment, @changepoint_sampler, WBS, @WBS, get_WBS_changepoints, MOSUM, @MOSUM, get_cps_mosum, @MOSUM_multi_scale, sSIC
 
 include("segment_costs.jl")
 include("PELT.jl")
