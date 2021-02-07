@@ -1,7 +1,7 @@
 mutable struct ChangepointSampler <: Sampleable{Univariate, Continuous}
     rand_dist_gen::Function                  # Function which generates a random distribution
     λ::Int                                   # Frequency of changepoints
-    changepoints::Array{Int64,1}               # Changepoints indices
+    changepoints::Array{Int64,1}             # Changepoints indices
     segment_params::Array{Any}               # Params of segments
     # Current state of sampler
     _counter::Int                            # number of changepoints
@@ -41,7 +41,7 @@ cp_rand(dist::ChangepointSampler, n::Int) = rand(dist, n), dist.changepoints
 
 function ran_dist(dist_type::Type, args...)
     newargs = Any[]
-    for a in args[2:end]
+    for a in args
         if isa(a, Sampleable)
             push!(newargs, rand(a))
         else push!(newargs, a) end
