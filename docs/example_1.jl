@@ -13,8 +13,8 @@ using Changepoints
 n = 1000        # Length of sample
 λ = 100         # Frequencey of changes
 
-# Mu parameter sampled from a N(0, 10) distribution for each changepoint
-μ = Normal(0.0, 10.0) 
+# Mu parameter sampled from a N(0,10) distribution for each changepoint
+μ = Normal(0,5) 
 σ = 1.0 # Sigma parameter fixed
 
 # Construct sample with changepoints where
@@ -31,7 +31,7 @@ sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 pelt_cps, pelt_cost = @PELT sample Normal(:?, σ)
 
 # Find changepoints via Binary Segmentation
-bs_cps = @BS sample Normal(:?, σ)
+bs_cps, bs_cost = @BS sample Normal(:?, σ)
 
 # If plotting multiple sets of changepoints which need to labelled
 # separately, it is best not to use `changepoint_plot` function
