@@ -16,12 +16,12 @@ This package is still under development. If you have any suggestions to improve 
 
 Change point detection aims to model time series data as piecewise stationary
 
-\[ X_t = f_t, \quad f_t \sim \mathbb{P}_j, j=1, \dots, q; k_j < t \leq k_{j+1}  \]
+<img src="https://render.githubusercontent.com/render/math?math=X_t = f_t, \quad f_t \sim \mathbb{P}_j, j=1, \dots, q; k_j < t \leq k_{j+1} ">
 
-for distributions \[ \mathbb{P}_j \] and change points \[k_j\],
-with the convention that $k_0=1$ and \[k_{q+1}=n\] denote the start and end of the data.
+for distributions <img src="https://render.githubusercontent.com/render/math?math=\mathbb{P}_j">  and change points <img src="https://render.githubusercontent.com/render/math?math=k_j">  ,
+with the convention that <img src="https://render.githubusercontent.com/render/math?math=k_0=1">  and <img src="https://render.githubusercontent.com/render/math?math=k_{q+1}=n"> denote the start and end of the data.
 
-The simplest such model is the piecewise-constant mean setting, where \[f_t = \mu_j + \epsilon_t, \mu_j \neq  \mu_{j+1}, E(\epsilon_t) = 0$, Var(\epsilon_t) = \sigma^2\].
+The simplest such model is the piecewise-constant mean setting, where <img src="https://render.githubusercontent.com/render/math?math=f_t = \mu_j + \epsilon_t, \mu_j \neq  \mu_{j+1}, E(\epsilon_t) = 0$, Var(\epsilon_t) = \sigma^2">.
 
 The methods in this package aim to estimate the number and location of changes in a given model.
 
