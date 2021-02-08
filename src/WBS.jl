@@ -123,15 +123,15 @@ end
 """
     get_WBS_changepoints(segment_cost, object [, Kmax = 1,  alpha = 1.01])
 
-Obtains changepoints from an `object` (output by the WBS function) by minimising an information criterion.
+Obtains change points from an `object` (output by the WBS function) by minimising an information criterion.
 `segment_cost` is a cost function, normally sSIC, and `alpha` is the penalty exponent. `Kmax` determines the maximum number of changepoints to detect.
 
-See also: [`@WBS`](@ref), [`@segment_cost`](@ref)
+See also: [`@WBS`](@ref), [`WBS`](@ref), [`sSIC`](@ref), [`@segment_cost`](@ref)
 
 # Returns
-* `out_cps`: Vector of changepoint locations under optimal segmentation
-* `optimal_number`: Integer number of changepoints which optimises the criterion
-* `cost`: Vector of segmentations cost for 0, ..., Kmax  changes
+* `out_cps`: Vector of change point locations under optimal segmentation
+* `optimal_number`: Integer number of change points which optimises the criterion
+* `cost`: Vector of segmentation costs for 0, ..., `Kmax`  changes
 * `object[1:optimal]`: WBS object truncated at optimal number
 # Example
 

@@ -4,11 +4,26 @@
 
 A Julia package for the detection of multiple changepoints in time series.
 
+This package is still under development. If you have any suggestions to improve the package, or if you've noticed a bug, then please post an [issue](https://github.com/STOR-i/Changepoints.jl/issues/new) for us and we'll get to it as quickly as we can. Pull requests are also welcome.
+
 - Detection is based on optimising a cost function over segments of the data.
 - Implementations of the most efficient search algorithms (PELT , Binary Segmentation).
 - A wide choice of parametric cost functions already implemented such as a change in mean/variance/mean and variance for Normal errors.
 - Changepoint algorithms have an interface which allows users to input their own cost functions
 - Implementations of testing-based segmentation algorithms (Wild/Seeded Binary Segmentation, MOSUM) for the univariate mean change problem
+
+## Introduction
+
+Change point detection aims to model time series data as piecewise stationary
+
+$$ X_t = f_t, \quad f_t \sim \mathbb{P}_j, j=1, \dots, q; k_j < t \leq k_{j+1}  $$
+
+for distributions $\mathbb{P}_j$ and change points $k_j$,
+with the convention that $k_0=1$ and $k_{q+1}=n$ denote the start and end of the data.
+
+The simplest such model is the piecewise-constant mean setting, where $f_t = \mu_j + \epsilon_t$, $\mu_j \neq  \mu_{j+1}, $E(\epsilon_t) = 0$, $Var(\epsilon_t) = \sigma^2$.
+
+The methods in this package aim to estimate the number and location of changes in a given model.
 
 For a general overview of the multiple changepoint problem and mathematical details see [PELT](http://arxiv.org/pdf/1101.1438.pdf). For an overview of segmentation algorithms, see [Data segmentation algorithms: Univariate mean change and beyond](https://arxiv.org/pdf/2012.12814).
 
@@ -124,7 +139,7 @@ For more information see [CROPS](http://arxiv.org/abs/1412.3617).
 To run the PELT algorithm for a range of penalties say pen1 to pen2 where pen1 < pen2 then we can use the `CROPS` function
 which takes as input a segment cost function, the length of the data set and the two penalties:
 ```
-seg_cost = NormalMeanSegment(data, σ) 
+seg_cost = NormalMeanSegment(data, σ)
 pen1, pen2 = 4.0, 100.0 # Penalty range
 crops_output = CROPS(seg_cost, n, pen1, pen2)
 ```
@@ -148,9 +163,10 @@ elbow_plot(crops_output)
 ## Segmentation with MOSUM
 
 By instead using segmentation algorithms, we can avoid specifying a cost function or penalty.
-These algorithms use local information to form test statistics, which are compared to a threshold for detection, and maximising locations are used as changepoint estimates.
+These algorithms use local information to form test statistics, which are compared to a threshold for detection, and maximising locations are used as changepoint estimates. Those implemented in this package are for the change in mean setting.
 
-The MOSUM procedure requires specifying a bandwidth `G`, which should be at most half of the true minimum segment length (see [MOSUM](https://projecteuclid.org/euclid.bj/1501142454)).
+The MOSUM procedure requires specifying a bandwidth `G`, which should be at most half of the true minimum segment length (see [MOSUM](https://projecteuclid.org/euclid.bj/1501142454)). To see optional function arguments, enter `?@MOSUM` into the REPL.
+This returns a dictionary with outputs including change point locations and the detector statistic.
 To run the procedure we use the following code:
 ```
 G = 35
@@ -160,7 +176,8 @@ mosum_plot(MOSUM_output)
 ![MOSUM plot](/docs/Plots_mosum_plot.png?raw=true "MOSUM plot")
 
 We can perform the MOSUM procedure with a series of increasing bandwiths to detect smaller or awkwardly-arranged signals.
-We have implemented the multi-scale merging procedure of [Messer et. al. 2014](https://arxiv.org/pdf/1303.3594.pdf):
+We have implemented the multi-scale merging procedure of [Messer et. al. 2014](https://arxiv.org/pdf/1303.3594.pdf), which runs the procedure for bandwidths in increasing order, adding as a change point only those located which are not too close to any points already located. This returns a vector of estimated change points.
+To run this, we enter:
 ```
 Gset = [20, 30, 50, 80, 130]
 MOSUM_multi_scale_output = @MOSUM_multi_scale data Gset
@@ -173,26 +190,30 @@ In the future we intend to incorporate the pruning procedure of [Cho and Kirch 2
 ## Segmentation with WBS and SeedBS
 
 The Wild Binary Segmentation (WBS) procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)).
+Optionally, we can specify the threshold scaling constant, the standard deviation, and the number of intervals to draw. We are returned an array of tuples containing change point information, in decreasing detection order; see `?WBS` for details.
+
 The following code runs the procedure, estimating the variance with MAD:
 ```
 WBS_return = @WBS data
 ```
 
 Alternatively, we may use a series of fixed intervals via Seeded Binary Segmentation (SeedBS), which gives reproducible results and is less costly (see [SeedBS](https://arxiv.org/abs/2002.06633)).
+We call this with an optional argument:
 ```
 SeedBS_return = @WBS data do_seeded=true
 ```
 
-We can extract estimated changepoints from both objects based on the strengthened Schwartz Information Criterion (sSIC), using `Kmax` as an upper bound of the number to be returned:
+We can extract estimated change points from both objects by minimising the penalised strengthened Schwartz Information Criterion (sSIC) (see references). Using `Kmax` as an upper bound of the number to be returned, we call this via:
 ```
 seg_cost_sSIC = sSIC(data)
-WBS_cps = get_WBS_changepoints(seg_cost_sSIC, WBS_return, 5)
+Kmax = 5
+WBS_cps = get_WBS_changepoints(seg_cost_sSIC, WBS_return, Kmax)
 changepoint_plot(data, WBS_cps[1])
 ```
 ![WBS plot](/docs/Plots_WBS.png?raw=true "WBS plot")
 
 ```
-SeedBS_cps = get_WBS_changepoints(seg_cost_sSIC, SeedBS_return, 5)
+SeedBS_cps = get_WBS_changepoints(seg_cost_sSIC, SeedBS_return, Kmax)
 changepoint_plot(data, SeedBS_cps[1])
 ```
 ![SeedBS plot](/docs/Plots_SeedBS.png?raw=true "SeedBS plot")

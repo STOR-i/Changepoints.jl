@@ -189,7 +189,10 @@ end
     @WBS data [th_const = 1.3 sigma = 1.0 M = 5000 do_seeded = false shrink = 1/sqrt(2) ]
 
 Runs the Wild Binary Segmentation algorithm for `data` with optional named arguments.
-If no `sigma` is specified, estimates via Median Absolute Deviation (MAD).
+
+The test threshold is determined by `th_const` and the known or estimated standard deviation `sigma`. If no `sigma` is specified, estimates via Median Absolute Deviation (MAD).
+`do_seeded` determined whether to use seeded intervals. If true, `shrink` is the decay factor for interval length; if not, `M` random intervals are drawn, and returns the position of found changepoints, and
+the cost of this segmentation.
 
 See also: [`WBS`](@ref), [`@segment_cost`](@ref)
 
@@ -236,6 +239,11 @@ end
 
 Runs the MOSUM algorithm for `data` with bandwidth `G` and optional named arguments.
 
+    Optionally, `var_est_method` specifies the variance estimator to normalise by; this can be the average `mosum` (default) or minimum `mosum.min` across windows.
+    `alpha` determines the signicance level (default 0.1).
+    `criterion` determines whether to use the `eta` (default) or `epsilon` location procedure (see references).
+    `eta` and `epsilon` are tuning parameters for the mentioned procedures (default 0.4 and 0.2).
+
 See also: [`MOSUM`](@ref)
 
 # Example
@@ -270,6 +278,7 @@ end
          alpha = 0.1 criterion = "eta" eta = 0.4 epsilon = 0.2]
 
 Runs the Multiple Filtre MOSUM procedure for the univariate data `x` with multiple bandwidths `Gset`, and returns the position of found changepoints.
+For optional arguments, see `@MOSUM`.
 
 See also: [`MOSUM_multi_scale`](@ref), [`@MOSUM`](@ref), [`MOSUM`](@ref)
 

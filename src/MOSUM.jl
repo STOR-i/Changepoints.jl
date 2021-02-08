@@ -3,6 +3,11 @@
 
 Runs the MOSUM procedure for the univariate data `x` with bandwidth `G`, and returns the number and position of found changepoints.
 
+Optionally, `var_est_method` specifies the variance estimator to normalise by; this can be the average `mosum` (default) or minimum `mosum.min` across windows.
+`alpha` determines the signicance level (default 0.1).
+`criterion` determines whether to use the `eta` (default) or `epsilon` location procedure (see references).
+`eta` and `epsilon` are tuning parameters for the mentioned procedures (default 0.4 and 0.2).
+
 See also: [`@BS`](@ref), [`@WBS`](@ref)
 
 # Returns
@@ -176,6 +181,7 @@ end
     MOSUM_multi_scale(x, Gset[, var_est_method, alpha, criterion, eta, epsilon])
 
 Runs the Multiple Filtre MOSUM procedure for the univariate data `x` with multiple bandwidths `Gset`, and returns the position of found changepoints.
+For optional arguments, see `@MOSUM`.
 
 See also: [`@MOSUM_multi_scale`](@ref), [`@MOSUM`](@ref), [`MOSUM`](@ref)
 
