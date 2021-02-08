@@ -17,7 +17,7 @@ n = 1000          # Sample size
 λ = 70            # Freq of changepoints
 
 # Mu parameter sampled from a N(0, 1) distribution for each changepoint
-μ, σ = Normal(0,1), 1.0 
+μ, σ = Normal(0,1), 1.0
 data, cps = @changepoint_sampler n λ Normal(μ, σ)
 changepoint_plot(data, cps)
 savefig("Plots_example.png")
@@ -31,7 +31,7 @@ savefig("Plots_example_pelt.png")
 
 # CROPS
 
-seg_cost = NormalMeanSegment(data, σ) 
+seg_cost = NormalMeanSegment(data, σ)
 pen1, pen2 = 4.0, 100.0 # Penalty range
 crops_output = CROPS(seg_cost, n, pen1, pen2)
 elbow_plot(crops_output)
@@ -52,14 +52,16 @@ changepoint_plot(data, MOSUM_multi_scale_output)
 savefig("Plots_mosum_multi_scale.png")
 
 # WBS
-
-WBS_return = @WBS data
+seg_cost_cusum = Changepoints.CUSUM(data)
+WBS_return = WBS(seg_cost_cusum,n )
+#WBS_return = Changepoints.@WBS data
 seg_cost_sSIC = Changepoints.sSIC(data)
 WBS_cps = get_WBS_changepoints(seg_cost_sSIC, WBS_return, 5)
 changepoint_plot(data, WBS_cps[1])
 savefig("Plots_WBS.png")
 
-SeedBS_return = @WBS data do_seeded=true
+SeedBS_return = WBS(seg_cost_cusum,n , do_seeded = true)
+#SeedBS_return = @WBS data do_seeded=true
 SeedBS_cps = get_WBS_changepoints(seg_cost_sSIC, SeedBS_return, 5)
 changepoint_plot(data, SeedBS_cps[1])
 savefig("Plots_SeedBS.png")

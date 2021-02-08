@@ -58,7 +58,7 @@ elbow_plot
 
 
 @userplot MOSUM_Plot
-using RecipesBase
+
 @recipe function f(h::MOSUM_Plot)
     if length(h.args) != 1 || !(typeof(h.args[1]) <: AbstractDict) || !haskey(h.args[1], "detector") || !haskey(h.args[1], "changepoints") || !haskey(h.args[1], "threshold")
         error("MOSUM plot should be given dictionary returned from running MOSUM algorithm. See [`MOSUM`](@ref)")
