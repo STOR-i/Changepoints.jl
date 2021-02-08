@@ -21,7 +21,11 @@ Change point detection aims to model time series data as piecewise stationary
 for distributions <img src="https://render.githubusercontent.com/render/math?math=\mathbb{P}_j">  and change points <img src="https://render.githubusercontent.com/render/math?math=k_j">  ,
 with the convention that <img src="https://render.githubusercontent.com/render/math?math=k_0=1">  and <img src="https://render.githubusercontent.com/render/math?math=k_{q+1}=n"> denote the start and end of the data.
 
+<<<<<<< HEAD
 The simplest such model is the piecewise-constant mean setting, where <img src="https://render.githubusercontent.com/render/math?math=f_t = \mu_j \+ \epsilon_t, \mu_j \neq  \mu_{j+1}, E(\epsilon_t) = 0, Var(\epsilon_t) = \sigma^2">.
+=======
+The simplest such model is the piecewise-constant mean setting, where <img src="https://render.githubusercontent.com/render/math?math=f_t = \mu_j \plus \epsilon_t, \mu_j \neq  \mu_{j+1}, E(\epsilon_t) = 0, Var(\epsilon_t) = \sigma^2">.
+>>>>>>> 7bb438ea984da6eedb21aa1188226ef466a172cf
 
 The methods in this package aim to estimate the number and location of changes in a given model.
 
