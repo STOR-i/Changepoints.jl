@@ -6,6 +6,8 @@ A Julia package for the detection of multiple changepoints in time series.
 
 This package is still under development. If you have any suggestions to improve the package, or if you've noticed a bug, then please post an [issue](https://github.com/STOR-i/Changepoints.jl/issues/new) for us and we'll get to it as quickly as we can. Pull requests are also welcome.
 
+## Features
+
 - Detection is based on optimising a cost function over segments of the data.
 - Implementations of the most efficient search algorithms (PELT , Binary Segmentation).
 - A wide choice of parametric cost functions already implemented such as a change in mean/variance/mean and variance for Normal errors.
@@ -19,11 +21,11 @@ Change point detection aims to model time series data as piecewise stationary be
 <img src="https://render.githubusercontent.com/render/math?math=X_t = f_t, \quad f_t \sim \mathbb{P}_j, j=1, \dots, q; k_j < t \leq k_{j+1} ">
 
 for distributions <img src="https://render.githubusercontent.com/render/math?math=\mathbb{P}_j">,
-with the convention that <img src="https://render.githubusercontent.com/render/math?math=k_0=1">  and <img src="https://render.githubusercontent.com/render/math?math=k_{q+1}=n"> denote the start and end of the data.
+with the convention that <img src="https://render.githubusercontent.com/render/math?math=k_0=1">  and <img src="https://render.githubusercontent.com/render/math?math=k_{q%2B1}=n"> denote the start and end of the data.
 
-The simplest such model is the piecewise-constant mean setting, where <img src="https://render.githubusercontent.com/render/math?math=f_t = \mu_j \+ \epsilon_t, \mu_j \neq  \mu_{j+1}, E(\epsilon_t) = 0, Var(\epsilon_t) = \sigma^2">.
+The simplest such model is the piecewise-constant mean setting, where <img src="https://render.githubusercontent.com/render/math?math=f_t = \mu_j + \epsilon_t, \mu_j \neq  \mu_{j%2B1}, E(\epsilon_t) = 0, Var(\epsilon_t) = \sigma^2">.
 
-The methods in this package aim to estimate the number and location of changes in a given model. Penalty-based approaches aim to minimise the quantity <img src="https://render.githubusercontent.com/render/math?math= \sum_{j=1}^{q+1}[\mathcal{C}(x_{k_{j-1}:k_j)}] + \beta f(q)">
+The methods in this package aim to estimate the number and location of changes in a given model. Penalty-based approaches aim to minimise the quantity <img src="https://render.githubusercontent.com/render/math?math=\sum_{j=1}^{q%2B1}[\mathcal{C}(x_{k_{j-1}:k_j)}%20]%20%2B%20\beta%20f(q)">
 where <img src="https://render.githubusercontent.com/render/math?math=\mathcal{C}, \beta f(q)"> are the cost function and penalty respectively. Segmentation methods form statistics comparing the sample either side of a candidate change point, and use the maximum statistic to evaluate a hypothesis test.
 
 For a general overview of the multiple changepoint problem and mathematical details see [PELT](http://arxiv.org/pdf/1101.1438.pdf). For an overview of segmentation algorithms, see [Data segmentation algorithms: Univariate mean change and beyond](https://arxiv.org/pdf/2012.12814).
