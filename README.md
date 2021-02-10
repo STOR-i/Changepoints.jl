@@ -66,7 +66,7 @@ help?> @PELT
 
 # Usage
 
-As an example first we simulate a time series with multiple changes in mean and then segment it, using PELT and segmentation methods, plotting the time series as we go.
+As an example first we simulate a time series with multiple changes in mean and then segment it, using PELT, BS, CROPS, and segmentation methods, plotting the time series as we go.
 
 ## Simulation
 
@@ -131,6 +131,17 @@ changepoint_plot(data, pelt_cps)
 
 ![Plot of Changepoints detected by PELT](/docs/Plots_example_pelt.png?raw=true "Changepoints detected by PELT")
 
+## Segmentation with BS
+
+Another search method is Binary Segmentation (BS). Using the same cost function as before, with exactly the same arguments as for `@PELT`, we can run this code by:
+```
+bs_cps = @BS data Normal(:?, 1.0)
+changepoint_plot(data, bs_cps[1])
+```
+![Plot of Changepoints detected by BS](/docs/Plots_example_BS.png?raw=true "Changepoints detected by BS")
+
+This returns the same results and uses the same default penalty as `@PELT`, and can take the same variety of cost functions.
+
 ## Penalty selection with CROPS
 
 The methods implemented view the problem as one of optimising a penalised cost function where the penalty comes in whenever a new changepoint is added.
@@ -162,6 +173,8 @@ Again, if a plotting package has been loaded, we can create a so called "elbow" 
 elbow_plot(crops_output)
 ```
 ![Elbow plot of cost against number of changepoints](/docs/Plots_elbow_plot.png?raw=true "Elbow plot")
+
+
 
 ## Segmentation with MOSUM
 

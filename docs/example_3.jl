@@ -28,6 +28,11 @@ pelt_cps, cost = @PELT data Normal(:?, 1.0)
 changepoint_plot(data, pelt_cps)
 savefig("Plots_example_pelt.png")
 
+# BS
+
+bs_cps = @BS data Normal(:?, 1.0)
+changepoint_plot(data, bs_cps[1])
+savefig("Plots_example_BS.png")
 
 # CROPS
 
