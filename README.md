@@ -192,8 +192,8 @@ In the future we intend to incorporate the pruning procedure of [Cho and Kirch 2
 
 ## Segmentation with WBS and SeedBS
 
-The Wild Binary Segmentation (WBS) procedure behaves like standard Binary Segmentation, but draws many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)).
-Optionally, we can specify the threshold scaling constant, the standard deviation, and the number of intervals to draw. We are returned an array of tuples containing change point information, in decreasing detection order; see `?WBS` for details.
+The Wild Binary Segmentation (WBS) procedure generalises standard Binary Segmentation, drawing many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)).
+Optionally, we can specify the threshold scaling constant, the standard deviation, and the number of intervals to draw. Specifying `M=1` will call the CUSUM-based BS procedure. We are returned an array of tuples containing change point information, in decreasing detection order; see `?WBS` for details. 
 
 The following code runs the procedure, estimating the variance with MAD:
 ```
