@@ -168,12 +168,17 @@ elbow_plot(crops_output)
 By instead using segmentation algorithms, we can avoid specifying a cost function or penalty.
 These algorithms use local information to form test statistics, which are compared to a threshold for detection, and maximising locations are used as changepoint estimates. Those implemented in this package are for the change in mean setting.
 
-The MOSUM procedure requires specifying a bandwidth `G`, which should be at most half of the true minimum segment length (see [MOSUM](https://projecteuclid.org/euclid.bj/1501142454)). To see optional function arguments, enter `?@MOSUM` into the REPL.
+The MOSUM procedure requires specifying a bandwidth `G`, which should be at most half of the true minimum segment length (see [MOSUM](https://projecteuclid.org/euclid.bj/1501142454)). Optionally, `var_est_method` specifies the variance estimator to normalise by; this can be the average `mosum` (default) or minimum `mosum.min` across windows. `alpha` determines the signicance level (default 0.1). `criterion` determines whether to use the `eta` (default) or `epsilon` location procedure (see references). `eta` and `epsilon` are tuning parameters for the mentioned procedures (default 0.4 and 0.2).
 This returns a dictionary with outputs including change point locations and the detector statistic.
+
 To run the procedure we use the following code:
 ```
-G = 35
-MOSUM_output = @MOSUM data G
+G = 35 # pick bandwidth
+MOSUM_output = @MOSUM data G # run MOSUM procedure
+```
+
+We can plot the detector statistic, located changes, and threshold with
+```
 mosum_plot(MOSUM_output)
 ```
 ![MOSUM plot](/docs/Plots_mosum_plot.png?raw=true "MOSUM plot")
@@ -182,7 +187,7 @@ We can perform the MOSUM procedure with a series of increasing bandwiths to dete
 We have implemented the multi-scale merging procedure of [Messer et. al. 2014](https://arxiv.org/pdf/1303.3594.pdf), which runs the procedure for bandwidths in increasing order, adding as a change point only those located which are not too close to any points already located. This returns a vector of estimated change points.
 To run this, we enter:
 ```
-Gset = [20, 30, 50, 80, 130]
+Gset = [20, 30, 50, 80, 130] # bandwiths
 MOSUM_multi_scale_output = @MOSUM_multi_scale data Gset
 changepoint_plot(data, MOSUM_multi_scale_output)
 ```
