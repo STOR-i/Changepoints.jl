@@ -192,7 +192,7 @@ Runs the Wild Binary Segmentation algorithm for `data` with optional named argum
 
 The test threshold is determined by `th_const` and the known or estimated standard deviation `sigma`. If no `sigma` is specified, estimates via Median Absolute Deviation (MAD).
 `do_seeded` determined whether to use seeded intervals. If true, `shrink` is the decay factor for interval length; if not, `M` random intervals are drawn, and returns the position of found changepoints, and
-the cost of this segmentation.
+the cost of this segmentation. `min_length` determines minimum segment length.
 
 See also: [`WBS`](@ref), [`@segment_cost`](@ref)
 

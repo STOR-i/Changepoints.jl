@@ -1,10 +1,10 @@
 # This script produces all of the plots that appear in the README.md file
 #
 # Requires Plots package
-
 using Random
 using Distributions, Plots
 using Changepoints
+
 
 Random.seed!(1) # Fix random seed
 
@@ -53,15 +53,15 @@ savefig("Plots_mosum_multi_scale.png")
 
 # WBS
 seg_cost_cusum = Changepoints.CUSUM(data)
-WBS_return = WBS(seg_cost_cusum,n )
+WBS_return = WBS(seg_cost_cusum,n, min_length = 10 )
 #WBS_return = Changepoints.@WBS data
 seg_cost_sSIC = Changepoints.sSIC(data)
-WBS_cps = get_WBS_changepoints(seg_cost_sSIC, WBS_return, 5)
+WBS_cps = get_WBS_changepoints(seg_cost_sSIC, WBS_return, 14)
 changepoint_plot(data, WBS_cps[1])
 savefig("Plots_WBS.png")
 
-SeedBS_return = WBS(seg_cost_cusum,n , do_seeded = true)
+SeedBS_return = WBS(seg_cost_cusum,n , do_seeded = true, min_length = 15)
 #SeedBS_return = @WBS data do_seeded=true
-SeedBS_cps = get_WBS_changepoints(seg_cost_sSIC, SeedBS_return, 5)
+SeedBS_cps = get_WBS_changepoints(seg_cost_sSIC, SeedBS_return, 14)
 changepoint_plot(data, SeedBS_cps[1])
 savefig("Plots_SeedBS.png")

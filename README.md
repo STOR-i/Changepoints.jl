@@ -193,7 +193,7 @@ In the future we intend to incorporate the pruning procedure of [Cho and Kirch 2
 ## Segmentation with WBS and SeedBS
 
 The Wild Binary Segmentation (WBS) procedure generalises standard Binary Segmentation, drawing many random intervals instead of using only the entire interval (see [WBS](https://arxiv.org/abs/1411.0858)).
-Optionally, we can specify the threshold scaling constant, the standard deviation, and the number of intervals to draw. Specifying `M=1` will call the CUSUM-based BS procedure. We are returned an array of tuples containing change point information, in decreasing detection order; see `?WBS` for details. 
+Optionally, we can specify the threshold scaling constant, the standard deviation, the number of intervals to draw, and the minimum segment length. Specifying `M=1` will call the CUSUM-based BS procedure. We are returned an array of tuples containing change point information, in decreasing detection order; see `?WBS` for details.
 
 The following code runs the procedure, estimating the variance with MAD:
 ```
@@ -206,10 +206,10 @@ We call this with an optional argument:
 SeedBS_return = @WBS data do_seeded=true
 ```
 
-We can extract estimated change points from both objects by minimising the penalised strengthened Schwartz Information Criterion (sSIC) (see references). Using `Kmax` as an upper bound of the number to be returned, we call this via:
+We can extract estimated change points from both objects by minimising the penalised strengthened Schwartz Information Criterion (sSIC) (see references). Using `Kmax=14` as an upper bound of the number to be returned, we call this via:
 ```
 seg_cost_sSIC = sSIC(data)
-Kmax = 5
+Kmax = 14
 WBS_cps = get_WBS_changepoints(seg_cost_sSIC, WBS_return, Kmax)
 changepoint_plot(data, WBS_cps[1])
 ```
