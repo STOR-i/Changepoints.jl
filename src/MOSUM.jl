@@ -1,5 +1,5 @@
 """
-    MOSUM(x, G[, var_est_method, alpha, criterion, eta, epsilon])
+    MOSUM(x, G, var_est_method="mosum", alpha=0.1, criterion="eta", eta=0.4, epsilon=0.2)
 
 Runs the MOSUM procedure for the univariate data `x` with bandwidth `G`, and returns the number and position of found changepoints.
 
@@ -36,19 +36,9 @@ mosum_plot(MOSUM_out)
 Eichinger, Birte, and Claudia Kirch. "A MOSUM procedure for the estimation of multiple random change points." Bernoulli 24.1 (2018): 526-564.
 Meier, Alexander, Claudia Kirch, and Haeran Cho. "mosum: A package for moving sums in change point analysis." (2018).
 """
-function MOSUM( x::Array{Float64} , G::Int64; kwargs...)
-    #Default arguments
-    default_args = Dict(:var_est_method => "mosum",
-        :alpha => 0.1,
-        :criterion => "eta",
-        :eta => 0.4,
-        :epsilon => 0.2)
-
-    kwargs = Dict(kwargs)
-    merge!(default_args, kwargs)
-
-    #return_jump_size = haskey(kwargs, :return_jump_size)
-
+function MOSUM( x::Array{Float64}, G::Int64; var_est_method="mosum", alpha=0.1, criterion="eta", eta=0.4, epsilon=0.2)
+    var_est_method in ("mosum", "mosum.min") || error("Keyword argument var_est_method must be either \"mosum\" or \"mosum.min\"")
+    
     CP = Array{Int64}(undef,0)
     q = 0
     Reject = false
@@ -81,10 +71,9 @@ function MOSUM( x::Array{Float64} , G::Int64; kwargs...)
 
     # normalise
     for t in (G+1):(n-G)
-        if default_args[:var_est_method] == "mosum"
+        if var_est_method == "mosum"
             variance[t] = (rvar[t] + lvar[t])/ 2
-        end
-        if default_args[:var_est_method] == "mosum.min"
+        elseif var_est_method == "mosum.min"
             variance[t] = min( rvar[t], lvar[t])
         end
         #jump_size[t] =
@@ -93,13 +82,13 @@ function MOSUM( x::Array{Float64} , G::Int64; kwargs...)
 
     #threshold
     a = sqrt(2*n/G); b = 2log(n/G) + log(log(n/G))/2 + log(3/2) - log(pi)/2
-    c = - log(log( (1- default_args[:alpha])^(-.5) ))
+    c = - log(log( (1- alpha)^(-.5) ))
     D = (b+c)/a
 
     mosum_stat, k = findmax(detector)
 
     if mosum_stat > D
-        got_cps = get_cps_mosum(detector, D, G, default_args[:criterion], default_args[:eta], default_args[:epsilon])
+        got_cps = get_cps_mosum(detector, D, G, criterion, eta, epsilon)
         CP = got_cps[1]
         q = got_cps[2]
         Reject = got_cps[3]
@@ -125,55 +114,52 @@ function MOSUM( x::Array{Float64} , G::Int64; kwargs...)
 end
 
 
-function get_cps_mosum(stat::Array{Float64} , D_n::Float64, G::Int64,  criterion::String = ["epsilon","eta"][1],
-     eta::Float64 = 0.4, epsilon::Float64 = 0.2 )
-  cps = Array{Int64}(undef,0) ##assign empty cps
-  Reject = false
-  if criterion == "epsilon"
-      n = length(stat)
-      rshift = stat[2:end]
-      push!(rshift, 0.0)
-      lshift = stat[1:(end-1)]
-      pushfirst!(lshift, 0.0)
-      over =  stat .> D_n #findall(x -> x > D_n , stat ) #indices greater than D_n
-      vv = over .& (lshift .< D_n )#& lshift >0 ) #lowers
-      v = findall(vv .== 1)
-      ww = over .& (rshift .< D_n)
-      w = findall(ww .== 1)
-      nu_remove = findall(w-v .>= epsilon * G) #nu(epsilon) test for distance between
-      v_nu = v[nu_remove]; w_nu = w[nu_remove] #c(w[nu_remove],n)
-      sub_pairs = [v_nu w_nu]
+function get_cps_mosum(stat::Array{Float64} , D_n::Float64, G::Int64,  criterion::String="epsilon",
+                       eta::Float64 = 0.4, epsilon::Float64 = 0.2 )
+    cps = Array{Int64}(undef,0) ##assign empty cps
+    Reject = false
+    if criterion == "epsilon"
+        n = length(stat)
+        rshift = stat[2:end]
+        push!(rshift, 0.0)
+        lshift = stat[1:(end-1)]
+        pushfirst!(lshift, 0.0)
+        over =  stat .> D_n #findall(x -> x > D_n , stat ) #indices greater than D_n
+        vv = over .& (lshift .< D_n )#& lshift >0 ) #lowers
+        v = findall(vv .== 1)
+        ww = over .& (rshift .< D_n)
+        w = findall(ww .== 1)
+        nu_remove = findall(w-v .>= epsilon * G) #nu(epsilon) test for distance between
+        v_nu = v[nu_remove]; w_nu = w[nu_remove] #c(w[nu_remove],n)
+        sub_pairs = [v_nu w_nu]
+        
+        q = size(sub_pairs)[1]
+        if q>0
+            for ii in 1:q
+                interval = sub_pairs[ii,1]:sub_pairs[ii,2]
+                kk = findmax(stat[interval])[2] #internal cp location
+                push!(cps, kk + 1 + sub_pairs[ii,1]) #- G-p
+            end
+        end
+    end
+    
+    if criterion == "eta"
+        n = length(stat)
+        window = Int(floor(eta*G))
+        for t in (G+1):(n-G)
+            if (stat[t] > D_n) & (stat[t] == maximum(stat[(t .- window):(t .+ window)]) )
+                push!(cps, t) ##add to cps
+            end
+        end
+    end
 
-
-   q = size(sub_pairs)[1]
-   if  q>0
-       for ii in 1:q
-           interval = sub_pairs[ii,1]:sub_pairs[ii,2]
-           kk = findmax(stat[interval])[2] #internal cp location
-           push!(cps, kk + 1 + sub_pairs[ii,1]) #- G-p
-       end
-   end
- end
-   if criterion == "eta"
-       n = length(stat)
-       window = Int(floor(eta*G))
-       for t in (G+1):(n-G)
-           if (stat[t] > D_n) & (stat[t] == maximum(stat[(t .- window):(t .+ window)]) )
-               push!(cps, t) ##add to cps
-           end
-       end
-   end
-
-
-  q = length(cps)
-  if q>0
-      Reject = true
-  end
-
-
-  return cps, q, Reject
+    q = length(cps)
+    if q>0
+        Reject = true
+    end
+    
+    return cps, q, Reject
 end
-
 
 
 
@@ -206,12 +192,11 @@ changepoint_plot(x, multi_scale_out)
 Messer M, Kirchner M, Schiemann J, Roeper J, Neininger R, Schneider G (2014). “A Multiple Filter Test for the Detection of Rate Changes in Renewal Processes with Varying Variance.” The Annals of Applied Statistics, 8(4), 2027–2067.
 """
 function MOSUM_multi_scale(x::Array{Float64}, Gset::Array{Int64}; kwargs...)
-    #default_args = Dict(:return_jump_size => true)
 
     sort!(Gset)
     cps = Array{Int64}[]
     for G in Gset
-        mosum_G = MOSUM(x, G; kwargs)
+        mosum_G = MOSUM(x, G; kwargs...)
         cps_G = mosum_G["changepoints"]
         if G == Gset[1]
             cps = cps_G
