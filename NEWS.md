@@ -1,3 +1,10 @@
+# Version 0.4 (forthcoming)
+* Increased minimum Julia requirement to v1.0.5
+* Added functions for WBS and MOSUM algorithms
+* Replaced support for plotting with Gadfly with support for Plots package
+* Fixed major bug in @changepoint_sampler macro
+* Provided more comprehensive description of package functionality in README.md
+
 # Version 0.3.1 (2019-01-24)
 * Bug fix to CROPS function
 
