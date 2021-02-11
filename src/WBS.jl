@@ -1,9 +1,21 @@
+result_type = NamedTuple{(:s, :e, :cpt, :CUSUM, :min_th, :scale),Tuple{Int64,Int64,Int64,Float64,Float64,Int64}}
+
+function mad(data::Array)
+    return  median(abs.(data .- median(data)))
+end
+
+#import StatsBase
+#using StatsBase
+# sigma = StatsBase.mad(x)
+# result_type = @NamedTuple{s::Int64, e::Int64, cpt::Int64, CUSUM::Float64, min_th::Float64, scale::Int64}
+
+
 """
-    WBS( segment_cost, n[,th_const = 1.3, sigma = 1.0, M = 5000, do_seeded = false, shrink = 1/sqrt(2), min_lenth = 10])
+    WBS(segment_cost, n, th_const = 1.3, sigma = 1.0, M = 5000, do_seeded = false, shrink = 1/sqrt(2), min_lenth = 10)
 
 Runs the Wild Binary segmentation algorithm for the CUSUM cost function `segment_cost` for a time series of length `n`.
-    The test threshold is determined by `th_const` and the known or estimated standard deviation `sigma`.
-    `do_seeded` determines whether to use seeded intervals. If true, `shrink` is the decay factor for interval length; if not, `M` random intervals are drawn, and returns the position of found changepoints, and
+The test threshold is determined by `th_const` and the known or estimated standard deviation `sigma`.
+`do_seeded` determines whether to use seeded intervals. If true, `shrink` is the decay factor for interval length; if not, `M` random intervals are drawn, and returns the position of found changepoints, and
 the cost of this segmentation. `min_length` determines minimum segment length.
 
 See also: [`@BS`](@ref), [`@segment_cost`](@ref)
@@ -36,42 +48,22 @@ WBS_return = WBS(seg_cost, n)
 Fryzlewicz, P. (2014) Wild binary segmentation for multiple change-point detection, Annals of Statistics 42(6), 2243-2281
 Kovács, S., Li, H., Bühlmann, P., & Munk, A. (2020). Seeded Binary Segmentation: A general methodology for fast and optimal change point detection. arXiv preprint arXiv:2002.06633.
 """
-#import StatsBase
-#using StatsBase
-# sigma = StatsBase.mad(x)
-result_type = @NamedTuple{s::Int64, e::Int64, cpt::Int64, CUSUM::Float64, min_th::Float64, scale::Int64}
-
-function mad(data::Array)
-    return  median(abs.(data .- median(data)))
-end
-
-function WBS( segment_cost::Function , n::Int64; kwargs...)
-    default_args = Dict(:th_const =>  1.3,
-        :sigma => 0.0,
-        :M => 5000,
-        :do_seeded => false,
-        :shrink => 1/sqrt(2),
-        :min_length => 10)
-
-    kwargs = Dict(kwargs)
-    merge!(default_args, kwargs)
-
-
+function WBS(segment_cost::Function, n::Int64; th_const=1.3, sigma=0.0, M=5000, do_seeded=false, shrink=1/sqrt(2), min_length=10)
     result = Array{result_type}(undef,0)
 
-    min_length= max(3, default_args[:min_length])
+    min_length= max(3, min_length)
     # threshold
-    th = default_args[:sigma] * default_args[:th_const] * sqrt(2 * log(n))
+    th = sigma * th_const * sqrt(2 * log(n))
     scale = 0
     # call WBS
-    result = WBS_RECUR(segment_cost, 1, n, th, result, scale, default_args[:M], default_args[:do_seeded], default_args[:shrink], min_length)
+    result = WBS_RECUR(segment_cost, 1, n, th, result, scale, M, do_seeded, shrink, min_length)
 
     return result
 end
 
 
 function WBS_RECUR(segment_cost::Function, s::Int64, e::Int64, th::Float64,
-    result::Array{result_type}, scale::Int64, M::Int64 = 5000, do_seeded::Bool = false, shrink::Float64 = 1/sqrt(2), min_length = 10)
+                   result::Array{result_type}, scale::Int64, M::Int64 = 5000, do_seeded::Bool = false, shrink::Float64 = 1/sqrt(2), min_length = 10)
     #k = length(CP) - 2 #current number of change points
      #minimum interval length
     scale += 1 #update scale
@@ -123,7 +115,7 @@ end
 
 
 """
-    get_WBS_changepoints(segment_cost, object [, Kmax = 1,  alpha = 1.01])
+    get_WBS_changepoints(segment_cost, object, Kmax = 1,  alpha = 1.01)
 
 Obtains change points from an `object` (output by the WBS function) by minimising an information criterion.
 `segment_cost` is a cost function, normally sSIC, and `alpha` is the penalty exponent. `Kmax` determines the maximum number of changepoints to detect.
@@ -158,7 +150,7 @@ Fryzlewicz, P. (2014) Wild binary segmentation for multiple change-point detecti
 """
 
 
-function get_WBS_changepoints(segment_cost::Function, object::Array{NamedTuple{(:s, :e, :cpt, :CUSUM, :min_th, :scale),Tuple{Int64,Int64,Int64,Float64,Float64,Int64}},1}, Kmax::Int64 = 1,  alpha::Float64 = 1.01)
+function get_WBS_changepoints(segment_cost::Function, object::Array{result_type,1}, Kmax::Int64 = 1,  alpha::Float64 = 1.01)
     #result = Array{result_type}(undef,0)
     Kmax = min(Kmax,length(object))
     if length(object) > 0
