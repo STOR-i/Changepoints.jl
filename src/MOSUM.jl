@@ -85,7 +85,7 @@ function MOSUM( data::Array{Float64}, G::Int64; var_est_method="mosum", alpha=0.
     c = - log(log( (1- alpha)^(-.5) ))
     D = (b+c)/a
 
-    mosum_stat, k = findmadata(detector)
+    mosum_stat, k = findmax(detector)
 
     if mosum_stat > D
         got_cps = get_cps_mosum(detector, D, G, criterion, eta, epsilon)
@@ -147,7 +147,7 @@ function get_cps_mosum(stat::Array{Float64} , D_n::Float64, G::Int64,  criterion
         n = length(stat)
         window = Int(floor(eta*G))
         for t in (G+1):(n-G)
-            if (stat[t] > D_n) & (stat[t] == madataimum(stat[(t .- window):(t .+ window)]) )
+            if (stat[t] > D_n) & (stat[t] == maximum(stat[(t .- window):(t .+ window)]) )
                 push!(cps, t) ##add to cps
             end
         end

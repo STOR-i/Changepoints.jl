@@ -32,10 +32,10 @@ For a general overview of the multiple changepoint problem and mathematical deta
 
 ## Installation
 
-Changepoints requires Julia version 1.5 or above. To install Changepoints simply run the following command inside Julia package mode (started by typing`]` in the Julia REPL):
+Changepoints requires Julia version 1.0.5 or above. To install Changepoints simply run the following command inside Julia package mode (started by typing`]` in the Julia REPL):
 
 ```julia-repl
-(v1.5) pkg>  add Changepoints
+(v1.0.5) pkg>  add Changepoints
 ```
 
 ## Documentation
