@@ -1,14 +1,14 @@
 """
-    MOSUM(x, G, var_est_method="mosum", alpha=0.1, criterion="eta", eta=0.4, epsilon=0.2)
+    MOSUM(data, G[, var_est_method="mosum", alpha=0.1, criterion="eta", eta=0.4, epsilon=0.2])
 
-Runs the MOSUM procedure for the univariate data `x` with bandwidth `G`, and returns the number and position of found changepoints.
+Runs the MOSUM procedure for the univariate array `data` with bandwidth `G`, and returns the number and position of found changepoints.
 
 Optionally, `var_est_method` specifies the variance estimator to normalise by; this can be the average `mosum` (default) or minimum `mosum.min` across windows.
 `alpha` determines the signicance level (default 0.1).
 `criterion` determines whether to use the `eta` (default) or `epsilon` location procedure (see references).
 `eta` and `epsilon` are tuning parameters for the mentioned procedures (default 0.4 and 0.2).
 
-See also: [`@BS`](@ref), [`@WBS`](@ref)
+See also: [`@BS`](@ref), [`MOSUM_multi_scale`](@ref), [`mosum_plot`](@ref)
 
 # Returns
 * `out::Dict{String,Union{Bool, Float64, Int64, Array}}`:
@@ -24,28 +24,28 @@ See also: [`@BS`](@ref), [`@WBS`](@ref)
 n = 1000
 λ = 300
 μ, σ = Normal(0.0, 10.0), 1.0
-x, cps = @changepoint_sampler n λ Normal(μ, σ)
+data, cps = @changepoint_sampler n λ Normal(μ, σ)
 G = 150
 # Run MOSUM procedure
-MOSUM_out = MOSUM(x, G)
+MOSUM_out = MOSUM(data, G)
 # Plot MOSUM detector
 mosum_plot(MOSUM_out)
 ```
 
 # References
 Eichinger, Birte, and Claudia Kirch. "A MOSUM procedure for the estimation of multiple random change points." Bernoulli 24.1 (2018): 526-564.
-Meier, Alexander, Claudia Kirch, and Haeran Cho. "mosum: A package for moving sums in change point analysis." (2018).
+Meier, Aledataander, Claudia Kirch, and Haeran Cho. "mosum: A package for moving sums in change point analysis." (2018).
 """
-function MOSUM( x::Array{Float64}, G::Int64; var_est_method="mosum", alpha=0.1, criterion="eta", eta=0.4, epsilon=0.2)
+function MOSUM( data::Array{Float64}, G::Int64; var_est_method="mosum", alpha=0.1, criterion="eta", eta=0.4, epsilon=0.2)
     var_est_method in ("mosum", "mosum.min") || error("Keyword argument var_est_method must be either \"mosum\" or \"mosum.min\"")
-    
+
     CP = Array{Int64}(undef,0)
     q = 0
     Reject = false
-    n = length(x)
+    n = length(data)
 
-    csum = cumsum(x)
-    sqsum = cumsum(x.^2)
+    csum = cumsum(data)
+    sqsum = cumsum(data.^2)
     variance = zeros(Float64, n)
     lvar = zeros(Float64, n)
     rvar = zeros(Float64, n)
@@ -85,7 +85,7 @@ function MOSUM( x::Array{Float64}, G::Int64; var_est_method="mosum", alpha=0.1, 
     c = - log(log( (1- alpha)^(-.5) ))
     D = (b+c)/a
 
-    mosum_stat, k = findmax(detector)
+    mosum_stat, k = findmadata(detector)
 
     if mosum_stat > D
         got_cps = get_cps_mosum(detector, D, G, criterion, eta, epsilon)
@@ -124,7 +124,7 @@ function get_cps_mosum(stat::Array{Float64} , D_n::Float64, G::Int64,  criterion
         push!(rshift, 0.0)
         lshift = stat[1:(end-1)]
         pushfirst!(lshift, 0.0)
-        over =  stat .> D_n #findall(x -> x > D_n , stat ) #indices greater than D_n
+        over =  stat .> D_n #findall(data -> data > D_n , stat ) #indices greater than D_n
         vv = over .& (lshift .< D_n )#& lshift >0 ) #lowers
         v = findall(vv .== 1)
         ww = over .& (rshift .< D_n)
@@ -132,22 +132,22 @@ function get_cps_mosum(stat::Array{Float64} , D_n::Float64, G::Int64,  criterion
         nu_remove = findall(w-v .>= epsilon * G) #nu(epsilon) test for distance between
         v_nu = v[nu_remove]; w_nu = w[nu_remove] #c(w[nu_remove],n)
         sub_pairs = [v_nu w_nu]
-        
+
         q = size(sub_pairs)[1]
         if q>0
             for ii in 1:q
                 interval = sub_pairs[ii,1]:sub_pairs[ii,2]
-                kk = findmax(stat[interval])[2] #internal cp location
+                kk = findmadata(stat[interval])[2] #internal cp location
                 push!(cps, kk + 1 + sub_pairs[ii,1]) #- G-p
             end
         end
     end
-    
+
     if criterion == "eta"
         n = length(stat)
         window = Int(floor(eta*G))
         for t in (G+1):(n-G)
-            if (stat[t] > D_n) & (stat[t] == maximum(stat[(t .- window):(t .+ window)]) )
+            if (stat[t] > D_n) & (stat[t] == madataimum(stat[(t .- window):(t .+ window)]) )
                 push!(cps, t) ##add to cps
             end
         end
@@ -157,46 +157,46 @@ function get_cps_mosum(stat::Array{Float64} , D_n::Float64, G::Int64,  criterion
     if q>0
         Reject = true
     end
-    
+
     return cps, q, Reject
 end
 
 
 
 """
-    MOSUM_multi_scale(x, Gset[, var_est_method, alpha, criterion, eta, epsilon])
+    MOSUM_multi_scale(data, Gset[, var_est_method="mosum", alpha=0.1, criterion="eta", eta=0.4, epsilon=0.2])
 
-Runs the Multiple Filtre MOSUM procedure for the univariate data `x` with multiple bandwidths `Gset`, and returns the position of found changepoints.
-For optional arguments, see `@MOSUM`.
+Runs the Multiple Filtre MOSUM procedure for the univariate array `data` with multiple bandwidths `Gset`, and returns the position of found changepoints.
+For optional arguments, see `?MOSUM`.
 
-See also: [`@MOSUM_multi_scale`](@ref), [`@MOSUM`](@ref), [`MOSUM`](@ref)
+See also: [`MOSUM`](@ref)
 
 # Returns
 * `cps` : Integer array of estimated change points
 
-# Example
+# Edataample
 ```julia-repl
 # Sample Normal time series with changing mean
 n = 1000
 λ = 300
 μ, σ = Normal(0.0, 10.0), 1.0
-x, cps = @changepoint_sampler n λ Normal(μ, σ)
+data, cps = @changepoint_sampler n λ Normal(μ, σ)
 Gset = [25, 50, 100, 150]
 # Run MOSUM procedure
-multi_scale_out = MOSUM_multi_scale(x, Gset; alpha = 0.05)
+multi_scale_out = MOSUM_multi_scale(data, Gset; alpha = 0.05)
 # Plot change points
-changepoint_plot(x, multi_scale_out)
+changepoint_plot(data, multi_scale_out)
 ```
 
 # References
 Messer M, Kirchner M, Schiemann J, Roeper J, Neininger R, Schneider G (2014). “A Multiple Filter Test for the Detection of Rate Changes in Renewal Processes with Varying Variance.” The Annals of Applied Statistics, 8(4), 2027–2067.
 """
-function MOSUM_multi_scale(x::Array{Float64}, Gset::Array{Int64}; kwargs...)
+function MOSUM_multi_scale(data::Array{Float64}, Gset::Array{Int64}; kwargs...)
 
     sort!(Gset)
     cps = Array{Int64}[]
     for G in Gset
-        mosum_G = MOSUM(x, G; kwargs...)
+        mosum_G = MOSUM(data, G; kwargs...)
         cps_G = mosum_G["changepoints"]
         if G == Gset[1]
             cps = cps_G
@@ -214,7 +214,7 @@ function MOSUM_multi_scale(x::Array{Float64}, Gset::Array{Int64}; kwargs...)
 #    #step 1
 #    PairSet = Array{Union{Float64, Int64}}[]
 #    for G in Gset
-#        mosum_G = MOSUM(x, G; default_args)
+#        mosum_G = MOSUM(data, G; default_args)
 #        cps = mosum_G["changepoints"]
 #        for k in cps
 #            h = mosum_G["detector"][k]

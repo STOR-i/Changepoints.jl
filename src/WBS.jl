@@ -11,10 +11,10 @@ end
 
 
 """
-    WBS(segment_cost, n, th_const = 1.3, sigma = 1.0, M = 5000, do_seeded = false, shrink = 1/sqrt(2), min_lenth = 10)
+    WBS(data; th_const = 1.3, sigma = 0.0, M = 5000, do_seeded = false, shrink = 1/sqrt(2), min_length = 10)
 
-Runs the Wild Binary segmentation algorithm for the CUSUM cost function `segment_cost` for a time series of length `n`.
-The test threshold is determined by `th_const` and the known or estimated standard deviation `sigma`.
+Runs the Wild Binary segmentation algorithm for univariate array `data`, using the CUSUM cost function.
+The test threshold is determined by `th_const` and the known or estimated standard deviation `sigma`. If `sigma = 0.0` is entered, this will be estimated by Median Absolute Deviance (MAD).
 `do_seeded` determines whether to use seeded intervals. If true, `shrink` is the decay factor for interval length; if not, `M` random intervals are drawn, and returns the position of found changepoints, and
 the cost of this segmentation. `min_length` determines minimum segment length.
 
@@ -39,19 +39,22 @@ n = 1000
 μ, σ = Normal(0.0, 10.0), 1.0
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 # Run wild binary segmentation
-seg_cost = CUSUM(sample, σ)
-sigma = mad(sample)
-WBS_return = WBS(seg_cost, n)
+WBS_return = WBS(sample; sigma = σ)
 ```
 
 # References
 Fryzlewicz, P. (2014) Wild binary segmentation for multiple change-point detection, Annals of Statistics 42(6), 2243-2281
 Kovács, S., Li, H., Bühlmann, P., & Munk, A. (2020). Seeded Binary Segmentation: A general methodology for fast and optimal change point detection. arXiv preprint arXiv:2002.06633.
 """
-function WBS(segment_cost::Function, n::Int64; th_const=1.3, sigma=0.0, M=5000, do_seeded=false, shrink=1/sqrt(2), min_length=10)
+function WBS(data::Array; th_const=1.3, sigma=0.0, M=5000, do_seeded=false, shrink=1/sqrt(2), min_length=10)
     result = Array{result_type}(undef,0)
 
+    if sigma == 0.0
+        sigma = mad(data)
+    end #if
+    segment_cost = CUSUM(data, sigma)
     min_length= max(3, min_length)
+    n = length(data)
     # threshold
     th = sigma * th_const * sqrt(2 * log(n))
     scale = 0
@@ -120,7 +123,7 @@ end
 Obtains change points from an `object` (output by the WBS function) by minimising an information criterion.
 `segment_cost` is a cost function, normally sSIC, and `alpha` is the penalty exponent. `Kmax` determines the maximum number of changepoints to detect.
 
-See also: [`@WBS`](@ref), [`WBS`](@ref), [`sSIC`](@ref), [`@segment_cost`](@ref)
+See also: [`WBS`](@ref), [`sSIC`](@ref), [`@segment_cost`](@ref)
 
 # Returns
 * `out_cps`: Vector of change point locations under optimal segmentation
@@ -137,8 +140,7 @@ n = 1000
 sample, cps = @changepoint_sampler n λ Normal(μ, σ)
 
 # Run wild binary segmentation
-seg_cost_CUSUM = CUSUM(sample, σ)
-WBS_return = WBS(seg_cost_CUSUM, n)
+WBS_return = WBS(sample)
 
 # Obtain changepoints
 seg_cost_sSIC = sSIC(sample)

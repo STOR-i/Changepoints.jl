@@ -45,27 +45,26 @@ savefig("Plots_elbow_plot.png")
 # MOSUM
 
 G = 35
-MOSUM_output = @MOSUM data G
+MOSUM_output = MOSUM(data, G)
 mosum_plot(MOSUM_output)
 savefig("Plots_mosum_plot.png")
 
 # MOSUM multi-scale
 
 Gset = [20, 30, 50, 80, 130]
-MOSUM_multi_scale_output =  @MOSUM_multi_scale data Gset
+MOSUM_multi_scale_output =  MOSUM_multi_scale(data, Gset)
 changepoint_plot(data, MOSUM_multi_scale_output)
 savefig("Plots_mosum_multi_scale.png")
 
 # WBS
-seg_cost_cusum = Changepoints.CUSUM(data)
-WBS_return = WBS(seg_cost_cusum,n, min_length = 10 )
+WBS_return = WBS(data, min_length = 10 )
 #WBS_return = Changepoints.@WBS data
 seg_cost_sSIC = Changepoints.sSIC(data)
 WBS_cps = get_WBS_changepoints(seg_cost_sSIC, WBS_return, 14)
 changepoint_plot(data, WBS_cps[1])
 savefig("Plots_WBS.png")
 
-SeedBS_return = WBS(seg_cost_cusum,n , do_seeded = true, min_length = 15)
+SeedBS_return = WBS(data, do_seeded = true, min_length = 10)
 #SeedBS_return = @WBS data do_seeded=true
 SeedBS_cps = get_WBS_changepoints(seg_cost_sSIC, SeedBS_return, 14)
 changepoint_plot(data, SeedBS_cps[1])

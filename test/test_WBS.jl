@@ -7,12 +7,11 @@
     # Normal mean segments #
     ########################
     μ, σ = Normal(0.0, 10.0), 1.0
-    sample, cps = @changepoint_sampler n λ Normal(μ, σ)
-    seg_cost_CUSUM = Changepoints.CUSUM(sample);
-    seg_cost_sSIC = Changepoints.sSIC(sample);
+    data, cps = @changepoint_sampler n λ Normal(μ, σ)
+    seg_cost_sSIC = Changepoints.sSIC(data);
 
-    @test_nowarn WBS(seg_cost_CUSUM, n);
-    @test_nowarn get_WBS_changepoints(seg_cost_sSIC, WBS(seg_cost_CUSUM, n) );
-    @test_nowarn WBS(seg_cost_CUSUM, n; do_seeded = true);
+    @test_nowarn WBS(data);
+    @test_nowarn get_WBS_changepoints(seg_cost_sSIC, WBS(data) );
+    @test_nowarn WBS(data; do_seeded = true);
 
 end

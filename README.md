@@ -187,7 +187,7 @@ This returns a dictionary with outputs including change point locations and the 
 To run the procedure we use the following code:
 ```
 G = 35 # pick bandwidth
-MOSUM_output = @MOSUM data G # run MOSUM procedure
+MOSUM_output = MOSUM(data, G) # run MOSUM procedure
 ```
 
 We can plot the detector statistic, located changes, and threshold with
@@ -201,7 +201,7 @@ We have implemented the multi-scale merging procedure of [Messer et. al. 2014](h
 To run this, we enter:
 ```
 Gset = [20, 30, 50, 80, 130] # bandwiths
-MOSUM_multi_scale_output = @MOSUM_multi_scale data Gset
+MOSUM_multi_scale_output = MOSUM_multi_scale(data, Gset)
 changepoint_plot(data, MOSUM_multi_scale_output)
 ```
 ![MOSUM multi scale plot](/docs/Plots_mosum_multi_scale.png?raw=true "MOSUM multi-scale plot")
@@ -215,13 +215,13 @@ Optionally, we can specify the threshold scaling constant, the standard deviatio
 
 The following code runs the procedure, estimating the variance with MAD:
 ```
-WBS_return = @WBS data
+WBS_return = WBS(data)
 ```
 
 Alternatively, we may use a series of fixed intervals via Seeded Binary Segmentation (SeedBS), which gives reproducible results and is less costly (see [SeedBS](https://arxiv.org/abs/2002.06633)).
 We call this with an optional argument:
 ```
-SeedBS_return = @WBS data do_seeded=true
+SeedBS_return = WBS(data; do_seeded=true)
 ```
 
 We can extract estimated change points from both objects by minimising the penalised strengthened Schwartz Information Criterion (sSIC) (see references). Using `Kmax=14` as an upper bound of the number to be returned, we call this via:
