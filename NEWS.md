@@ -1,4 +1,4 @@
-# Version 0.4 (forthcoming)
+# Version 0.4 (2021-03-29)
 * Increased minimum Julia requirement to v1.0.5
 * Added functions for WBS and MOSUM algorithms
 * Replaced support for plotting with Gadfly with support for Plots package
