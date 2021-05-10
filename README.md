@@ -91,7 +91,7 @@ The following code constructs a log-likelihood based cost function for segments 
 
 ```
 σ = 1.0
-seg_cost = NormalMeanChange(data, σ)  # Create segment cost function
+seg_cost = NormalMeanSegment(data, σ)  # Create segment cost function
 
 ```
 
@@ -120,6 +120,8 @@ Some other examples of expressions which can be used with PELT in this way are:
 - `Normal(:?, :?)`: Normally distributed data with changing mean and variance
 - `Exponential(:?)`: data distributed as Exponential distribution with changing mean
 - `Gamma(:?, β)`: data distributed as Gamma distribution with changing shape parameter and known rate parameter `β`
+
+See documentation for `@segment_cost` for a full list of available cost functions for penalty-based changepoint methods.
 
 Currently, this package supports the Plots package for the convenient plotting of the results. This package must be explicity loaded to make use of this functionality.
 
