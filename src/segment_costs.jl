@@ -82,7 +82,7 @@ function NormalMeanVarSegment(data::Array{Float64})
     cd_2 = zero_cumsum(x -> x^2, data)
     function cost(s::Int64, t::Int64)
       mu = (cd[t + 1] - cd[s + 1]) / (t - s)
-      sig = ( cd_2[t+1] - cd_2[s+1] ) / (t-s) - mu^2
+      sig = abs.( ( cd_2[t+1] - cd_2[s+1] ) / (t-s) - mu^2 )
       return (t-s)*log(sig) + (cd_2[t+1] - cd_2[s+1])/sig - 2*(cd[t+1] - cd[s+1])*mu/sig + ((t-s)*mu^2)/sig
     end
     return cost
